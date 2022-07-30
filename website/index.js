@@ -3,20 +3,29 @@ const app = express();
 const port = process.env.PORT || 3000;
 const fs = require('fs');
 const path = require('path');
-const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 var DiscordStrategy = require('passport-discord').Strategy;
+const MemoryStore = require("memorystore")(session);
 var bot = require('./routers/bot');
 var admin = require('./routers/admin');
 var auth = require('./routers/auth');
 
+
+//import models 
+const Banned = require('../models/site-ban');
+
 // set up session
 app.use(session({
-    secret: 'secret',
+    store: new MemoryStore({ checkPeriod: 86400000 }),
+    secret: "#YoourrFunnySecretShouldBeLongerThanThisOrdasfjkadsnkfanslkfjasnfdsajnfkdjn#",
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
+// set up view engine
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
+
 // Import routers 
 app.use('/bot', bot);
 app.use('/admin', admin);
@@ -25,14 +34,25 @@ app.use('/auth', auth);
 var scopes = ['identify', 'email', 'guilds', 'guilds.join'];
 
 passport.use(new DiscordStrategy({
-    clientID: 'id',
-    clientSecret: 'secret',
-    callbackURL: 'callbackURL',
+    clientID: '934087523649609768',
+    clientSecret: 'nPKjKvOCOyyhDaQM64qcJYbd6CdhCxLh',
+    callbackURL: 'http://localhost:3000/auth/callback',
     scope: scopes
 },
     function (accessToken, refreshToken, profile, cb) {
-        User.findOrCreate({ discordId: profile.id }, function (err, user) {
-            return cb(err, user);
+        console.log(profile);
+        Banned.findOne({ user: profile.id }, function (err, user) {
+            if (err) {
+                console.log(err);
+                return cb(err);
+            }
+            if (user) {
+                console.log('User is banned');
+                return cb(err, false);
+            } else {
+                console.log('User is not banned');
+                return cb(err, user);
+            }
         });
     }));
 // use passport for authentication
@@ -40,11 +60,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 // set up static files
 app.use(express.static(path.join(__dirname, 'public')));
-// set up view engine
-app.set('view engine', 'ejs');
 // set up routes
 app.get('/', (req, res) => {
-    res.render('index');
+    res.render('index.ejs');
 });
 
 app.listen(port, () => {

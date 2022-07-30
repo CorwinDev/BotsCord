@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "start": "node index.js",
+    "css": "postcss website/public/css/tailwind.css -o website/public/css/style.css"
   },
   "repository": {
     "type": "git",
@@ -25,11 +26,15 @@
   },
   "homepage": "https://github.com/CorwinDev/BotsCord#readme",
   "dependencies": {
+    "autoprefixer": "^10.4.8",
     "discord.js": "^14.1.1",
+    "ejs": "^3.1.8",
     "express": "^4.18.1",
     "express-session": "^1.17.3",
+    "memorystore": "^1.6.7",
     "mongoose": "^6.5.0",
     "passport": "^0.6.0",
-    "passport-discord": "^0.1.4"
+    "passport-discord": "^0.1.4",
+    "tailwindcss": "^3.1.7"
   }
 }
