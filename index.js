@@ -3,10 +3,12 @@ const bot = require('./bot');
 const website = require('./website');
 // Import config and export
 const config = require('./config');
+const mongoose = require('mongoose');
 // Connect to mongoDB
 try {
-    mongoose.connect(config.mongoDB.url);
+    mongoose.connect(config.mongodb);
 } catch (err) {
+    console.log(err);
     console.log('Error connecting to mongoDB');
     process.exit(1);
 }

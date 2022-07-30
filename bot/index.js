@@ -9,12 +9,13 @@ const client = new Client({
         GatewayIntentBits.GuildMessageReactions,
         GatewayIntentBits.GuildMessageTyping,
         GatewayIntentBits.DirectMessages,
-        
+
     ]
 });
+client.config = require('../config');
 // Set intents 
 client.on('ready', () => {
     console.log('Bot is ready!');
 });
 // Login
-client.login(process.env.BOT_TOKEN);
+client.login(client.config.bot.token);
