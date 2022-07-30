@@ -1,0 +1,34 @@
+{
+  "name": "botscord",
+  "version": "0.0.1",
+  "description": "BotsCord",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CorwinDev/BotsCord.git"
+  },
+  "keywords": [
+    "Discord",
+    "Bots",
+    "BotsCord",
+    "BotList",
+    "ServerList"
+  ],
+  "author": "CorwinDev",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/CorwinDev/BotsCord/issues"
+  },
+  "homepage": "https://github.com/CorwinDev/BotsCord#readme",
+  "dependencies": {
+    "discord.js": "^14.1.1",
+    "express": "^4.18.1",
+    "express-session": "^1.17.3",
+    "mongoose": "^6.5.0",
+    "passport": "^0.6.0"
+  }
+}
