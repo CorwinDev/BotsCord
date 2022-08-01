@@ -10,37 +10,39 @@
 </head>
 
 <body class="bg-primary-color">
-  <!-- navbar in tailwind with login buttons -->
-  <nav class="flex items-center justify-between flex-wrap p-6 bg-blue-color">
-    <div class="flex items-center flex-shrink-0 text-white mr-6">
-      <!-- logo -->
-      <a href="/">
-        <img class="mx-auto w-auto h-8" src="/img/logo.png" alt="logo">
-      </a>
-      <span class="font-semibold text-xl tracking-tight">&nbsp;BotsCord</span>
-    </div>
-    <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-      <div class="text-sm lg:flex-grow">
-        <a href="/bots" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
-          Bots
+  <div class="p-2 pl-4 pr-4 bg-blue-color">
+    <!-- navbar in tailwind with login buttons -->
+    <nav class="flex items-center justify-between flex-wrap p-6 bg-blue-color">
+      <div class="flex items-center flex-shrink-0 text-white mr-6">
+        <!-- logo -->
+        <a href="/">
+          <img class="mx-auto w-auto h-8" src="/img/logo.png" alt="logo">
         </a>
-        <a href="/servers" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
-          Servers
-        </a>
+        <span class="font-semibold text-xl tracking-tight">&nbsp;BotsCord</span>
       </div>
-      <div>
-        <% if (typeof user == "undefined") { %>
-        <a href="/login" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a>
-        <% }else { %>
-        <a href="/profile" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Profile</a>
-        <% } %>
+      <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+        <div class="text-sm lg:flex-grow">
+          <a href="/bots" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+            Bots
+          </a>
+          <a href="/servers" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+            Servers
+          </a>
+        </div>
+        <div>
+          <% if (typeof user == "undefined") { %>
+          <a href="/login" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a>
+          <% }else { %>
+          <a href="/profile" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Profile</a>
+          <% } %>
+        </div>
       </div>
+    </nav>
+    <!-- end navbar in tailwind -->
+    <!-- show alert if variable message is available -->
+    <% if (typeof message != "undefined") { %>
+    <div class="alert alert-success" role="alert">
+      <%= message %>
     </div>
-  </nav>
-  <!-- end navbar in tailwind -->
-  <!-- show alert if variable message is available -->
-  <% if (typeof message != "undefined") { %>
-  <div class="alert alert-success" role="alert">
-    <%= message %>
+    <% } %>
   </div>
-  <% } %>
