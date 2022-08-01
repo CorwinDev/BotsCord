@@ -25,7 +25,11 @@ app.use(session({
 // set up view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
-
+// use passport for authentication
+app.use(passport.initialize());
+app.use(passport.session());
+// set up static files
+app.use(express.static(path.join(__dirname, 'public')));
 // Import routers 
 app.use('/bot', bot);
 app.use('/admin', admin);
@@ -55,16 +59,34 @@ passport.use(new DiscordStrategy({
             }
         });
     }));
-// use passport for authentication
-app.use(passport.initialize());
-app.use(passport.session());
-// set up static files
-app.use(express.static(path.join(__dirname, 'public')));
 // set up routes
 app.get('/', (req, res) => {
-    res.render('index.ejs');
+    var message = req.session.message;
+    req.session.message = null;
+    if (message) {
+        res.render('index', {
+            message: message
+        });
+    } else {
+        res.render('index.ejs');
+    }
+});
+
+app.get("/robots.txt", function (req, res) {
+    res.set('Content-Type', 'text/plain');
+    res.send(`Sitemap: https://botscord.site/sitemap.xml`);
+});
+app.get("/sitemap.xml", async function (req, res) {
+    let link = "<url><loc>https://botscord.site/</loc></url>";
+    let botdataforxml = await botsdata.find()
+    botdataforxml.forEach(bot => {
+        link += "\n<url><loc>https://botscord.site/bot/" + bot.botID + "</loc></url>";
+    })
+    res.set('Content-Type', 'text/xml');
+    res.send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="https://www.google.com/schemas/sitemap-image/1.1">${link}</urlset>`);
 });
 
 app.listen(port, () => {
+
     console.log('Your app is listening on port ' + port);
 });

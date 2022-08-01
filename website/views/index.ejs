@@ -1,11 +1,51 @@
 <%- include("./includes/header.ejs") %>
-<h1 class="text-3xl font-bold underline">
-  Hello world!
-</h1>
+<div class="bg-blue-color">
+  <br><br>
+  <div class="container px-3 mb-5 mt-1">
+    <div class="mb-3 mx-auto">
+      <span class="icon-section" style="float:right"><img draggable="false" class="section-img" title="botscord.site" src="../img/logo.png" width="320" alt="Discord Bots | Discord Bot List"></span>
+      <h1 class=" text-xl" translate="no" style="font-weight:800;color:#fff">BotsCord</h1>
+      <p class="content" style="opacity:.6;color:#fff">Find the best Discord Bots for your server with BotsCord!</p>
+      <br>
+      <form class="flex items-center w-">
+        <label for="simple-search" class="sr-only">Search</label>
+        <div class="relative w-full">
+          <div class="flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none">
+            <svg aria-hidden="true" class="w-5 h-5 text-primary-color dark:text-primary-color" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+            </svg>
+          </div>
+          <input type="text" id="simple-search" class="bg-primary-color border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-primary-color dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required>
+        </div>
+        <button type="submit" class="p-2.5 ml-2 text-sm font-medium text-white bg-button-primary rounded-lg border border-button-primary hover:bg-button-primary focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-button-primary dark:hover:bg-button-primary dark:focus:ring-blue-800">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+          </svg>
+          <span class="sr-only">Search</span>
+        </button>
+      </form>
 
-<br><br><br><br><br><br>
-<br><br><br>
-<br><br><br>
+      <a title="BotsCord" href="/tag/Moderation" class="text-white bg-button-primary hover:bg-button-primary focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm px-2 py-2 mb-2 dark:bg-button-primary dark:hover:bg-button-primary focus:outline-none dark:focus:ring-button-primary underline hover:no-underline"><i class="fad fa-magic"></i>&nbsp;Moderation</a>
+      <a title="BotsCord" href="/tag/Fun" class="text-white bg-button-primary hover:bg-button-primary focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm px-2 py-2  mb-2 dark:bg-button-primary dark:hover:bg-button-primary focus:outline-none dark:focus:ring-button-primary underline hover:no-underline"><i class="fad fa-smile"></i>&nbsp;Fun</a>
+      <a title="BotsCord" href="/tag/Moderation" class="text-white bg-button-primary hover:bg-button-primary focus:ring-4 focus:ring-blue-300 font-bold rounded-lg text-sm px-2 py-2 mb-2 dark:bg-button-primary dark:hover:bg-button-primary focus:outline-none dark:focus:ring-button-primary underline hover:no-underline"><i class="fad fa-file"></i></i>&nbsp;Logging</a>
+      <a title="BotsCord" href="/tag/Utility" class="botscord-button"><i class="fad fa-cogs"></i>&nbsp;Utility</a>
 
-
+    </div>
+  </div>
+</div>
+<!-- Bots card with bot info -->
+<div class="max-w-sm rounded overflow-hidden shadow-lg">
+  <img class="w-full" src="/img/card-top.jpg" alt="Sunset in the mountains">
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-2">The Coldest Sunset</div>
+    <p class="text-gray-700 text-base">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.
+    </p>
+  </div>
+  <div class="px-6 pt-4 pb-2">
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#photography</span>
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#travel</span>
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+  </div>
+</div>
 <%- include("./includes/footer.ejs") %>

@@ -6,13 +6,18 @@
   <meta name="viewport" content="width=, initial-scale=1.0">
   <title>BotsCord</title>
   <link href="/css/style.css" rel="stylesheet">
+  <link href=https://pro.fontawesome.com/releases/v5.13.1/css/all.css rel=stylesheet>
 </head>
 
 <body class="bg-primary-color">
   <!-- navbar in tailwind with login buttons -->
-  <nav class="flex items-center justify-between flex-wrap p-6">
+  <nav class="flex items-center justify-between flex-wrap p-6 bg-blue-color">
     <div class="flex items-center flex-shrink-0 text-white mr-6">
-      <span class="font-semibold text-xl tracking-tight">BotsCord</span>
+      <!-- logo -->
+      <a href="/">
+        <img class="mx-auto w-auto h-8" src="/img/logo.png" alt="logo">
+      </a>
+      <span class="font-semibold text-xl tracking-tight">&nbsp;BotsCord</span>
     </div>
     <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
       <div class="text-sm lg:flex-grow">
@@ -33,3 +38,9 @@
     </div>
   </nav>
   <!-- end navbar in tailwind -->
+  <!-- show alert if variable message is available -->
+  <% if (typeof message != "undefined") { %>
+  <div class="alert alert-success" role="alert">
+    <%= message %>
+  </div>
+  <% } %>
