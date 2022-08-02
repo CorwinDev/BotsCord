@@ -4,15 +4,21 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=, initial-scale=1.0">
-  <title>BotsCord</title>
+  <title>BotsCord |
+    <% if (typeof title != "undefined") { %>
+    <%= title %>
+    <% } else { %>
+    Home
+    <% } %>
+  </title>
   <link href="/css/style.css" rel="stylesheet">
   <link href=https://pro.fontawesome.com/releases/v5.13.1/css/all.css rel=stylesheet>
 </head>
 
 <body class="bg-primary-color">
-  <div class="p-2 pl-4 pr-4 bg-blue-color">
+  <div class="p-2 pl-5 pr-5 bg-blue-color">
     <!-- navbar in tailwind with login buttons -->
-    <nav class="flex items-center justify-between flex-wrap p-6 bg-blue-color">
+    <nav class="flex items-center flex-wrap p-6 bg-blue-color">
       <div class="flex items-center flex-shrink-0 text-white mr-6">
         <!-- logo -->
         <a href="/">
@@ -20,29 +26,56 @@
         </a>
         <span class="font-semibold text-xl tracking-tight">&nbsp;BotsCord</span>
       </div>
-      <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-        <div class="text-sm lg:flex-grow">
-          <a href="/bots" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
-            Bots
-          </a>
-          <a href="/servers" class="block mt-4 lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
-            Servers
-          </a>
-        </div>
-        <div>
-          <% if (typeof user == "undefined") { %>
-          <a href="/login" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Login</a>
-          <% }else { %>
-          <a href="/profile" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-teal-500 hover:bg-white mt-4 lg:mt-0">Profile</a>
-          <% } %>
+      <button data-collapse-toggle="navbar-solid-bg" type="button" class="inline-flex justify-end items-end ml-3 text-gray-400 rounded-lg lg:hidden hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:text-gray-400 dark:hover:text-white dark:focus:ring-gray-500" aria-controls="navbar-solid-bg" aria-expanded="false" id="trigger">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+        </svg>
+      </button>
+      <div class="w-full hidden lg:block flex-grow lg:items-center lg:w-auto" id="navbar-solid-bg">
+        <div class="flex">
+          <div class="text-sm lg:flex-grow">
+            <a href="/bots" class="block lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+              Bots
+            </a>
+            <a href="/servers" class="block lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+              Servers
+            </a>
+          </div>
+          <div>
+            <% if (typeof user == "undefined") { %>
+            <a href="/auth" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Login</a>
+            <% }else { %>
+            <a href="/profile" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Profile</a>
+                        <a href="/auth/logout" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-red-500 hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Logout</a>
+
+            <% } %>
+
+          </div>
         </div>
       </div>
     </nav>
-    <!-- end navbar in tailwind -->
-    <!-- show alert if variable message is available -->
+    <% if (typeof error != "undefined") { %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <strong class="font-bold">Holy Cows!</strong>
+      <span class="block sm:inline"><br><%= error %></span>
+    </div>
+    <% } %>
     <% if (typeof message != "undefined") { %>
-    <div class="alert alert-success" role="alert">
-      <%= message %>
+    <div class="bg-white border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+      <strong class="font-bold">Alert!</strong>
+      <span class="block sm:inline"><br><%= message %></span>
     </div>
     <% } %>
   </div>
+  <script>
+    const targetEl = document.getElementById("navbar-solid-bg");
+    const triggerEl = document.getElementById("trigger");
+    triggerEl.addEventListener("click", function() {
+      if (targetEl.classList.contains("hidden")) {
+        targetEl.classList.remove("hidden");
+      } else {
+        targetEl.classList.add("hidden");
+      }
+    });
+  </script>

@@ -7,10 +7,18 @@ const session = require('express-session');
 const passport = require('passport');
 var DiscordStrategy = require('passport-discord').Strategy;
 const MemoryStore = require("memorystore")(session);
+const bodyParser = require('body-parser');
+var showdown = require('showdown'),
+    converter = new showdown.Converter();
 var bot = require('./routers/bot');
 var admin = require('./routers/admin');
 var auth = require('./routers/auth');
-
+passport.serializeUser(function (user, done) {
+    done(null, user);
+});
+passport.deserializeUser(function (obj, done) {
+    done(null, obj);
+});
 
 //import models 
 const Banned = require('../models/site-ban');
@@ -22,12 +30,11 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 // set up view engine
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
-// use passport for authentication
-app.use(passport.initialize());
-app.use(passport.session());
 // set up static files
 app.use(express.static(path.join(__dirname, 'public')));
 // Import routers 
@@ -36,26 +43,26 @@ app.use('/admin', admin);
 app.use('/auth', auth);
 
 var scopes = ['identify', 'email', 'guilds', 'guilds.join'];
+var prompt = 'consent'
 
 passport.use(new DiscordStrategy({
     clientID: '934087523649609768',
     clientSecret: 'nPKjKvOCOyyhDaQM64qcJYbd6CdhCxLh',
     callbackURL: 'http://localhost:3000/auth/callback',
-    scope: scopes
+    scope: scopes,
+    prompt: prompt
 },
-    function (accessToken, refreshToken, profile, cb) {
-        console.log(profile);
+    function (accessToken, refreshToken, profile, done) {  
         Banned.findOne({ user: profile.id }, function (err, user) {
             if (err) {
                 console.log(err);
-                return cb(err);
+                return done(err);
             }
             if (user) {
                 console.log('User is banned');
-                return cb(err, false);
+                return done(err, false);
             } else {
-                console.log('User is not banned');
-                return cb(err, user);
+                return done(null, profile);
             }
         });
     }));
@@ -63,12 +70,27 @@ passport.use(new DiscordStrategy({
 app.get('/', (req, res) => {
     var message = req.session.message;
     req.session.message = null;
+    var error = req.session.error;
+    req.session.error = null;
     if (message) {
         res.render('index', {
-            message: message
+            message: message,
+            user: req.user,
+            markdown: converter,
         });
-    } else {
-        res.render('index.ejs');
+        return
+    } 
+    if(error){
+        res.render('index', {
+            error: error,
+            user: req.user,
+            markdown: converter,
+        });
+    }else{
+        res.render('index.ejs',{
+            user: req.user,
+            markdown: converter,
+        });
     }
 });
 
