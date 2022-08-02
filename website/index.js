@@ -13,6 +13,7 @@ var showdown = require('showdown'),
 var bot = require('./routers/bot');
 var admin = require('./routers/admin');
 var auth = require('./routers/auth');
+var client = require('../index');
 passport.serializeUser(function (user, done) {
     done(null, user);
 });
@@ -30,6 +31,8 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
 }));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 // set up view engine
@@ -109,6 +112,6 @@ app.get("/sitemap.xml", async function (req, res) {
 });
 
 app.listen(port, () => {
-
     console.log('Your app is listening on port ' + port);
 });
+module.exports.client = client;

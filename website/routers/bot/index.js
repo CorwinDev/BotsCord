@@ -15,15 +15,13 @@ router.get('/add', function (req, res) {
 
 router.post('/add', function (req, res) {
     if (req.user) {
+        console.log(req.body)
         var bot = new bots({
-            id: req.body.id,
-            name: req.body.name,
-            avatar: req.body.avatar,
+            id: req.body.bot_id,
+            name: req.body.bot_name,
             verified: false,
-            description: req.body.description,
+            long_description: req.body.bot_description,
             owner: req.user.userid,
-            long_description: req.body.long_description,
-            banner: req.body.banner,
         });
         bot.save(function (err) {
             if (err) {

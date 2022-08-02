@@ -18,13 +18,14 @@
 <body class="bg-primary-color">
   <div class="p-2 pl-5 pr-5 bg-blue-color">
     <!-- navbar in tailwind with login buttons -->
-    <nav class="flex items-center flex-wrap p-6 bg-blue-color">
+    <nav class="flex flex-wrap p-6 bg-blue-color">
       <div class="flex items-center flex-shrink-0 text-white mr-6">
         <!-- logo -->
         <a href="/">
           <img class="mx-auto w-auto h-8" src="/img/logo.png" alt="logo">
         </a>
-        <span class="font-semibold text-xl tracking-tight">&nbsp;BotsCord</span>
+        <a href="/" class="font-semibold text-xl tracking-tight">&nbsp;BotsCord</a>
+
       </div>
       <button data-collapse-toggle="navbar-solid-bg" type="button" class="inline-flex justify-end items-end ml-3 text-gray-400 rounded-lg lg:hidden hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:text-gray-400 dark:hover:text-white dark:focus:ring-gray-500" aria-controls="navbar-solid-bg" aria-expanded="false" id="trigger">
         <span class="sr-only">Open main menu</span>
@@ -32,26 +33,50 @@
           <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
         </svg>
       </button>
-      <div class="w-full hidden lg:block flex-grow lg:items-center lg:w-auto" id="navbar-solid-bg">
+      <div class="w-full hidden lg:block flex-grow lg:items-center lg:w-auto content-center items-center" id="navbar-solid-bg">
         <div class="flex">
           <div class="text-sm lg:flex-grow">
-            <a href="/bots" class="block lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+            <a href="/bots" class="block lg:inline-block lg:mt-0 text-white hover:text-white mr-4 text-lg">
+              <li class="fad fa-robot mr-1"></li>
               Bots
             </a>
-            <a href="/servers" class="block lg:inline-block lg:mt-0 text-white hover:text-white mr-4">
+            <a href="/servers" class="block lg:inline-block lg:mt-0 text-white hover:text-white mr-4 text-lg">
+              <li class="fad fa-server mr-1"></li>
               Servers
             </a>
+            <div class="relative inline-block text-left">
+              <div>
+                <button type="button" class="block lg:inline-block lg:mt-0 text-white hover:text-white mr-4 text-lg" id="menu-button" aria-expanded="true" aria-haspopup="true">
+                  More
+                </button>
+              </div>
+              <div class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                <div class="py-1" role="none">
+                  <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0">Edit</a>
+                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1">Duplicate</a>
+                </div>
+                <div class="py-1" role="none">
+                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2">Archive</a>
+                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-3">Move</a>
+                </div>
+                <div class="py-1" role="none">
+                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-4">Share</a>
+                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-5">Add to favorites</a>
+                </div>
+                <div class="py-1" role="none">
+                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-6">Delete</a>
+                </div>
+              </div>
+            </div>
+            <!-- dropdown menu with tailwindcss -->
           </div>
-          <div>
-            <% if (typeof user == "undefined") { %>
-            <a href="/auth" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Login</a>
-            <% }else { %>
-            <a href="/profile" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Profile</a>
-                        <a href="/auth/logout" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-red-500 hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Logout</a>
-
-            <% } %>
-
-          </div>
+          <% if (typeof user == "undefined") { %>
+          <a href="/auth" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Login</a>
+          <% }else { %>
+          <a href="/profile" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Profile</a>
+          <a href="/auth/logout" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-red-500 hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Logout</a>
+          <% } %>
         </div>
       </div>
     </nav>
