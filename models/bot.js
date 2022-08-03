@@ -8,6 +8,9 @@ let hm = new mongoose.Schema({
     owner: String,
     long_description: String,
     banner: String,
+    style: String,
+    tags: [String],
+    premium: Boolean,
 });
 
 module.exports = mongoose.model("bots", hm);

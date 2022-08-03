@@ -6,7 +6,7 @@ router.get('/', function () {
 })
 router.get('/add', function (req, res) {
     if (req.user) {
-        res.render('bot/add');
+        res.render('bot/add', {user: req.user});
         return
     } else {
         res.redirect('/auth');
@@ -15,14 +15,18 @@ router.get('/add', function (req, res) {
 
 router.post('/add', function (req, res) {
     if (req.user) {
-        console.log(req.body)
         var bot = new bots({
             id: req.body.bot_id,
             name: req.body.bot_name,
             verified: false,
             long_description: req.body.bot_description,
             owner: req.user.userid,
+            style: req.body.style,
+            description: req.body.bot_short,
+            tags: req.body.tags,
+
         });
+
         bot.save(function (err) {
             if (err) {
                 console.log(err);
@@ -33,8 +37,7 @@ router.post('/add', function (req, res) {
                 res.redirect('/');
             }
         });
-    }
-    else {
+    }else {
         req.session.error = "You aren't logged in";
         res.redirect('/');
     }

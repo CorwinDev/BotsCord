@@ -23,6 +23,7 @@ passport.deserializeUser(function (obj, done) {
 
 //import models 
 const Banned = require('../models/site-ban');
+const bots = require('../models/bot');
 
 // set up session
 app.use(session({
@@ -70,16 +71,19 @@ passport.use(new DiscordStrategy({
         });
     }));
 // set up routes
-app.get('/', (req, res) => {
+app.get('/',async (req, res) => {
     var message = req.session.message;
     req.session.message = null;
     var error = req.session.error;
     req.session.error = null;
+    var robots = await bots.find({verified: true});
+    
     if (message) {
         res.render('index', {
             message: message,
             user: req.user,
             markdown: converter,
+            bots: robots,
         });
         return
     } 
@@ -88,11 +92,13 @@ app.get('/', (req, res) => {
             error: error,
             user: req.user,
             markdown: converter,
+            bots: robots,
         });
     }else{
         res.render('index.ejs',{
             user: req.user,
             markdown: converter,
+            bots: robots,
         });
     }
 });
