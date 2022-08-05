@@ -9,7 +9,7 @@ router.get('/add', function (req, res) {
         res.render('bot/add', {user: req.user});
         return
     } else {
-        req.session.backURL = req.url;
+        req.session.backURL = req.originalUrl;
         res.redirect('/auth');
     }
 });
@@ -39,7 +39,7 @@ router.post('/add', function (req, res) {
             }
         });
     }else {
-        req.session.backURL = req.url;
+        req.session.backURL = req.originalUrl;
         res.redirect('/auth');
     }
 });

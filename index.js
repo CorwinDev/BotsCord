@@ -23,14 +23,24 @@ const client = new Client({
 
     ]
 });
+const bsl = new Client({
+    intents: [
+        GatewayIntentBits.Guilds,
+    ]
+})
 client.config = config;
+bsl.config = config
 // Set intents 
 client.on('ready', () => {
-    console.log('Bot is ready!');
+    console.log('Website bot is ready!');
     require('./website')
+});
+bsl.on('ready', () => {
+    console.log('BSL Started!');
 });
 // Login
 client.login(client.config.bot.token);
+bsl.login(bsl.config.bot.bsl.token);
 // Node Error Handler
 process.on('uncaughtException', function (err) {
     console.log(err);
@@ -71,4 +81,5 @@ process.on('disconnect', function (err) {
 module.exports.config = config;
 module.exports.mongoose = mongoose;
 module.exports.client = client;
+module.exports.bsl = bsl;
 module.exports.embed = EmbedBuilder;

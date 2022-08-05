@@ -53,34 +53,23 @@
               <div>
                 <button type="button" class="block lg:inline-block lg:mt-0 text-white hover:text-white mr-4 text-lg"
                   id="menu-button" aria-expanded="true" aria-haspopup="true">
-                  More
+                  <li class="fa more"></li> More
                 </button>
               </div>
               <div
-                class="hidden origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
-                role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                class="hidden origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+                role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" id="dropdown" style="z-index: 99 !important;">
                 <div class="py-1" role="none">
-                  <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
-                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                    id="menu-item-0">Edit</a>
-                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                    id="menu-item-1">Duplicate</a>
+                  <a href="/invite" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                    id="menu-item-0"><i class="fas fa-user-plus"></i>Invite</a>
+                  <a href="/discord" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                    id="menu-item-1"><i class="fa-brands fa-discord"></i>Discord Server</a>
                 </div>
                 <div class="py-1" role="none">
-                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                    id="menu-item-2">Archive</a>
-                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                    id="menu-item-3">Move</a>
-                </div>
-                <div class="py-1" role="none">
-                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                    id="menu-item-4">Share</a>
-                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                    id="menu-item-5">Add to favorites</a>
-                </div>
-                <div class="py-1" role="none">
-                  <a href="#" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                    id="menu-item-6">Delete</a>
+                  <a href="/server/add" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                    id="menu-item-2"><i class="fa fa-solid fa-plus"></i>Add server</a>
+                  <a href="/me/servers" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
+                    id="menu-item-3"><li class="fa fa-server mr-1"></li>Edit server</a>
                 </div>
               </div>
             </div>
@@ -123,6 +112,15 @@
         targetEl.classList.remove("hidden");
       } else {
         targetEl.classList.add("hidden");
+      }
+    });
+    const dropdown = document.getElementById("menu-button");
+    const dropdownMenu = document.getElementById("dropdown");
+    dropdown.addEventListener("click", function () {
+      if (dropdownMenu.classList.contains("hidden")) {
+        dropdownMenu.classList.remove("hidden");
+      } else {
+        dropdownMenu.classList.add("hidden");
       }
     });
   </script>

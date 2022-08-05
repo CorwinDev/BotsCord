@@ -1,25 +1,39 @@
 var express = require('express'),
     router = express.Router();
 var servers = require('../../../models/server');
-const client = require('../../index');
+const client = require('../../../index');
+const Discord = require('discord.js');
 router.get('/', function () {
 })
+
 router.get('/add', function (req, res) {
-    console.log(req.headers.referer)
     if (req.user) {
         res.render('server/add', {
             user: req.user,
-            botscord: client,
-        });
+            botscord: client
+                });
         return
     } else {
-        req.session.backURL = req.url;
+        req.session.backURL = req.originalUrl;
         res.redirect('/auth');
     }
 });
 
-router.post('/add', function (req, res) {
+router.post('/add', async function (req, res) {
     if (req.user) {
+        var checkServer = await client.bsl.guilds.cache.get(req.body.serverid);
+        if (!checkServer) {
+            return res.redirect(client.config.bot.bsl.invite + "&guild_id=" + req.body.serverid);
+        }else{
+            let checkGuild = await servers.findOne({ id: guildID });
+            if (checkGuild) {
+                req.session.error = "Server already exists";
+                return res.redirect('/');
+            }
+            var server = new servers({
+                id: req.body.serverid,
+            })
+        }
         var bot = new servers({
             id: req.body.bot_id,
             name: req.body.bot_name,
@@ -42,7 +56,7 @@ router.post('/add', function (req, res) {
             }
         });
     } else {
-        req.session.backURL = req.url;
+        req.session.backURL = req.originalUrl;
         res.redirect('/auth');
     }
 });

@@ -15,13 +15,12 @@ router.get("/", (req, res, next) => {
     } else {
         req.session.backURL = "/";
     }
-    console.log(req.session)
     next();
 }, passport.authenticate('discord'))
 router.get('/callback', passport.authenticate('discord', {
-    failureRedirect: '/'
+    failureRedirect: '/',
+    keepSessionInfo: true
 }), function (req, res) {
-    console.log(req.session)
     try {
         request({
             url: `https://discordapp.com/api/v8/guilds/${config.server.id}/members/${req.user.id}`,
@@ -42,7 +41,6 @@ router.get('/callback', passport.authenticate('discord', {
         .setThumbnail("https://cdn.discordapp.com/avatars/" + req.user.id + "/" + req.user.avatar + ".png")
         .setFooter({ text: 'Logged in', iconURL: "https://cdn.discordapp.com/avatars/" + req.user.id + "/" + req.user.avatar + ".png" });
     client.client.channels.cache.get(client.client.config.bot.channels.login).send({ embeds: [embed] });
-    console.log(req.session)
     res.redirect(req.session.backURL || '/')
 });
 router.get('/logout', function (req, res) {

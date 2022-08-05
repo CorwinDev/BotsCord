@@ -122,6 +122,9 @@ app.get("/sitemap.xml", async function (req, res) {
     res.set('Content-Type', 'text/xml');
     res.send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="https://www.google.com/schemas/sitemap-image/1.1">${link}</urlset>`);
 });
+app.get('/invite', function (req, res) {
+    res.redirect(client.config.bot.bsl.invite);
+});
 app.use((req, res, next) => {
     if (res.statusCode === 404) {
         req.session.error = "Page not found";
