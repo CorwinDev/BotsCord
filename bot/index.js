@@ -3,8 +3,6 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const client = new Client({
     intents: [
         GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildPresences,
         GatewayIntentBits.GuildMessages,
         GatewayIntentBits.GuildMessageReactions,
         GatewayIntentBits.GuildMessageTyping,
@@ -12,10 +10,14 @@ const client = new Client({
 
     ]
 });
-client.config = require('../config');
+client.config = require('./config');
 // Set intents 
 client.on('ready', () => {
     console.log('Bot is ready!');
+    // Log server count
+    setTimeout(() => {
+        console.log(`${client.guilds.cache.size} servers`);
+    }, 1000);
 });
 // Login
 client.login(client.config.bot.token);

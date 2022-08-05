@@ -29,7 +29,20 @@
   <div class="text-white text-center">
     <p>
       © 2021 - 2022 BotsCord. All rights reserved. <br>
-      Made with <i class="fas fa-heart text-red-500"></i> by <a href="https://corwin.dev" class="text-blue-400 hover:text-white">Corwin</a>.
+      Made with <i class="fas fa-heart text-red-500"></i> by <a href="https://corwin.dev"
+        class="text-blue-400 hover:text-white">Corwin</a>.
     </p>
   </div>
 </footer>
+<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
+
+<script src="https://unpkg.com/@popperjs/core@2.9.1/dist/umd/popper.min.js" charset="utf-8"></script>
+
+<script type="text/javascript">
+  var tooltipTriggerList = [].slice.call(
+    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+  );
+  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+    return new Tooltip(tooltipTriggerEl);
+  });
+</script>

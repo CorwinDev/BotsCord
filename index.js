@@ -1,5 +1,3 @@
-// Load Bot and website
-const website = require('./website');
 // Import config and export
 const config = require('./config');
 const mongoose = require('mongoose');
@@ -29,6 +27,7 @@ client.config = config;
 // Set intents 
 client.on('ready', () => {
     console.log('Bot is ready!');
+    require('./website')
 });
 // Login
 client.login(client.config.bot.token);

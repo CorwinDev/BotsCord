@@ -3,6 +3,6 @@
     "ejs": "html"
   },
   "[html]": {
-    "editor.defaultFormatter": "j69.ejs-beautify"
+    "editor.defaultFormatter": "vscode.html-language-features"
   }
 }

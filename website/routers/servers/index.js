@@ -1,12 +1,16 @@
 var express = require('express'),
     router = express.Router();
-var bots = require('../../../models/bot');
+var servers = require('../../../models/server');
 const client = require('../../index');
 router.get('/', function () {
 })
 router.get('/add', function (req, res) {
+    console.log(req.headers.referer)
     if (req.user) {
-        res.render('bot/add', {user: req.user});
+        res.render('server/add', {
+            user: req.user,
+            botscord: client,
+        });
         return
     } else {
         req.session.backURL = req.url;
@@ -16,7 +20,7 @@ router.get('/add', function (req, res) {
 
 router.post('/add', function (req, res) {
     if (req.user) {
-        var bot = new bots({
+        var bot = new servers({
             id: req.body.bot_id,
             name: req.body.bot_name,
             verified: false,
@@ -25,7 +29,6 @@ router.post('/add', function (req, res) {
             style: req.body.style,
             description: req.body.bot_short,
             tags: req.body.tags,
-
         });
 
         bot.save(function (err) {
@@ -34,18 +37,18 @@ router.post('/add', function (req, res) {
                 req.session.error = "Something went wrong";
                 res.redirect('/');
             } else {
-                req.session.message = "Bot added";
+                req.session.message = "Server added";
                 res.redirect('/');
             }
         });
-    }else {
+    } else {
         req.session.backURL = req.url;
         res.redirect('/auth');
     }
 });
 
 router.get('/:botID', function (req, res) {
-    bots.findOne({ id: req.params.botID }, function (err, bot) {
+    servers.findOne({ id: req.params.botID }, function (err, bot) {
         if (err) {
             console.log(err);
             return res.redirect('/');
@@ -54,8 +57,9 @@ router.get('/:botID', function (req, res) {
             req.session.error = "No bot found";
             return res.redirect('/');
         }
-        res.render('bot/index', { 
-            bot: bot });
+        res.render('server/index', {
+            user: req.user,
+        });
     })
 })
 module.exports = router;
