@@ -22,10 +22,8 @@ router.post('/add', function (req, res) {
             verified: false,
             long_description: req.body.bot_description,
             owner: req.user.userid,
-            style: req.body.style,
             description: req.body.bot_short,
             tags: req.body.tags,
-
         });
 
         bot.save(function (err) {

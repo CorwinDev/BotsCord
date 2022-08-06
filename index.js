@@ -34,6 +34,7 @@ bsl.config = config
 client.on('ready', () => {
     console.log('Website bot is ready!');
     require('./website')
+    require('./website/bot')
 });
 bsl.on('ready', () => {
     console.log('BSL Started!');
@@ -83,3 +84,6 @@ module.exports.mongoose = mongoose;
 module.exports.client = client;
 module.exports.bsl = bsl;
 module.exports.embed = EmbedBuilder;
+global.client = client;
+global.bsl = bsl;
+global.config = config;

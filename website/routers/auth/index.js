@@ -2,6 +2,7 @@ var express = require('express'),
     router = express.Router(),
     passport = require('passport');
 const request = require('request');
+var url = require('url');
 
 const client = require('../../../index');
 router.get("/", (req, res, next) => {
@@ -9,7 +10,7 @@ router.get("/", (req, res, next) => {
         req.session.backURL = req.session.backURL;
     } else if (req.headers.referer) {
         const parsed = url.parse(req.headers.referer);
-        if (parsed.hostname === app.locals.domain) {
+        if (parsed.hostname === global.config.server.host) {
             req.session.backURL = parsed.path;
         }
     } else {

@@ -20,8 +20,9 @@
             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" " required />
           <label for="floating_last_name"
-            class="peer-focus:font-medium absolute text-sm text-white dark:text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Server ID</label>
-            </label>
+            class="peer-focus:font-medium absolute text-sm text-white dark:text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Server
+            ID</label>
+          </label>
         </div>
       </div>
       <div class="relative z-0 mb-6 w-full group">
@@ -30,7 +31,7 @@
           placeholder=" " required rows="5"></textarea>
         <label for="server_name"
           class="peer-focus:font-medium absolute text-sm text-white dark:text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Server
-          description</label>
+          description (MarkDown supported!)</label>
       </div>
       <div class="relative z-0 mb-6 w-full group">
         <input type="text" name="server_short" id="floating_last_name"
@@ -40,13 +41,24 @@
           class="peer-focus:font-medium absolute text-sm text-white dark:text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Short
           Description (Will be show on home page)</label>
       </div>
-      <!-- select buttons for html/markdown -->
       <div class="relative z-0 mb-6 w-full group">
-        <select name="style"
+        <select multiple name="tags"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required>
-          <option value="html">HTML</option>
-          <option value="markdown">MarkDown</option>
+          <option value="development">Development</option>
+          <option value="fun">Fun</option>
+          <option value="media">Media</option>
+          <option value="company">Company</option>
+          <option value="game">Game</option>
+          <option value="emoji">Emoji</option>
+          <option value="botlist">Bot List</option>
+          <option value="serverlist">Server List</option>
+          <option value="turkish">Turkish</option>
+          <option value="support">Support</option>
+          <option value="sound">Sound</option>
+          <option value="chatting">Chatting</option>
+          <option value="nsfw">NSFW</option>
+          <option value="challange">Challange</option>
         </select>
       </div>
       <button type="submit"

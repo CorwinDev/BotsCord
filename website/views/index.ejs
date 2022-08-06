@@ -68,7 +68,7 @@
         <p class="content text-white text-center" style="opacity:.6">These bots are featured on BotsCord!</p>
       </div>
       <div
-        class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 m-8">
+        class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
         <% } %>
           <% for(let i=0; i < nbots.length; i++) { if (i===3) break; var bot=nbots[i]; if(bot) { %>
             <div
@@ -84,13 +84,22 @@
                   <%= bot.description %>
                 </p>
               </div>
+              <div class="px-6 pt-4 pb-2">
+                <a href="/bot/<%= bot.id %>"
+                  class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                  <i class="fa fa-eye" aria-hidden="true"></i> View
+                </a>
+                <a href="/bot/<%= bot.id %>/invite"
+                  class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                  <i class="fa fa-link" aria-hidden="true"></i> Invite
+                </a>
+              </div>
               <% if(bot.tags) {%>
                 <div class="px-6 pt-4 pb-2">
                   <% bot.tags.forEach(tag=>{ %>
-                    <span
-                      class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#
-                      <%= tag %>
-                    </span>
+                    <a href="/tag/<%= tag %>"
+                      class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#<%= tag %>
+                    </a>
                     <% }) %>
                 </div>
                 <% } %>
@@ -114,7 +123,7 @@
         <p class="content text-white text-center" style="opacity:.6">We rolled the dice and got this nice bots!</p>
       </div>
       <div
-        class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 m-8">
+        class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
         <% } %>
           <% for(let i=0; i < nbots.length; i++) { if (i===3) break; var bot=nbots[i]; if(bot) { %>
             <div
@@ -130,13 +139,21 @@
                   <%= bot.description %>
                 </p>
               </div>
+              <div class="px-6 pt-4 pb-2">
+                <a href="/bot/<%= bot.id %>"
+                  class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                  <i class="fa fa-eye" aria-hidden="true"></i> View
+                </a>
+                <a href="/bot/<%= bot.id %>/invite"
+                  class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                  <i class="fa fa-link" aria-hidden="true"></i> Invite
+                </a>
+              </div>
               <% if(bot.tags) {%>
                 <div class="px-6 pt-4 pb-2">
                   <% bot.tags.forEach(tag=>{ %>
-                    <span
-                      class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#
-                      <%= tag %>
-                    </span>
+                    <a href="/tag/<%= tag %>" class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#<%= tag %>
+                    </a>
                     <% }) %>
                 </div>
                 <% } %>
@@ -160,7 +177,7 @@
         <p class="content text-white text-center" style="opacity:.6">These servers are featured on BotsCord!</p>
       </div>
       <div
-        class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 m-8">
+        class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
         <% } %>
           <% for(let i=0; i < nbots.length; i++) { if (i===3) break; var bot=nbots[i]; if(bot) { %>
             <div
@@ -176,13 +193,22 @@
                   <%= bot.description %>
                 </p>
               </div>
+              <div class="px-6 pt-4 pb-2">
+                <a href="/server/<%= bot.id %>"
+                  class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                  <i class="fa fa-eye" aria-hidden="true"></i> View
+                </a>
+                <a href="/server/<%= bot.id %>/invite"
+                  class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                  <i class="fa fa-link" aria-hidden="true"></i> Invite
+                </a>
+              </div>
               <% if(bot.tags) {%>
                 <div class="px-6 pt-4 pb-2">
                   <% bot.tags.forEach(tag=>{ %>
-                    <span
-                      class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#
-                      <%= tag %>
-                    </span>
+                    <a href="/tag/<%= tag %>"
+                      class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#<%= tag %>
+                    </a>
                     <% }) %>
                 </div>
                 <% } %>
@@ -201,18 +227,18 @@
       if(nbots.length > 0) { %>
       <div class="mx-auto text-center">
         <br>
-        <h2 class="text-xl text-white text-center"><i class="fa fa-shuffle" aria-hidden="true"></i> Random Bots
+        <h2 class="text-xl text-white text-center"><i class="fa fa-shuffle" aria-hidden="true"></i> Random Servers
         </h2>
-        <p class="content text-white text-center" style="opacity:.6">We rolled the dice and got this nice bots!</p>
+        <p class="content text-white text-center" style="opacity:.6">We rolled the dice and got this nice Servers!</p>
       </div>
       <div
-        class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 m-8">
+        class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
         <% } %>
           <% for(let i=0; i < nbots.length; i++) { if (i===3) break; var bot=nbots[i]; if(bot) { %>
             <div
               class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color ">
               <img class="w-full rounded-full"
-                src="https://cdn.discordapp.com/avatars/860390761307439114/2845a42b0c7868c3db29ea1996e84320.webp"
+                src="<% bot.icon %> " onerror="this.src='/img/logo.png'"
                 alt="<%= bot.name %>">
               <div class="px-6 py-4">
                 <div class="font-bold text-xl mb-2 text-white">
@@ -222,13 +248,21 @@
                   <%= bot.description %>
                 </p>
               </div>
+              <div class="px-6 pt-4 pb-2">
+                <a href="/server/<%= bot.id %>"
+                  class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
+                  <i class="fa fa-eye" aria-hidden="true"></i> View
+                </a>
+                <a href="/server<%= bot.id %>/invite"
+                  class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2" data-toggle="tooltip" title="Join the server" data-placement="top">
+                  <i class="fa fa-link" aria-hidden="true"></i> Invite
+                </a>
+              </div>
               <% if(bot.tags) {%>
                 <div class="px-6 pt-4 pb-2">
                   <% bot.tags.forEach(tag=>{ %>
-                    <span
-                      class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#
-                      <%= tag %>
-                    </span>
+                    <a href="/tag/<%= tag %>" class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#<%= tag %>
+                    </a>
                     <% }) %>
                 </div>
                 <% } %>

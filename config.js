@@ -7,6 +7,7 @@ module.exports = {
             "login": "868065455628234780",
             "vote": "937643610541793300",
             "error": "1003947531543269507",
+            "info": "1005178285124239510",
         },
         "bsl" : {
             "id": "870001234583621713",
@@ -17,6 +18,10 @@ module.exports = {
             },
             "invite":"https://discord.com/api/oauth2/authorize?client_id=870001234583621713&permissions=314433&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Fcallback&response_type=code&scope=applications.commands%20bot"
         }
+    },
+    "discord":{
+        "id": "868065454940385291",
+        "invite":"",
     },
     "server": {
         "port": 3000,

@@ -34,15 +34,20 @@
     </p>
   </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/index.min.js"></script>
-
-<script src="https://unpkg.com/@popperjs/core@2.9.1/dist/umd/popper.min.js" charset="utf-8"></script>
-
-<script type="text/javascript">
-  var tooltipTriggerList = [].slice.call(
-    document.querySelectorAll('[data-bs-toggle="tooltip"]')
-  );
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new Tooltip(tooltipTriggerEl);
+<script src="https://unpkg.com/@popperjs/core@2"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
+<script>
+  $(document).ready(function () {
+    $('[data-tooltip]').each(function () {
+      var title = $(this).attr('title');
+      console.log($(this))
+      tippy("[data-tooltip]", {
+        content: title,
+        appendTo: document.body,
+        popperOptions: {
+          strategy: 'fixed',
+        },
+      });
+    });
   });
 </script>
