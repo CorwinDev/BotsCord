@@ -1,8 +1,8 @@
 {
-  "emmet.includeLanguages": {
-    "ejs": "html"
+ "emmet.includeLanguages": {
+    "ejs": "html",
   },
-  "[html]": {
-    "editor.defaultFormatter": "vscode.html-language-features"
-  }
+ "[html]": {
+    "editor.defaultFormatter": "j69.ejs-beautify"
+  },
 }

@@ -1,80 +1,83 @@
-<%- include('../includes/header.ejs', { title: server.name}) %>
-    <br><br><br><br>
-    <div class="flex space-x-4 py-2 lg:h-5/6 sm:min-h-min">
-        <div class="p-10 bg-blue-color w-2/3 text-white h-full m-4 mx-14">
-                <%= server.long_description %>
-        </div>
-        <div class="bg-blue-color w-1/4 p-10 text-white h-full m-4 ">
-            <h1 class="text-3xl">
-                <%= server.name %>
-            </h1>
-            <a href="/server/<%= server.id %>/join" class="button float-right"><i class="fa fa-link"></i>
-                Join</a>
-            <% if(user) { if(serverr.members.cache.get(user.id)) {
+<%- include('../includes/header.ejs', { title: server.name, server: server}) %>
+<br><br><br><br>
+<div class="flex space-x-4 py-2 lg:h-5/6 sm:min-h-min">
+  <div class="p-10 bg-blue-color w-2/3 text-white h-full m-4 mx-14">
+    <pre><br><%= server.long_description %></pre>
+  </div>
+  <div class="bg-blue-color w-1/4 p-10 text-white h-full m-4 ">
+    <% console.log(serverr) %>
+    <img class="w-full rounded-full" src="<%= serverr.icon %>" alt="<%= server.name %>" onerror="this.src='/img/logo.png'">
+    <h1 class="text-3xl">
+      <%= server.name %>
+    </h1>
+    <a href="/server/<%= server.id %>/join" class="button float-right"><i class="fa fa-link"></i>
+      Join</a>
+    <% if(user) { if(serverr.members.cache.get(user.id)) {
                 if(serverr.members.cache.get(user.id).permissions.has('ADMINISTRATOR')) { %>
-                <div class="h6 mt-4">
-                    <i class="fa fa-user-crown"></i>Owner Options
-                </div>
-                <a href="/server/<%= server.id %>/edit" class="mt-1">
-                    <div class="box-2-p"><i class="mt-1 fa fa-pencil"></i></div>
-                    <p class="box-2">Edit Server</p>
-                </a>
-                <% } } } %>
-                    <h6 class="text-xl mt-4">
-                        <i class="fa fa-question-circle"></i> 
-                        <p>Information</p>
-                    </h6>
-                    <div class="mt-1">
-                        <div class="box-2-p"><i class="mt-1 fa fa-users"></i></div>
-                        <p class="box-2">Members:&nbsp;<%= serverr.memberCount.toLocaleString().replace(',', '.' ) %>
-                        </p>
-                    </div>
-                    <div class="mt-1">
-                        <div class="box-2-p"><i class="mt-1 fa fa-robot"></i></div>
-                        <p class="box-2">Bots:&nbsp;<%= serverr.members.cache.filter(a=> a.user.bot).size %>
-                        </p>
-                    </div>
-                    <div class="mt-1">
-                        <div class="box-2-p"><i class="mt-1 fa fa-icons"></i></div>
-                        <p class="box-2">Emoji:&nbsp;<%= serverr.emojis.cache.size || "0" %>
-                        </p>
-                    </div>
-                    <div class="mt-1">
-                        <div class="box-2-p"><i class="mt-1 fa fa-user"></i></div>
-                        <p class="box-2">Role Count:&nbsp;<%= serverr.roles.cache.size || "0" %>
-                        </p>
-                    </div>
-                    <div class="mt-1">
-                        <div class="box-2-p"><i class="mt-1 fa fa-diamond"></i></div>
-                        <p class="box-2">Boost Level:&nbsp;<%= serverr.premiumTier || "0" %>
-                        </p>
-                    </div>
-                    <div class="h6 mt-4">
-                        <i class="fa fa-user-crown"></i> Owners
-                    </div>
-                    <% serverr.members.cache.filter(a=> !a.user.bot && a.permissions.has('ADMINISTRATOR')).map(admin =>{
-                        %>
-                        <a style="text-decoration: none;margin-bottom: -5px;" href="/user/<%= admin.user.id %>"
-                            class="flex mt-1">
-                            <div class="h-5 w-5 rounded-lg"
-                                style="background: url(<%= admin.user.avatarURL({dynamic:true}) || '../../img/undefined_avatar.png' %>) center center no-repeat; background-size: 100%;">
-                            </div>
-                            <p translate="no" class="box-2">
-                                <%= admin.user.tag %>
-                                    <% if(admin.user.id===serverr.ownerID) { %>
-                                        &nbsp;<span data-toggle="tooltip" title="Join the server"><i
-                                                class="fa fa-crown has-text-warning"></i></span>
-                                        <% } %>
-                            </p>
-                        </a>
-                        <% }) %>
-
-        </div>
+    <div class="h6 mt-4">
+      <i class="fa user-crown"></i>Owner Options
     </div>
-    <br><br><br>
+    <a href="/server/<%= server.id %>/edit" class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-pencil"></i></div>
+      <p class="box-2">Edit Server</p>
+    </a>
+    <% } } } %>
+    <h6 class="text-xl mt-4">
+      <i class="fa fa-question-circle"></i> Information
+    </h6>
+    <div class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-users"></i></div>
+      <p class="box-2">Votes:&nbsp;<%= bot.votes || 0 %>
+      </p>
+    </div>
+    <div class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-users"></i></div>
+      <p class="box-2">Members:&nbsp;<%= serverr.memberCount.toLocaleString().replace(',', '.' ) %>
+      </p>
+    </div>
+    <div class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-robot"></i></div>
+      <p class="box-2">Bots:&nbsp;<%= serverr.members.cache.filter(a=> a.user.bot).size %>
+      </p>
+    </div>
+    <div class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-icons"></i></div>
+      <p class="box-2">Emoji:&nbsp;<%= serverr.emojis.cache.size || "0" %>
+      </p>
+    </div>
+    <div class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-user"></i></div>
+      <p class="box-2">Role Count:&nbsp;<%= serverr.roles.cache.size || "0" %>
+      </p>
+    </div>
+    <div class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-diamond"></i></div>
+      <p class="box-2">Boost Level:&nbsp;<%= serverr.premiumTier || "0" %>
+      </p>
+    </div>
+    <div class="h6 mt-4">
+      <i class="fa fa-crown"></i> Owners
+    </div>
+    <% serverr.members.cache.filter(a=> !a.user.bot && a.permissions.has('ADMINISTRATOR')).map(admin =>{
+                        %>
+    <a style="text-decoration: none;margin-bottom: -5px;" href="/user/<%= admin.user.id %>" class="flex mt-1">
+      <div class="h-5 w-5 rounded-lg" style="background: url(<%= admin.user.avatarURL({dynamic:true}) || '../../img/undefined_avatar.png' %>) center center no-repeat; background-size: 100%;">
+      </div>
+      <p translate="no" class="box-2">
+        <%= admin.user.tag %>
+        <% if(admin.user.id===serverr.ownerID) { %>
+        &nbsp;<span data-toggle="tooltip" title="Join the server"><i class="fa fa-crown has-text-warning"></i></span>
+        <% } %>
+      </p>
+    </a>
+    <% }) %>
 
-    <%- include('../includes/footer.ejs') %>
-        <!-- <% /*, meta: {
+  </div>
+</div>
+<br><br><br>
+
+<%- include('../includes/footer.ejs') %>
+<!-- <% /*, meta: {
     site_name: 'Powered by Botscord',
     description: server.description + "🟢" + global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence.status != 'dnd').size + "online ⚫" +global.bsl.guilds.cache.get(server.id).memberCount + "members",
     image: server.icon

@@ -25,13 +25,13 @@ passport.deserializeUser(function (obj, done) {
 //import models 
 const Banned = require('../models/site-ban');
 const bots = require('../models/bot');
-const server  = require('../models/server');
+const server = require('../models/server');
 var scopes = ['identify', 'guilds', 'guilds.join'];
 var prompt = 'consent'
 passport.use(new DiscordStrategy({
     clientID: '934087523649609768',
     clientSecret: 'nPKjKvOCOyyhDaQM64qcJYbd6CdhCxLh',
-    callbackURL: 'http://localhost:3000/auth/callback',
+    callbackURL: client.config.server.host + '/auth/callback',
     scope: scopes,
     prompt: prompt
 },
@@ -110,6 +110,14 @@ app.get('/', async (req, res) => {
     }
 });
 
+app.get('/bots', async (req, res) => {
+    var bot = await bots.find({});
+    res.render('bots', {
+        bots: bot,
+        user: req.user,
+        botscord: client
+    });
+});
 app.get("/robots.txt", function (req, res) {
     res.set('Content-Type', 'text/plain');
     res.send(`Sitemap: https://botscord.xyz/sitemap.xml`);
@@ -133,12 +141,12 @@ app.use((req, res, next) => {
     } else if (res.statusCode === 500) {
         req.session.error = "Internal server error";
         res.redirect('/');
-    }else{
+    } else {
         req.session.error = "Page not found";
         res.redirect('/');
     }
 })
-app.listen(port, () => {
-    console.log(colors.green("Website: "),'Your app is listening on port ' + port);
+app.listen(client.config.server.port, () => {
+    console.log(colors.green("Website: "), 'Your app is listening on port ' + port);
 });
 module.exports.client = client;

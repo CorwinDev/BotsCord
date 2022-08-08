@@ -1,2 +1,68 @@
+<%- include('../includes/header.ejs', { title: bot.name, bot: bot}) %>
+<br><br><br><br>
+<div class="flex space-x-4 py-2 lg:h-5/6 sm:min-h-min">
+  <div class="p-10 bg-blue-color w-2/3 text-white h-full m-4 mx-14">
+    <pre><br><%= bot.long_description %></pre>
+  </div>
+  <div class="bg-blue-color w-1/4 p-10 text-white h-full m-4 ">
+    <!-- bot avatar image -->
+    <img class="w-full rounded-full" src="<%= bot.icon %>" alt="<%= bot.name %>" onerror="this.src='https://cdn.discordapp.com/avatars/<%= bot.id %>/<%=bota.avatar %>.webp'">
+    <h1 class="text-3xl text-center">
+      <%= bot.name %>
+    </h1>
+    <a href="/bot/<%= bot.id %>/join" class="button float-right"><i class="fa fa-link"></i>
+      Invite</a>
+    <% if(user) {  
+                bot.owners.forEach(a=>{
+                    if(a.id == user.id) {
+                        %>
+    <div class="h6 mt-4">
+      <i class="fa fa-user-crown"></i>Owner Options
+    </div>
+    <a href="/bot/<%= bot.id %>/edit" class="button float-right"><i class="fa fa-edit"></i>
+      Edit</a>
+    <%
+                    }
+                })
+            }
+                %>
+    <h6 class="text-xl mt-4">
+      <i class="fa fa-question-circle"></i> Information
+    </h6>
+    <% if(bot.users){ %>
+    <div class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-users"></i></div>
+      <p class="box-2">Members:&nbsp;<%= bot.users %></p>
+      </p>
+    </div>
+    <% } %>
+    <% if(bot.servers){ %>
+    <div class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-server"></i></div>
+      <p class="box-2">Servers:&nbsp;<%= bot.servers %></p>
+      </p>
+    </div>
+    <% } %>
+    <div class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-users"></i></div>
+      <p class="box-2">Votes:&nbsp;<%= bot.votes  || 0 %>
+      </p>
+    </div>
+    <div class="h6 mt-4">
+      <i class="fa fa-crown"></i> Owners
+    </div>
+    <% owners.forEach(admin=>{
+                        %>
+    <a style="text-decoration: none;margin-bottom: -5px;" href="/user/<%= admin.id %>" class="flex mt-1">
+      <div class="h-5 w-5 rounded-lg" style="background: url(<%= "https://cdn.discordapp.com/avatars/" + admin.id + "/" + admin.avatar + ".webp" || '../../img/undefined_avatar.png' %>) center center no-repeat; background-size: 100%;">
+      </div>
+      <p translate="no" class="box-2">
+        <%=admin.username %>
+      </p>
+    </a>
+    <% }) %>
 
-<%- include('../includes/header.ejs', {title: 'Bot' }) %>
+  </div>
+</div>
+<br><br><br>
+<%- include('../includes/footer.ejs') %>

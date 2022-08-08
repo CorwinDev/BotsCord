@@ -1,19 +1,27 @@
 var express = require('express');
-var index = require('./../../../index');
+var config = require('./../../../index').config;
 var router = express.Router();
-
-router.get('/', function (req, res) {
+var bots = require('../../../models/bot');
+var servers = require('../../../models/server');
+var bans = require('../../../models/site-ban');
+router.get('/', async function (req, res) {
     if (req.user) {
-        if (index.config.users.verificator.includes(req.user.userid) ||  index.config.users.owner.includes(req.user.userid)) {
+        if (config.users.verificator.includes(req.user.userid) ||  config.users.owner.includes(req.user.userid)) {
+            const bot = await bots.find({});
+            const server = await servers.find({});
+            const ban = await bans.find({});
             res.render('admin/index', {
-                title: 'Admin',
-                user: req.user
+                user: req.user,
+                bots: bot,
+                servers: server,
+                bans: ban
             });
         } else {
             res.redirect('/');
         }
     } else {
-        res.redirect('/auth?r=' + req.originalUrl);
+        req.session.backURL = req.originalUrl;
+        res.redirect('/auth');
     }
 })
 

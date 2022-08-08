@@ -1061,6 +1061,9 @@ video {
 .overflow-hidden {
   overflow: hidden;
 }
+.text-ellipsis {
+  text-overflow: ellipsis;
+}
 .break-words {
   overflow-wrap: break-word;
 }
@@ -1964,14 +1967,6 @@ body {
 
   .sm\:inline {
     display: inline;
-  }
-
-  .sm\:flex {
-    display: flex;
-  }
-
-  .sm\:grid {
-    display: grid;
   }
 
   .sm\:min-h-min {

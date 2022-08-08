@@ -17,6 +17,25 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
+  <!-- meta -->
+  <meta name="description"
+    content="BotsCord is a Discord bot that allows you to create your own Discord bot and have it run on your server.">
+  <meta name="keywords" content="bots, bot, discord, botscord, botscord.xyz">
+  <% if(typeof server !="undefined" ) { %>
+    <meta property="og:title" content="BotsCord.xyz" />
+    <meta property="og:url" content="http://botscord.xyz/server/<%=server.id %>" />
+    <meta property="og:image" content="<%= server.icon %>" />
+    <meta property="og:description" content="<%= server.description %> Members: <%= server.members %>" />
+    <% } %>
+      <meta property="og:title" content="BotsCord.xyz" />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="http://botscord.xyz" />
+      <meta property="og:image" content="http://botscord.xyz/img/logo.png" />
+      <meta property="og:description"
+        content="Botscord is a place where you can promote and vote for your favorite bot/server!" />
+      <meta name="theme-color" content="#FF0000">
+      <meta name="author" content="BotsCord">
+      <meta name="robots" content="index, follow">
 </head>
 
 <body class="bg-primary-color">
