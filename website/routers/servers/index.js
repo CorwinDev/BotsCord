@@ -12,7 +12,7 @@ router.get('/add', function (req, res) {
     if (req.user) {
         res.render('server/add', {
             user: req.user,
-            botscord: client
+            serverscord: client
         });
         return
     } else {
@@ -25,7 +25,7 @@ router.post('/add', async function (req, res) {
     if (req.user) {
         var checkServer = await client.bsl.guilds.cache.get(req.body.serverid);
         if (!checkServer) {
-            return res.redirect(client.config.bot.bsl.invite + "&guild_id=" + req.body.serverid);
+            return res.redirect(client.config.server.bsl.invite + "&guild_id=" + req.body.serverid);
         } else {
             let checkGuild = await servers.findOne({ id: checkServer.id });
             if (checkGuild) {
@@ -66,7 +66,7 @@ router.post('/add', async function (req, res) {
                 .setTimestamp()
                 .setThumbnail(checkServer.iconURL({ format: 'png', dynamic: true }))
                 .setFooter({ text: 'New Server', iconURL: "https://cdn.discordapp.com/avatars/" + req.user.id + "/" + req.user.avatar + ".png" });
-            client.client.channels.cache.get(client.client.config.bot.channels.info).send({ embeds: [embed] });
+            client.client.channels.cache.get(client.client.config.server.channels.info).send({ embeds: [embed] });
             server.save(function (err) {
                 if (err) {
                     console.log(err);
@@ -85,20 +85,94 @@ router.post('/add', async function (req, res) {
 });
 
 router.get('/:server', function (req, res) {
-    servers.findOne({ id: req.params.server }, function (err, bot) {
+    servers.findOne({ id: req.params.server }, function (err, server) {
         if (err) {
             console.log(err);
             return res.redirect('/');
         }
-        if (!bot) {
-            req.session.error = "No bot found";
+        if (!server) {
+            req.session.error = "No server found";
             return res.redirect('/');
         }
         res.render('server/index', {
             user: req.user,
-            server: bot,
-            serverr: global.client.guilds.cache.get(bot.id)
+            server: server,
+            serverr: global.client.guilds.cache.get(server.id)
         });
     })
+})
+
+router.get('/:server/edit', function (req, res) {
+    if(!req.user){
+        req.session.backURL = req.originalUrl;
+        res.redirect('/auth');
+    }
+    servers.findOne({ id: req.params.server }, function (err, server) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/');
+        }
+        if (!server) {
+            req.session.error = "No server found";
+            return res.redirect('/');
+        }
+        var serverr = global.client.guilds.cache.get(server.id)
+        if (serverr.members.cache.get(req.user.id)) {
+            if (serverr.members.cache.get(req.user.id).permissions.has('ADMINISTRATOR')) {
+                res.render('server/edit', {
+                    user: req.user,
+                    server: server,
+                    serverr: serverr
+                });
+            } else {
+                req.session.error = "You don't have permission to edit this server";
+                return res.redirect('/');
+            }
+        } else {
+            req.session.error = "You don't have permission to edit this server";
+            return res.redirect('/');
+        }
+        })
+})
+
+router.post('/:server/edit', async function (req, res) {
+    if(!req.user){
+        req.session.backURL = req.originalUrl;
+        res.redirect('/auth');
+    }
+    servers.findOne({ id: req.params.server }, function (err, server) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/');
+        }
+        if (!server) {
+            req.session.error = "No server found";
+            return res.redirect('/');
+        }
+        var serverr = global.client.guilds.cache.get(server.id)
+        if (serverr.members.cache.get(req.user.id)) {
+            if (serverr.members.cache.get(req.user.id).permissions.has('ADMINISTRATOR')) {
+                server.description = req.body.server_short;
+                server.long_description = req.body.server_description;
+                server.tags = req.body.tags;
+                server.save(function (err) {
+                    if (err) {
+                        console.log(err);
+                        req.session.error = "Something went wrong";
+                        res.redirect('/');
+                    } else {
+                        req.session.message = "Server edited";
+                        res.redirect('/');
+                    }
+                });
+            } else {
+                req.session.error = "You don't have permission to edit this server";
+                return res.redirect('/');
+            }
+        } else {
+            req.session.error = "You don't have permission to edit this server";
+            return res.redirect('/');
+        }
+        })
 })
 module.exports = router;

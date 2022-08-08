@@ -3,6 +3,7 @@ const servers = require('../../models/server');
 var config = client.config
 const { SlashCommandBuilder, Routes } = require('discord.js');
 const { REST } = require('@discordjs/rest');
+const colors = require('colors');
 const commands = [
     new SlashCommandBuilder().setName('ping').setDescription('Replies with pong!'),
     new SlashCommandBuilder().setName('topserver').setDescription('Replies with highest server!'),
@@ -13,7 +14,7 @@ const commands = [
 const rest = new REST({ version: '10' }).setToken(config.bot.token);
 
 rest.put(Routes.applicationGuildCommands(config.bot.id, config.discord.id), { body: commands })
-    .then(() => console.log('Successfully registered application commands.'))
+    .then(() => console.log(colors.green("Website: "),'Successfully registered application commands.'))
     .catch(console.error);
 
 client.on('interactionCreate', async interaction => {
@@ -30,5 +31,21 @@ client.on('interactionCreate', async interaction => {
         const { user } = interaction;
         await interaction.reply(`${user.username}#${user.discriminator} has ${user.bot ? 'a bot' : 'no bot'} and is connected to ${user.guilds.size} servers!`);
 
+    }
+});
+client.on("guildMemberAdd", async (member) => {
+    let guild = client.guilds.cache.get(config.discord.id);
+    if (member.user.bot) {
+        try {
+            guild.member(member.id).roles.add(config.server.roles.botlist.bot);
+        } catch (error) {
+
+        }
+    }else{
+        try {
+            guild.member(member.id).roles.add(config.server.roles.botlist.user);
+        } catch (error) {
+
+        }
     }
 });

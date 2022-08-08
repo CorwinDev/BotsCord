@@ -28,6 +28,7 @@
   "dependencies": {
     "autoprefixer": "^10.4.8",
     "body-parser": "^1.20.0",
+    "colors": "^1.4.0",
     "cookie-session": "^2.0.0",
     "discord.js": "^14.1.1",
     "ejs": "^3.1.8",

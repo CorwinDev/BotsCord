@@ -8,6 +8,7 @@ const passport = require('passport');
 var DiscordStrategy = require('passport-discord').Strategy;
 var MemoryStore = require('memorystore')(session);
 const bodyParser = require('body-parser');
+const colors = require('colors');
 var showdown = require('showdown'),
     converter = new showdown.Converter();
 var bot = require('./routers/bot');
@@ -25,7 +26,7 @@ passport.deserializeUser(function (obj, done) {
 const Banned = require('../models/site-ban');
 const bots = require('../models/bot');
 const server  = require('../models/server');
-var scopes = ['identify', 'email', 'guilds', 'guilds.join'];
+var scopes = ['identify', 'guilds', 'guilds.join'];
 var prompt = 'consent'
 passport.use(new DiscordStrategy({
     clientID: '934087523649609768',
@@ -138,6 +139,6 @@ app.use((req, res, next) => {
     }
 })
 app.listen(port, () => {
-    console.log('Your app is listening on port ' + port);
+    console.log(colors.green("Website: "),'Your app is listening on port ' + port);
 });
 module.exports.client = client;

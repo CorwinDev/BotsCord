@@ -8,7 +8,8 @@ let hm = new mongoose.Schema({
     tags: [String],
     premium: Boolean,
     icon: String,
-    members: String,
+    members: Number,
+    votes: Number,
 });
 
 module.exports = mongoose.model("servers", hm);

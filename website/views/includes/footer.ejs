@@ -34,20 +34,3 @@
     </p>
   </div>
 </footer>
-<script src="https://unpkg.com/@popperjs/core@2"></script>
-<script src="https://unpkg.com/tippy.js@6"></script>
-<script>
-  $(document).ready(function () {
-    $('[data-tooltip]').each(function () {
-      var title = $(this).attr('title');
-      console.log($(this))
-      tippy("[data-tooltip]", {
-        content: title,
-        appendTo: document.body,
-        popperOptions: {
-          strategy: 'fixed',
-        },
-      });
-    });
-  });
-</script>

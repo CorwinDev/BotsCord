@@ -1,12 +1,13 @@
 // Import config and export
 const config = require('./config');
 const mongoose = require('mongoose');
+const colors = require('colors');
 // Connect to mongoDB
 try {
     mongoose.connect(config.mongodb);
 } catch (err) {
     console.log(err);
-    console.log('Error connecting to mongoDB');
+    console.log(colors.red("MongoDB: "), 'Error connecting to mongoDB');
     process.exit(1);
 }
 // Create discord.js client
@@ -32,12 +33,13 @@ client.config = config;
 bsl.config = config
 // Set intents 
 client.on('ready', () => {
-    console.log('Website bot is ready!');
+    console.log(colors.green("Website: "), 'Website bot is ready!');
     require('./website')
     require('./website/bot')
+    require('./bsl')
 });
 bsl.on('ready', () => {
-    console.log('BSL Started!');
+    console.log(colors.blue("BSL: "), 'BSL ready');
 });
 // Login
 client.login(client.config.bot.token);
