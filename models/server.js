@@ -2,7 +2,9 @@ const mongoose = require("mongoose");
 let hm = new mongoose.Schema({
     id: String,
     name: String,
-    description: String,
+    description: {
+        type: String, maxLength: 20
+    },
     owner: String,
     long_description: String,
     tags: [String],

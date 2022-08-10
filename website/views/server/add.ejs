@@ -32,20 +32,12 @@
     </div>
     <div class="relative z-0 mb-6 w-full group">
       <select multiple name="tags" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-        <option value="development">Development</option>
-        <option value="fun">Fun</option>
-        <option value="media">Media</option>
-        <option value="company">Company</option>
-        <option value="game">Game</option>
-        <option value="emoji">Emoji</option>
-        <option value="botlist">Bot List</option>
-        <option value="serverlist">Server List</option>
-        <option value="turkish">Turkish</option>
-        <option value="support">Support</option>
-        <option value="sound">Sound</option>
-        <option value="chatting">Chatting</option>
-        <option value="nsfw">NSFW</option>
-        <option value="challange">Challange</option>
+        <% var tags = global.config.server.tags %>
+        <% tags.forEach(function(tag) { %>
+        <option value="<%= tag %>">
+          <%= tag %>
+        </option>
+        <% }) %>
       </select>
     </div>
     <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>

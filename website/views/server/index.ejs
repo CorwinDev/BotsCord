@@ -1,8 +1,10 @@
 <%- include('../includes/header.ejs', { title: server.name, server: server}) %>
 <br><br><br><br>
 <div class="flex space-x-4 py-2 lg:h-5/6 sm:min-h-min">
-  <div class="p-10 bg-blue-color w-2/3 text-white h-full m-4 mx-14">
-    <pre><br><%= server.long_description %></pre>
+  <div class="p-10 bg-blue-color w-2/3 text-white h-full m-4 mx-14 text-ellipsis">
+    <p class="text-white text-clip">
+    <pre style="white-space: pre-wrap;" class="text-clip break-words	w-full h-full"><br><%= server.long_description %></pre>
+    </p>
   </div>
   <div class="bg-blue-color w-1/4 p-10 text-white h-full m-4 ">
     <img class="w-full rounded-full" src="<%= serverr.icon %>" alt="<%= server.name %>" onerror="this.src='/img/logo.png'">
@@ -13,14 +15,16 @@
       Vote</a>
     <a href="/server/<%= server.id %>/join" class="button float-right inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><i class="fa fa-link"></i>
       Join</a>
-      <br>
+    <br>
     <% if(user) { if(serverr.members.cache.get(user.id)) {
                 if(serverr.members.cache.get(user.id).permissions.has('ADMINISTRATOR')) { %>
     <div class="h6 mt-4">
       <i class="fa user-crown"></i>Owner Options
     </div>
     <a href="/server/<%= server.id %>/settings" class="mt-1">
-      <div class="box-2-p"><i class="mt-1 fa fa-pencil"></i><p class="box-2">Edit Server</p></div>  
+      <div class="box-2-p"><i class="mt-1 fa fa-pencil"></i>
+        <p class="box-2">Edit Server</p>
+      </div>
     </a>
     <% } } } %>
     <h6 class="text-xl mt-4">
@@ -33,7 +37,7 @@
     </div>
     <div class="mt-1">
       <div class="box-2-p"><i class="mt-1 fa fa-users"></i></div>
-      <p class="box-2">Members:&nbsp;<%= serverr.memberCount.toLocaleString().replace(',', '.' ) %>
+      <p class="box-2">Members:&nbsp;<%= serverr.memberCount.toLocaleString().replace(',', '.' ) %>/ <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status != 'dnd').size %> online
       </p>
     </div>
     <div class="mt-1">
@@ -59,7 +63,7 @@
     <div class="h6 mt-4">
       <i class="fa fa-crown"></i> Owners
     </div>
-    <% serverr.members.cache.filter(a=> !a.user.bot && a.permissions.has('ADMINISTRATOR')).map(admin =>{
+    <% serverr.members.cache.filter(a=> !a.user.bot && a.permissions.has(global.discord.PermissionsBitField.Flags.Administrator)).map(admin =>{
                         %>
     <a style="text-decoration: none;margin-bottom: -5px;" href="/user/<%= admin.user.id %>" class="flex mt-1">
       <div class="h-5 w-5 rounded-lg" style="background: url(<%= admin.user.avatarURL({dynamic:true}) || '../../img/undefined_avatar.png' %>) center center no-repeat; background-size: 100%;">

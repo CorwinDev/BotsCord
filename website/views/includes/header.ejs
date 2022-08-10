@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=, initial-scale=1.0">
   <title>BotsCord |
     <% if (typeof title !="undefined" ) { %>
-      <%= title %>
-        <% } else { %>
-          Home
-          <% } %>
+    <%= title %>
+    <% } else { %>
+    Home
+    <% } %>
   </title>
   <link href="/css/style.css" rel="stylesheet">
   <script src="https://kit.fontawesome.com/204113bb1b.js" crossorigin="anonymous"></script>
@@ -19,24 +20,24 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/img/favicon-16x16.png">
   <link rel="manifest" href="/img/site.webmanifest">
   <!-- meta -->
-  <meta name="description"
-    content="BotsCord is a Discord bot that allows you to create your own Discord bot and have it run on your server.">
+  <meta name="description" content="BotsCord is a Discord bot that allows you to create your own Discord bot and have it run on your server.">
   <meta name="keywords" content="bots, bot, discord, botscord, botscord.xyz">
   <% if(typeof server !="undefined" ) { %>
-    <meta property="og:title" content="BotsCord.xyz" />
-    <meta property="og:url" content="http://botscord.xyz/server/<%=server.id %>" />
-    <meta property="og:image" content="<%= server.icon %>" />
-    <meta property="og:description" content="<%= server.description %> Members: <%= server.members %>" />
-    <% } %>
-      <meta property="og:title" content="BotsCord.xyz" />
-      <meta property="og:type" content="website" />
-      <meta property="og:url" content="http://botscord.xyz" />
-      <meta property="og:image" content="http://botscord.xyz/img/logo.png" />
-      <meta property="og:description" content="Botscord is a place where you can promote and vote for your favorite bot/server!" />
-      <meta name="theme-color" content="#FF0000">
-      <meta name="author" content="BotsCord">
-      <meta name="robots" content="index, follow">
-    
+  <meta property="og:title" content="BotsCord.xyz" />
+  <meta property="og:url" content="http://botscord.xyz/server/<%=server.id %>" />
+  <meta property="og:image" content="<%= server.icon %>" />
+  <meta property="og:description" content="<%= server.description %>
+  ­
+  🟢 <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status != 'dnd').size %> onlineᅠᅠᅠᅠ⚫ <%= global.bsl.guilds.cache.get(server.id).memberCount %> members">
+  <% } %>
+  <meta property="og:title" content="BotsCord.xyz" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="http://botscord.xyz" />
+  <meta property="og:image" content="http://botscord.xyz/img/logo.png" />
+  <meta property="og:description" content="Botscord is a place where you can promote and vote for your favorite bot/server!" />
+  <meta name="theme-color" content="#FF0000">
+  <meta name="author" content="BotsCord">
+  <meta name="robots" content="index, follow">
 </head>
 
 <body class="bg-primary-color">
@@ -47,27 +48,19 @@
   </script>
   <div class="p-2 pl-5 pr-5 bg-blue-color">
     <!-- navbar in tailwind with login buttons -->
-    <nav class="flex flex-wrap p-6 bg-blue-color">
-      <div class="flex items-center flex-shrink-0 text-white mr-6">
-        <!-- logo -->
-        <a href="/">
-          <img class="mx-auto w-auto h-8" src="/img/logo.png" alt="logo">
-        </a>
-        <a href="/" class="font-semibold text-xl tracking-tight">&nbsp;BotsCord</a>
-      </div>
-      <button data-collapse-toggle="navbar-solid-bg" type="button"
-        class="inline-flex justify-end items-end ml-3 text-gray-400 rounded-lg lg:hidden hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:text-gray-400 dark:hover:text-white dark:focus:ring-gray-500"
-        aria-controls="navbar-solid-bg" aria-expanded="false" id="trigger">
+    <nav class="block lg:flex  p-6 bg-blue-color text-white">
+      <!-- logo -->
+      <a href="/">
+        <img class="mx-auto w-auto h-8" src="/img/logo.png" alt="logo">
+      </a>
+      <a href="/" class="font-semibold text-xl tracking-tight">&nbsp;BotsCord &nbsp;</a>
+      <button data-collapse-toggle="navbar-solid-bg" type="button" class="float-right text-gray-400 rounded-lg lg:hidden hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 dark:text-gray-400 dark:hover:text-white dark:focus:ring-gray-500" aria-controls="navbar-solid-bg" aria-expanded="false" id="trigger">
         <span class="sr-only">Open main menu</span>
-        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg">
-          <path fill-rule="evenodd"
-            d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"
-            clip-rule="evenodd"></path>
+        <svg class="w-6 h-6" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
         </svg>
       </button>
-      <div class="w-full hidden lg:block flex-grow lg:items-center lg:w-auto content-center items-center"
-        id="navbar-solid-bg">
+      <div class="w-0 hidden lg:block flex-grow lg:items-center lg:w-auto content-center items-center" id="navbar-solid-bg">
         <div class="flex">
           <div class="text-sm lg:flex-grow">
             <a href="/bots" class="block lg:inline-block lg:mt-0 text-white hover:text-white mr-4 text-lg">
@@ -78,28 +71,20 @@
               <li class="fa fa-server mr-1"></li>
               Servers
             </a>
+            <a href="#" class="block lg:inline-block lg:mt-0 text-white hover:text-white mr-4 text-lg" id="menu-button">
+              <li class="fa fa-bars"></li> More
+
+            </a>
             <div class="relative inline-block text-left">
-              <div>
-                <button type="button" class="block lg:inline-block lg:mt-0 text-white hover:text-white mr-4 text-lg"
-                  id="menu-button" aria-expanded="true" aria-haspopup="true">
-                  <li class="fa more"></li> More
-                </button>
-              </div>
-              <div
-                class="hidden origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
-                role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" id="dropdown"
-                style="z-index: 99 !important;">
+
+              <div class="hidden origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" id="dropdown" style="z-index: 99 !important;">
                 <div class="py-1" role="none">
-                  <a href="/invite" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                    id="menu-item-0"><i class="fas fa-user-plus"></i>Invite</a>
-                  <a href="/discord" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                    id="menu-item-1"><i class="fa-brands fa-discord"></i>Discord Server</a>
+                  <a href="/invite" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-0"><i class="fas fa-user-plus"></i>Invite</a>
+                  <a href="/discord" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-1"><i class="fa-brands fa-discord"></i>Discord Server</a>
                 </div>
                 <div class="py-1" role="none">
-                  <a href="/server/add" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                    id="menu-item-2"><i class="fa fa-solid fa-plus"></i>Add server</a>
-                  <a href="/me/servers" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1"
-                    id="menu-item-3">
+                  <a href="/server/add" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2"><i class="fa fa-solid fa-plus"></i>Add server</a>
+                  <a href="/me/servers" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-3">
                     <li class="fa fa-server mr-1"></li>Edit server
                   </a>
                 </div>
@@ -108,38 +93,35 @@
             <!-- dropdown menu with tailwindcss -->
           </div>
           <% if (typeof user=="undefined" ) { %>
-            <a href="/auth"
-              class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Login</a>
-            <% }else { %>
-              <a href="/profile"
-                class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Profile</a>
-              <a href="/auth/logout"
-                class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-red-500 hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0">Logout</a>
-              <% } %>
+          <a href="/auth" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0 w-fit h-fit">Login</a>
+          <% }else { %>
+          <a href="/profile" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0 w-fit h-fit">Profile</a>
+          <a href="/auth/logout" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-red-500 hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0 w-fit h-fit">Logout</a>
+          <% } %>
         </div>
       </div>
     </nav>
     <% if (typeof error !="undefined" ) { %>
-      <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-        <strong class="font-bold">Holy Cows!</strong>
-        <span class="block sm:inline"><br>
-          <%= error %>
-        </span>
-      </div>
-      <% } %>
-        <% if (typeof message !="undefined" ) { %>
-          <div class="bg-white border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
-            <strong class="font-bold">Alert!</strong>
-            <span class="block sm:inline"><br>
-              <%= message %>
-            </span>
-          </div>
-          <% } %>
+    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <strong class="font-bold">Holy Cows!</strong>
+      <span class="block sm:inline"><br>
+        <%= error %>
+      </span>
+    </div>
+    <% } %>
+    <% if (typeof message !="undefined" ) { %>
+    <div class="bg-white border border-blue-400 text-blue-700 px-4 py-3 rounded relative" role="alert">
+      <strong class="font-bold">Alert!</strong>
+      <span class="block sm:inline"><br>
+        <%= message %>
+      </span>
+    </div>
+    <% } %>
   </div>
   <script>
     const targetEl = document.getElementById("navbar-solid-bg");
     const triggerEl = document.getElementById("trigger");
-    triggerEl.addEventListener("click", function () {
+    triggerEl.addEventListener("click", function() {
       if (targetEl.classList.contains("hidden")) {
         targetEl.classList.remove("hidden");
       } else {
@@ -148,7 +130,7 @@
     });
     const dropdown = document.getElementById("menu-button");
     const dropdownMenu = document.getElementById("dropdown");
-    dropdown.addEventListener("click", function () {
+    dropdown.addEventListener("click", function() {
       if (dropdownMenu.classList.contains("hidden")) {
         dropdownMenu.classList.remove("hidden");
       } else {

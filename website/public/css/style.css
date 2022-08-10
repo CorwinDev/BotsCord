@@ -883,6 +883,9 @@ video {
 .w-1\/4 {
   width: 25%;
 }
+.w-0 {
+  width: 0px;
+}
 .max-w-7xl {
   max-width: 80rem;
 }
@@ -1096,6 +1099,9 @@ video {
 }
 .text-ellipsis {
   text-overflow: ellipsis;
+}
+.text-clip {
+  text-overflow: clip;
 }
 .break-words {
   overflow-wrap: break-word;
@@ -1318,6 +1324,9 @@ video {
 }
 .p-2\.5 {
   padding: 0.625rem;
+}
+.p-96 {
+  padding: 24rem;
 }
 .px-3 {
   padding-left: 0.75rem;
@@ -2055,6 +2064,10 @@ body {
 
   .lg\:inline-block {
     display: inline-block;
+  }
+
+  .lg\:flex {
+    display: flex;
   }
 
   .lg\:hidden {

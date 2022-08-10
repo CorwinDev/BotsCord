@@ -68,7 +68,7 @@
       </div>
       <% if(bot.tags) {%>
       <div class="px-6 pt-4 pb-2">
-        <% bot.tags.forEach(tag=>{ %>
+        <% bot.tags.slice(-3).forEach(tag=>{ %>
         <a href="/tag/<%= tag %>" class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#<%= tag %>
         </a>
         <% }) %>
@@ -112,7 +112,7 @@
       </div>
       <% if(bot.tags) {%>
       <div class="px-6 pt-4 pb-2">
-        <% bot.tags.forEach(tag=>{ %>
+        <% bot.tags.slice(-3).forEach(tag=>{ %>
         <a href="/tag/<%= tag %>" class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#<%= tag %>
         </a>
         <% }) %>
@@ -163,7 +163,7 @@
       </div>
       <% if(bot.tags) {%>
       <div class="px-6 pt-4 pb-2">
-        <% bot.tags.forEach(tag=>{ %>
+        <% bot.tags.slice(-3).forEach(tag=>{ %>
         <a href="/tag/<%= tag %>" class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#<%= tag %>
         </a>
         <% }) %>
@@ -188,7 +188,7 @@
       <img class="w-full rounded-full" src="<%= bot.icon %> " onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <% if (bot.votes){ %>
       <div class="px-6 text-white text-base">
-        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= global.bsl.guilds.cache.get(bot.id).memberCount.toLocaleString().replace(',', '.' ) %><span class="float-right"><i class=" fa fa-bomb"></i>&nbsp;<%=bot.bump %></span>
+        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= global.bsl.guilds.cache.get(bot.id).memberCount.toLocaleString().replace(',', '.' ) %><span class="float-right"><i class="fa fa-bomb"></i>: <%=bot.bumps %></span>
         </p>
       </div>
       <% } %>
@@ -202,7 +202,7 @@
       </div>
       <% if(bot.tags) {%>
       <div class="px-6 pt-4 pb-2">
-        <% bot.tags.forEach(tag=>{ %>
+        <% bot.tags.slice(-3).forEach(tag=>{ %>
         <a href="/tag/<%= tag %>" class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#<%= tag %>
         </a>
         <% }) %>
@@ -233,7 +233,7 @@
       <img class="w-full rounded-full" src="<%= bot.icon %> " onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <% if (bot.votes){ %>
       <div class="px-6 text-white text-base">
-        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= global.bsl.guilds.cache.get(bot.id).memberCount.toLocaleString().replace(',', '.' ) %></p>
+        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= global.bsl.guilds.cache.get(bot.id).memberCount.toLocaleString().replace(',', '.' ) %><span class="float-right"><i class="fa fa-bomb"></i>: <%=bot.bumps %></span> </p>
       </div>
       <% } %>
       <div class="px-6 py-4">
@@ -246,7 +246,7 @@
       </div>
       <% if(bot.tags) {%>
       <div class="px-6 pt-4 pb-2">
-        <% bot.tags.forEach(tag=>{ %>
+        <% bot.tags.slice(-3).forEach(tag=>{ %>
         <a href="/tag/<%= tag %>" class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#<%= tag %>
         </a>
         <% }) %>

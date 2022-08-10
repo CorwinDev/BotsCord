@@ -6,9 +6,9 @@ const colors = require('colors');
 const bsl = colors.blue("BSL: ");
 const ms = require("parse-ms-2");
 // Set intents 
-client.on('ready',async () => {
-    const bot = await bots.find({ verified: true});
-    client.user.setPresence({ activities: [{ name: 'botscord.xyz | '+bot.length+' bots' }] });
+client.on('ready', async () => {
+    const bot = await bots.find({ verified: true });
+    client.user.setPresence({ activities: [{ name: 'botscord.xyz | ' + bot.length + ' bots' }] });
     console.log(bsl, 'Bot is ready!');
     // Log server count
     setTimeout(() => {
@@ -46,14 +46,14 @@ client.on('interactionCreate', async interaction => {
     } else if (commandName === 'user') {
         const { user } = interaction;
         await interaction.reply(`${user.username}#${user.discriminator} has ${user.bot ? 'a bot' : 'no bot'} and is connected to ${user.guilds.size} servers!`);
-    }else if (commandName === 'help') {
+    } else if (commandName === 'help') {
         await interaction.reply(`
         **Commands**
         \`ping\` - Replies with pong!
         \`topserver\` - Replies with highest server!
         \`user\` - Replies with user info and connected bots/servers!
         `);
-    }else if (commandName === 'bump') {
+    } else if (commandName === 'bump') {
         let findServer = await servers.findOne({ id: interaction.guild.id });
         if (!findServer) return interaction.reply(
             "This server was not found in our list.\nAdd your server: https://botscord.xyz/server/add"
@@ -65,7 +65,12 @@ client.on('interactionCreate', async interaction => {
             return interaction.reply(`You can bump again in ${time.minutes}m ${time.seconds}s`);
         }
         findServer.bump = Date.now();
-        findServer.bumps++;
+        if (findServer.bumps == undefined) {
+            findServer.bumps = 1;
+        } else {
+
+            findServer.bumps++;
+        }
         await findServer.save();
         const embed = new EmbedBuilder()
             .setColor('#0099ff')
@@ -74,7 +79,7 @@ client.on('interactionCreate', async interaction => {
             .setFooter({ iconURL: interaction.user.avatarURL(), text: 'BotsCord' })
             .setTimestamp();
         await interaction.reply({ embeds: [embed] });
-    }else if (commandName === 'info') {
+    } else if (commandName === 'info') {
 
     } else {
         await interaction.reply('Command not found!');

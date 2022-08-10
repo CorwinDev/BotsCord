@@ -27,6 +27,8 @@ const client = new Client({
 const bsl = new Client({
     intents: [
         GatewayIntentBits.Guilds,
+        GatewayIntentBits.GuildMembers,
+        GatewayIntentBits.GuildPresences,
     ]
 })
 client.config = config;
@@ -86,3 +88,4 @@ module.exports.embed = EmbedBuilder;
 global.client = client;
 global.bsl = bsl;
 global.config = config;
+global.discord = require('discord.js');
