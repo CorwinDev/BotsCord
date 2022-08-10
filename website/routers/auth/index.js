@@ -36,7 +36,7 @@ router.get('/callback', passport.authenticate('discord', {
     } catch { };
     const embed = new client.embed()
         .setTitle('User logged in')
-        .setDescription(`${req.user.username}#${req.user.discriminator} logged in\nID: ${req.user.id}\nEmail: ${req.user.email}`)
+        .setDescription(`${req.user.username}#${req.user.discriminator} logged in\nID: ${req.user.id}`)
         .setColor('#0099ff')
         .setTimestamp()
         .setThumbnail("https://cdn.discordapp.com/avatars/" + req.user.id + "/" + req.user.avatar + ".png")
@@ -48,7 +48,6 @@ router.get('/logout', function (req, res) {
     req.logout(function (err) {
         if (err) { return next(err); }
         req.session.destroy();
-        req.session.message = 'You have been logged out';
         res.redirect('/');
     });
 });

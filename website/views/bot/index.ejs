@@ -14,12 +14,12 @@
       Invite</a>
     <% if(user) {  
                 bot.owners.forEach(a=>{
-                    if(a.id == user.id) {
+                    if(a == user.id) {
                         %>
     <div class="h6 mt-4">
       <i class="fa fa-user-crown"></i>Owner Options
     </div>
-    <a href="/bot/<%= bot.id %>/edit" class="button float-right"><i class="fa fa-edit"></i>
+    <a href="/bot/<%= bot.id %>/settings" class="button float-right"><i class="fa fa-edit"></i>
       Edit</a>
     <%
                     }

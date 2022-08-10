@@ -1,6 +1,7 @@
 var express = require('express'),
     router = express.Router();
 var servers = require('../../../models/server');
+var votes = require('../../../models/votes');
 const client = require('../../../index');
 const Discord = require('discord.js');
 var showdown = require('showdown'),
@@ -102,10 +103,11 @@ router.get('/:server', function (req, res) {
     })
 })
 
-router.get('/:server/edit', function (req, res) {
-    if(!req.user){
+router.get('/:server/settings', function (req, res) {
+    if (!req.user) {
         req.session.backURL = req.originalUrl;
         res.redirect('/auth');
+        return;
     }
     servers.findOne({ id: req.params.server }, function (err, server) {
         if (err) {
@@ -132,11 +134,11 @@ router.get('/:server/edit', function (req, res) {
             req.session.error = "You don't have permission to edit this server";
             return res.redirect('/');
         }
-        })
+    })
 })
 
-router.post('/:server/edit', async function (req, res) {
-    if(!req.user){
+router.post('/:server/settings', async function (req, res) {
+    if (!req.user) {
         req.session.backURL = req.originalUrl;
         res.redirect('/auth');
     }
@@ -155,6 +157,7 @@ router.post('/:server/edit', async function (req, res) {
                 server.description = req.body.server_short;
                 server.long_description = req.body.server_description;
                 server.tags = req.body.tags;
+                server.webhook = req.body.server_webhook;
                 server.save(function (err) {
                     if (err) {
                         console.log(err);
@@ -173,6 +176,113 @@ router.post('/:server/edit', async function (req, res) {
             req.session.error = "You don't have permission to edit this server";
             return res.redirect('/');
         }
-        })
+    })
 })
+
+router.get('/:server/vote', function (req, res) {
+    if (!req.user) {
+        req.session.backURL = req.originalUrl;
+        res.redirect('/auth');
+    } else {
+        servers.findOne({ id: req.params.server }, async function (err, bot) {
+            if (err) {
+                console.log(err);
+                return res.redirect('/');
+            }
+            if (!bot) {
+                req.session.error = "No bot found";
+                return res.redirect('/');
+            }
+            // check if users has already voted for this bot
+            votes.findOne({ user: req.user.id, server: bot.id }, function (err, vote) {
+                if (err) {
+                    console.log(err);
+                    return res.redirect('/');
+                }
+                if (vote) {
+                    if (vote.date > Date.now() - (1000 * 60 * 60 * 24)) {
+                        req.session.error = "You can only vote once per day";
+                        return res.redirect('/');
+                    }
+                    vote.date = Date.now();
+                    vote.save(function (err) {
+                        if (err) {
+                            console.log(err);
+                            return res.redirect('/');
+                        }
+                        if (bot.votes) {
+                            bot.votes = 1;
+                        } else {
+                            bot.votes++;
+                        }
+                        bot.save(function (err) {
+                            if (err) {
+                                console.log(err);
+                                req.session.error = "Something went wrong";
+                                return res.redirect('/');
+                            }
+                        })
+                        if (bot.webhook) {
+                            try {
+                                var webhook = new Discord.WebhookClient({ url: bot.webhook });
+                                webhook.send({
+                                    content: `${req.user.username} has voted for ${bot.name}`,
+                                    username: "BotsCord",
+                                    avatarURL: "https://botscord.xyz/img/logo.png"
+                                });
+                            } catch (e) {
+                                console.log(e);
+                            }
+                        }
+                        req.session.message = "Vote added";
+                        return res.redirect('/');
+                    })
+                } else {
+                    // add vote to database
+                    var vote = new votes({
+                        user: req.user.id,
+                        date: new Date(),
+                        server: bot.id,
+                    });
+                    vote.save(function (err) {
+                        if (err) {
+                            console.log(err);
+                            req.session.error = "Something went wrong";
+                            return res.redirect('/');
+                        } else {
+                            if (bot.votes) {
+                                bot.votes = 1;
+                            } else {
+                                bot.votes++;
+                            }
+                            bot.save(function (err) {
+                                if (err) {
+                                    console.log(err);
+                                    req.session.error = "Something went wrong";
+                                    return res.redirect('/');
+                                } else {
+                                    if (bot.webhook) {
+                                        try {
+                                            var webhook = new Discord.WebhookClient({ url: bot.webhook });
+                                            webhook.send({
+                                                content: `${req.user.username} has voted for ${bot.name}`,
+                                                username: "BotsCord",
+                                                avatarURL: "https://botscord.xyz/img/logo.png"
+                                        });
+                                        } catch (e) {
+                                            console.log(e);
+                                        }
+                                    }
+                                    req.session.message = "Vote added";
+                                    return res.redirect('/');
+                                }
+                            })
+                        }
+                    });
+                }
+            })
+        })
+    }
+})
+
 module.exports = router;

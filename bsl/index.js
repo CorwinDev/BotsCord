@@ -4,10 +4,11 @@ const bots = require('../models/bot');
 var config = client.config
 const colors = require('colors');
 const bsl = colors.blue("BSL: ");
+const ms = require("parse-ms-2");
 // Set intents 
 client.on('ready',async () => {
-    const bot = await bots.find();
-    client.user.setPresence({ activity: { type: 'WATCHING', name: 'botscord.xyz | '+bot.length+' bots' }, status: "online" });
+    const bot = await bots.find({ verified: true});
+    client.user.setPresence({ activities: [{ name: 'botscord.xyz | '+bot.length+' bots' }] });
     console.log(bsl, 'Bot is ready!');
     // Log server count
     setTimeout(() => {
@@ -15,18 +16,21 @@ client.on('ready',async () => {
             `${client.guilds.cache.size} servers`);
     }, 1000);
 });
-const { SlashCommandBuilder, Routes } = require('discord.js');
+const { SlashCommandBuilder, Routes, EmbedBuilder } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const commands = [
     new SlashCommandBuilder().setName('ping').setDescription('Replies with pong!'),
     new SlashCommandBuilder().setName('topserver').setDescription('Replies with highest server!'),
     new SlashCommandBuilder().setName('user').setDescription('Replies with user info and connected bots/servers!'),
+    new SlashCommandBuilder().setName('help').setDescription('Replies with the help embed!'),
+    new SlashCommandBuilder().setName('bump').setDescription('Bump you server'),
+    new SlashCommandBuilder().setName('info').setDescription('Get info about your server and the bot'),
 ]
     .map(command => command.toJSON());
 
-const rest = new REST({ version: '10' }).setToken(config.bot.token);
+const rest = new REST({ version: '10' }).setToken(config.bot.bsl.token);
 
-rest.put(Routes.applicationCommands(config.bot.id), { body: commands })
+rest.put(Routes.applicationCommands(config.bot.bsl.id), { body: commands })
     .then(() => console.log(bsl, 'Successfully registered application commands.'))
     .catch(console.error);
 
@@ -38,11 +42,39 @@ client.on('interactionCreate', async interaction => {
     } else if (commandName === 'topserver') {
 
         const topServer = await servers.find({}).sort({ votes: -1 });
-        console.log(bsl, topServer);
         await interaction.reply(`The top server is ${topServer[0].name} with ${topServer[0].votes} votes!`);
     } else if (commandName === 'user') {
         const { user } = interaction;
         await interaction.reply(`${user.username}#${user.discriminator} has ${user.bot ? 'a bot' : 'no bot'} and is connected to ${user.guilds.size} servers!`);
+    }else if (commandName === 'help') {
+        await interaction.reply(`
+        **Commands**
+        \`ping\` - Replies with pong!
+        \`topserver\` - Replies with highest server!
+        \`user\` - Replies with user info and connected bots/servers!
+        `);
+    }else if (commandName === 'bump') {
+        let findServer = await servers.findOne({ id: interaction.guild.id });
+        if (!findServer) return interaction.reply(
+            "This server was not found in our list.\nAdd your server: https://botscord.xyz/server/add"
+        );
+        let cooldown = 3600000;
+        let lastDaily = findServer.bump;
+        if (cooldown - (Date.now() - lastDaily) > 0) {
+            let time = ms(cooldown - (Date.now() - lastDaily));
+            return interaction.reply(`You can bump again in ${time.minutes}m ${time.seconds}s`);
+        }
+        findServer.bump = Date.now();
+        findServer.bumps++;
+        await findServer.save();
+        const embed = new EmbedBuilder()
+            .setColor('#0099ff')
+            .setTitle('Bump')
+            .setDescription('You have successfully bumped your server!')
+            .setFooter({ iconURL: interaction.user.avatarURL(), text: 'BotsCord' })
+            .setTimestamp();
+        await interaction.reply({ embeds: [embed] });
+    }else if (commandName === 'info') {
 
     } else {
         await interaction.reply('Command not found!');

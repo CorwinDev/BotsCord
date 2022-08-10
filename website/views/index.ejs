@@ -3,7 +3,7 @@
   <div class="container-sm mx-auto px-3 mb-5 mt-1 h-fit p-1">
     <div class="mb-3 mx-auto h-fit">
       <span style="float: right; margin-right: 10%;" class="logo">
-        <img draggable="false" title="botscord.site" src="/img/logo.png" width="320" alt="Discord Bots | Discord Bot List">
+        <img draggable="false" title="botscord.site" src="/img/logo.webp" width="320" alt="Discord Bots | Discord Bot List">
       </span>
       <br><br>
       <h1 class="text-xl" style="font-weight:800;color:#fff">BotsCord</h1>
@@ -52,10 +52,11 @@
   <div class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
     <% } %>
     <% for(let i=0; i < nbots.length; i++) { if (i===3) break; var bot=nbots[i]; if(bot) { %>
-    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color ">
-      <img class="w-full rounded-full" src="https://cdn.discordapp.com/avatars/860390761307439114/2845a42b0c7868c3db29ea1996e84320.webp" alt="<%= bot.name %>">
+    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/bot/<%=bot.id%> ';" style="cursor: pointer;">
+      <img class="w-full rounded-full" src="<%= bot.icon %>" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <div class="px-6 text-white text-base">
-        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <%if(bot.servers) { %><i class="fa fa-server"></i>: <%= bot.servers %><% } %></p>
+        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <%if(bot.servers) { %><i class="fa fa-server"></i>: <%= bot.servers %><% } %>
+        </p>
       </div>
       <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2 text-white">
@@ -64,14 +65,6 @@
         <p class="text-white text-base">
           <%= bot.description %>
         </p>
-      </div>
-      <div class="px-6 pt-4 pb-2">
-        <a href="/bot/<%= bot.id %>" class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-          <i class="fa fa-eye" aria-hidden="true"></i> View
-        </a>
-        <a href="/bot/<%= bot.id %>/invite" class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-          <i class="fa fa-link" aria-hidden="true"></i> Invite
-        </a>
       </div>
       <% if(bot.tags) {%>
       <div class="px-6 pt-4 pb-2">
@@ -103,10 +96,11 @@
   <div class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
     <% } %>
     <% for(let i=0; i < nbots.length; i++) { if (i===3) break; var bot=nbots[i]; if(bot) { %>
-    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color ">
-      <img class="w-full rounded-full" src="https://cdn.discordapp.com/avatars/860390761307439114/2845a42b0c7868c3db29ea1996e84320.webp" alt="<%= bot.name %>">
+    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/bot/<%=bot.id%> ';" style="cursor: pointer;">
+      <img class="w-full rounded-full" src="<%= bot.icon %>" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <div class="px-6 text-white text-base">
-        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <%if(bot.servers) { %><i class="fa fa-server"></i>: <%= bot.servers %><% } %></p>
+        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <%if(bot.servers) { %><i class="fa fa-server"></i>: <%= bot.servers %><% } %>
+        </p>
       </div>
       <div class="px-6 py-4">
         <div class="font-bold text-xl mb-2 text-white">
@@ -115,14 +109,6 @@
         <p class="text-white text-base">
           <%= bot.description %>
         </p>
-      </div>
-      <div class="px-6 pt-4 pb-2">
-        <a href="/bot/<%= bot.id %>" class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-          <i class="fa fa-eye" aria-hidden="true"></i> View
-        </a>
-        <a href="/bot/<%= bot.id %>/invite" class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-          <i class="fa fa-link" aria-hidden="true"></i> Invite
-        </a>
       </div>
       <% if(bot.tags) {%>
       <div class="px-6 pt-4 pb-2">
@@ -153,10 +139,10 @@
   <div class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
     <% } %>
     <% for(let i=0; i < nbots.length; i++) { if (i===3) break; var bot=nbots[i]; if(bot) { %>
-    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color ">
-      <img class="w-full rounded-full" src="https://cdn.discordapp.com/avatars/860390761307439114/2845a42b0c7868c3db29ea1996e84320.webp" alt="<%= bot.name %>">
+    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/server/<%=bot.id%> ';" style="cursor: pointer;">
+      <img class="w-full rounded-full" src="<%= bot.icon %>" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <div class="px-6 text-white text-base">
-        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <%if(bot.members) { %><i class="fa fa-user"></i>: <%= bot.members %><% } %></p>
+        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= global.bsl.guilds.cache.get(bot.id).memberCount.toLocaleString().replace(',', '.' ) %>
         </p>
       </div>
       <div class="px-6 py-4">
@@ -188,6 +174,44 @@
     <% } %>
   </div>
 </div>
+<div class="bumpservers">
+  <div class="mx-auto text-center">
+    <br>
+    <h2 class="text-xl text-white text-center"><i class="fa fa-bomb" aria-hidden="true"></i> Bumped servers
+    </h2>
+    <p class="content text-white text-center" style="opacity:.6">Last bumped servers!</p>
+  </div>
+  <div class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
+    <% servers.sort((a, b) => b.bump - a.bump).slice(0, 5).map(bot => { 
+    if(!bot) return; %>
+    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/server/<%=bot.id%> ';" style="cursor: pointer;">
+      <img class="w-full rounded-full" src="<%= bot.icon %> " onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
+      <% if (bot.votes){ %>
+      <div class="px-6 text-white text-base">
+        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= global.bsl.guilds.cache.get(bot.id).memberCount.toLocaleString().replace(',', '.' ) %><span class="float-right"><i class=" fa fa-bomb"></i>&nbsp;<%=bot.bump %></span>
+        </p>
+      </div>
+      <% } %>
+      <div class="px-6 py-4">
+        <div class="font-bold text-xl mb-2 text-white">
+          <%= bot.name %>
+        </div>
+        <p class="text-white text-base">
+          <%= bot.description %>
+        </p>
+      </div>
+      <% if(bot.tags) {%>
+      <div class="px-6 pt-4 pb-2">
+        <% bot.tags.forEach(tag=>{ %>
+        <a href="/tag/<%= tag %>" class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#<%= tag %>
+        </a>
+        <% }) %>
+      </div>
+      <% } %>
+    </div>
+    <% }) %>
+  </div>
+</div>
 <div class="randomservers">
   <% var nbots=servers
       nbots.forEach((val, key) => {
@@ -205,12 +229,11 @@
   <div class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
     <% } %>
     <% for(let i=0; i < nbots.length; i++) { if (i===3) break; var bot=nbots[i]; if(bot) { %>
-    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color ">
-      <img class="w-full rounded-full" src="<% bot.icon %> " onerror="this.src='/img/logo.png'" alt="<%= bot.name %>">
-      <% if (bot.votes || bot.members){ %>
+    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/server/<%=bot.id%> ';" style="cursor: pointer;">
+      <img class="w-full rounded-full" src="<%= bot.icon %> " onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
+      <% if (bot.votes){ %>
       <div class="px-6 text-white text-base">
-        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes %> <i class="fa fa-user"></i>: <%= bot.members %>
-        </p>
+        <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= global.bsl.guilds.cache.get(bot.id).memberCount.toLocaleString().replace(',', '.' ) %></p>
       </div>
       <% } %>
       <div class="px-6 py-4">
@@ -220,14 +243,6 @@
         <p class="text-white text-base">
           <%= bot.description %>
         </p>
-      </div>
-      <div class="px-6 pt-4 pb-2">
-        <a href="/server/<%= bot.id %>" class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">
-          <i class="fa fa-eye" aria-hidden="true"></i> View
-        </a>
-        <a href="/server<%= bot.id %>/invite" class="inline-block bg-blue-700 rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2" data-toggle="tooltip" title="Join the server" data-placement="top">
-          <i class="fa fa-link" aria-hidden="true"></i> Join
-        </a>
       </div>
       <% if(bot.tags) {%>
       <div class="px-6 pt-4 pb-2">

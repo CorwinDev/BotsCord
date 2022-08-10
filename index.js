@@ -38,9 +38,6 @@ client.on('ready', () => {
     require('./website/bot')
     require('./bsl')
 });
-bsl.on('ready', () => {
-    console.log(colors.blue("BSL: "), 'BSL ready');
-});
 // Login
 client.login(client.config.bot.token);
 bsl.login(bsl.config.bot.bsl.token);

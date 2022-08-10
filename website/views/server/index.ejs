@@ -5,21 +5,22 @@
     <pre><br><%= server.long_description %></pre>
   </div>
   <div class="bg-blue-color w-1/4 p-10 text-white h-full m-4 ">
-    <% console.log(serverr) %>
     <img class="w-full rounded-full" src="<%= serverr.icon %>" alt="<%= server.name %>" onerror="this.src='/img/logo.png'">
     <h1 class="text-3xl">
       <%= server.name %>
     </h1>
-    <a href="/server/<%= server.id %>/join" class="button float-right"><i class="fa fa-link"></i>
+    <a href="/server/<%= server.id %>/vote" class="button float-left inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><i class="fa fa-link"></i>
+      Vote</a>
+    <a href="/server/<%= server.id %>/join" class="button float-right inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><i class="fa fa-link"></i>
       Join</a>
+      <br>
     <% if(user) { if(serverr.members.cache.get(user.id)) {
                 if(serverr.members.cache.get(user.id).permissions.has('ADMINISTRATOR')) { %>
     <div class="h6 mt-4">
       <i class="fa user-crown"></i>Owner Options
     </div>
-    <a href="/server/<%= server.id %>/edit" class="mt-1">
-      <div class="box-2-p"><i class="mt-1 fa fa-pencil"></i></div>
-      <p class="box-2">Edit Server</p>
+    <a href="/server/<%= server.id %>/settings" class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-pencil"></i><p class="box-2">Edit Server</p></div>  
     </a>
     <% } } } %>
     <h6 class="text-xl mt-4">
@@ -27,7 +28,7 @@
     </h6>
     <div class="mt-1">
       <div class="box-2-p"><i class="mt-1 fa fa-users"></i></div>
-      <p class="box-2">Votes:&nbsp;<%= bot.votes || 0 %>
+      <p class="box-2">Votes:&nbsp;<%= server.votes || 0 %>
       </p>
     </div>
     <div class="mt-1">

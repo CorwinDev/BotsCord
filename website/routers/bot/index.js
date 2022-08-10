@@ -3,6 +3,17 @@ var express = require('express'),
 var bots = require('../../../models/bot');
 var votes = require('../../../models/votes');
 const client = require('../../index');
+function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
+}
+
 router.get('/', function () {
     return res.redirect('/bots');
 })
@@ -16,9 +27,9 @@ router.get('/add', function (req, res) {
     }
 });
 
-router.post('/add', function (req, res) {
+router.post('/add', async function (req, res) {
     if (req.user) {
-        var checkbot = bots.findOne({ id: req.body.id });
+        var checkbot = await bots.findOne({ id: req.body.id });
         if (checkbot) {
             req.session.error = "Bot already exists";
             res.redirect('/');
@@ -37,6 +48,7 @@ router.post('/add', function (req, res) {
             owners: owners,
             description: req.body.bot_short,
             tags: req.body.tags,
+            token: makeid(64),
         });
 
         bot.save(function (err) {
@@ -91,6 +103,65 @@ router.get('/:botID', async function (req, res) {
     })
 })
 
+router.get('/:botID/settings', async function (req, res) {
+    if (!req.user) {
+        req.session.backURL = req.originalUrl;
+        return res.redirect('/auth');
+    } else {
+        bots.findOne({ id: req.params.botID }, async function (err, bot) {
+            if (err) {
+                console.log(err);
+                return res.redirect('/');
+            }
+            if (!bot) {
+                req.session.error = "No bot found";
+                return res.redirect('/');
+            }
+            res.render('bot/edit', {
+                bot: bot,
+                user: req.user,
+            });
+
+        });
+    }
+});
+
+router.post('/:botID/settings', async function (req, res) {
+    if (!req.user) {
+        req.session.backURL = req.originalUrl;
+        return res.redirect('/auth');
+    } else {
+        bots.findOne({ id: req.params.botID }, async function (err, bot) {
+            if (err) {
+                console.log(err);
+                return res.redirect('/');
+            }
+            if (!bot) {
+                req.session.error = "No bot found";
+                return res.redirect('/');
+            }
+            if(!bot.owners.includes(req.user.id)){
+                
+                
+                    req.session.error = "You do not have permission to edit this bot";
+                    return res.redirect('/');
+            }
+            bot.name = req.body.bot_name;
+            bot.description = req.body.bot_short;
+            bot.long_description = req.body.bot_description;
+            bot.save(function (err) {
+                if (err) {
+                    console.log(err);
+                    req.session.error = "Something went wrong";
+                    res.redirect('/');
+                } else {
+                    req.session.message = "Bot updated";
+                    res.redirect('/');
+                }
+            });
+        });
+    }
+});
 router.get('/:botID/vote', async function (req, res) {
     if (!req.user) {
         req.session.backURL = req.originalUrl;

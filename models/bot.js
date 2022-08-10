@@ -13,6 +13,7 @@ let hm = new mongoose.Schema({
     servers: String,
     users: String,
     votes: Number,
+    token: String,
 });
 
 module.exports = mongoose.model("bots", hm);

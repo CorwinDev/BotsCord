@@ -12,7 +12,7 @@ module.exports = {
         "secondary-color": "#F5F5F5",
         "blue-color": "#18191C",
         "footer": "#27282D",
-        "button-primary": "5865F2"
+        "button-primary": "#5865F2"
       },
       fontFamily: {
         sans: ["QuickSand", "sans-serif"],

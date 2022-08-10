@@ -15,6 +15,7 @@ var bot = require('./routers/bot');
 var admin = require('./routers/admin');
 var auth = require('./routers/auth');
 var servers = require('./routers/servers');
+var api = require('./routers/api');
 var client = require('../index');
 passport.serializeUser(function (user, done) {
     done(null, user);
@@ -70,6 +71,7 @@ app.use('/bot', bot);
 app.use('/admin', admin);
 app.use('/auth', auth);
 app.use('/server', servers);
+app.use('/api', api);
 
 // set up routes
 app.get('/', async (req, res) => {
