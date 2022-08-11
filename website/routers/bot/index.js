@@ -80,6 +80,7 @@ router.get('/:botID', async function (req, res) {
         let coowner = new Array()
         await bot.owners.forEach(async function (a) {
             var b = await global.bsl.users.fetch(a)
+            if(!b) return;
             coowner.push(b)
         })
         try {

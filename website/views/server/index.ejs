@@ -37,7 +37,7 @@
     </div>
     <div class="mt-1">
       <div class="box-2-p"><i class="mt-1 fa fa-users"></i></div>
-      <p class="box-2">Members:&nbsp;<%= serverr.memberCount.toLocaleString().replace(',', '.' ) %>/ <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status != 'dnd').size %> online
+      <p class="box-2">Members:&nbsp;<%= serverr.memberCount.toLocaleString().replace(',', '.' ) %>/ <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status).size %> online
       </p>
     </div>
     <div class="mt-1">
@@ -82,9 +82,3 @@
 <br><br><br>
 
 <%- include('../includes/footer.ejs') %>
-<!-- <% /*, meta: {
-    site_name: 'Powered by Botscord',
-    description: server.description + "🟢" + global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence.status != 'dnd').size + "online ⚫" +global.bsl.guilds.cache.get(server.id).memberCount + "members",
-    image: server.icon
-} */
-%> -->

@@ -3,14 +3,13 @@ let hm = new mongoose.Schema({
     id: String,
     name: String,
     description: {
-        type: String, maxLength: 20
+        type: String, maxLength: 100
     },
     owner: String,
     long_description: String,
     tags: [String],
     premium: Boolean,
-    icon: String,
-    members: Number,
+    invite: String,
     votes: Number,
     bump: Date,
     webhook: String,

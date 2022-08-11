@@ -1,0 +1,39 @@
+<%- include("../includes/header.ejs", { title: "Bot" + bots.name}) %>
+<div class="overflow-x-auto relative container-sm">
+  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+      <tr>
+        <th scope="col" class="py-3 px-6">
+          Bot Name
+        </th>
+        <th scope="col" class="py-3 px-6">
+          BotID
+        </th>
+        <th scope="col" class="py-3 px-6">
+          Bot Description
+        </th>
+        <th scope="col" class="py-3 px-6">
+          Owner
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+        <% var nbots = bots.filter(bot => bot.verified == false); %>
+      <% nbots.forEach(function(bot) { %>
+      <tr class="hover:bg-gray-100 dark:hover:bg-gray-800" onclick="location.href='/admin/bot/<%= bot.id %>'">
+        <td class="py-3 px-6">
+          <%= bot.name %>
+        </td>
+        <td class="py-3 px-6">
+          <%= bot.id %>
+        </td>
+        <td class="py-3 px-6">
+          <%= bot.description %>
+        </td>
+        <td class="py-3 px-6">
+          <%= bot.owner %>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>

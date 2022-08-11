@@ -10,17 +10,30 @@ router.get('/', function (req, res) {
     })
 });
 router.get('/search/:id', function (req, res) {
-    bots.findOne({ id: req.params.id }, function (err, bot) {
+    bots.find({ $or: [{ id: { $regex: req.params.id } }, { name: { $regex: req.params.id } }] },async  function (err, bot) {
         if (err) throw err;
         if (!bot) {
-            servers.find()
-            return res.json({
-                message: "Bot not found"
+            return
+        } else {
+            var serverArray = [];
+            const serverr = await servers.find({ $or: [{ id: { $regex: req.params.id } }, { name: { $regex: req.params.id } }] })
+            if (!serverr) {
+                return
+            } else {
+                serverr.forEach(function (server1) {
+                    serverArray.push({ "name": server1.name, "id": server1.id, "description": server1.description, type: "server", "avatar": global.bsl.guilds.cache.get(server1.id).iconURL() })
+                });
+            }
+
+
+            bot.forEach(function (server) {
+                serverArray.push({ "name": server.name, "id": server.id, "description": server.description, type: "bot" });
             });
+            res.json({
+                serverArray
+            })
+
         }
-        res.json({
-            bot: bot,
-        })
     })
 })
 router.use(function (req, res, next) {

@@ -211,9 +211,9 @@ router.get('/:server/vote', function (req, res) {
                             return res.redirect('/');
                         }
                         if (bot.votes) {
-                            bot.votes = 1;
-                        } else {
                             bot.votes++;
+                        } else {
+                            bot.votes = 1;
                         }
                         bot.save(function (err) {
                             if (err) {
@@ -234,6 +234,14 @@ router.get('/:server/vote', function (req, res) {
                                 console.log(e);
                             }
                         }
+                        const embed = new Discord.EmbedBuilder()
+                            .setColor('#0099ff')
+                            .setTitle(`${req.user.username} has voted for ${bot.name}`)
+                            .setDescription(`[${bot.name}](${bot.url})`)
+                            .setThumbnail(global.bsl.guilds.cache.get(bot.id).iconURL({ format: 'png' }))
+                            .setFooter({ text: "BotsCord", iconURL: "https://botscord.xyz/img/logo.png"})
+                            .setTimestamp();
+                        global.client.channels.cache.get(global.config.bot.channels.vote).send({ embeds: [embed] });
                         req.session.message = "Vote added";
                         return res.redirect('/');
                     })
@@ -251,9 +259,9 @@ router.get('/:server/vote', function (req, res) {
                             return res.redirect('/');
                         } else {
                             if (bot.votes) {
-                                bot.votes = 1;
-                            } else {
                                 bot.votes++;
+                            } else {
+                                bot.votes = 1;
                             }
                             bot.save(function (err) {
                                 if (err) {
@@ -273,6 +281,14 @@ router.get('/:server/vote', function (req, res) {
                                             console.log(e);
                                         }
                                     }
+                                    const embed = new Discord.EmbedBuilder()
+                                        .setColor('#0099ff')
+                                        .setTitle(`${req.user.username} has voted for ${bot.name}`)
+                                        .setDescription(`[${bot.name}](${bot.url})`)
+                                        .setThumbnail(global.bsl.guilds.cache.get(bot.id).iconURL({ format: 'png' }))
+                                        .setFooter({ text: "BotsCord", iconURL: "https://botscord.xyz/img/logo.png" })
+                                        .setTimestamp();
+                                    global.client.channels.cache.get(global.config.bot.channels.vote).send({ embeds: [embed] });
                                     req.session.message = "Vote added";
                                     return res.redirect('/');
                                 }

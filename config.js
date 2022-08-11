@@ -39,8 +39,6 @@ module.exports = {
             "company",
             "game",
             "emoji",
-            "botlist",
-            "serverlist",
             "turkish",
             "support",
             "sound",
@@ -50,7 +48,7 @@ module.exports = {
         ]
     },
     users: {
-        owner: [""],
-        verificator: [""],
+        owner: ["755297485328482356"],
+        verificator: ["755297485328482356"],
     }
 }

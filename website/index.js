@@ -120,16 +120,40 @@ app.get('/bots', async (req, res) => {
         botscord: client
     });
 });
+
+app.get('/servers', async (req, res) => {
+    var servers = await server.find({});
+    res.render('servers', {
+        servers: servers,
+        user: req.user,
+        botscord: client
+    });
+});
+
+app.get('/tag/:id', async (req, res) => {
+    var id = req.params.id;
+    var bot = await bots.find({ tags: id });
+    res.render('tags/index', {
+        bot: bot,
+        user: req.user,
+        tag: id,
+    });
+});
+
 app.get("/robots.txt", function (req, res) {
     res.set('Content-Type', 'text/plain');
     res.send(`Sitemap: https://botscord.xyz/sitemap.xml`);
 });
 app.get("/sitemap.xml", async function (req, res) {
     let link = "<url><loc>https://botscord.xyz/</loc></url>";
-    let botdataforxml = await bots.find()
+    let botdataforxml = await bots.find({verified:true})
+    let serverdataforxml = await server.find()
     botdataforxml.forEach(bot => {
         link += "\n<url><loc>https://botscord.xyz/bot/" + bot.id + "</loc></url>";
     })
+    serverdataforxml.forEach(server => {
+        link += "\n<url><loc>https://botscord.xyz/server/" + server.id + "</loc></url>";
+    });
     res.set('Content-Type', 'text/xml');
     res.send(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="https://www.google.com/schemas/sitemap-image/1.1">${link}</urlset>`);
 });

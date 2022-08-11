@@ -28,7 +28,7 @@
   <meta property="og:image" content="<%= server.icon %>" />
   <meta property="og:description" content="<%= server.description %>
   ­
-  🟢 <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status != 'dnd').size %> onlineᅠᅠᅠᅠ⚫ <%= global.bsl.guilds.cache.get(server.id).memberCount %> members">
+  🟢 <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status).size %> onlineᅠᅠᅠᅠ⚫ <%= global.bsl.guilds.cache.get(server.id).memberCount %> members">
   <% } %>
   <meta property="og:title" content="BotsCord.xyz" />
   <meta property="og:type" content="website" />
