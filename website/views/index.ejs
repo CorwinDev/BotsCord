@@ -18,7 +18,6 @@
             </svg>
           </div>
           <input type="text" id="simple-search" class="bg-primary-color border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-primary-color dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required>
-
           <div id="search-results" class="hidden bg-primary-color border border-gray-300 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full pl-10 p-2.5  dark:bg-primary-color dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></div>
         </div>
       </form><br>
@@ -35,14 +34,15 @@
               type: 'GET',
               success: function(data) {
                 var html = '';
+                if(!data.serverArray.length) html = '<div class="text-center">No results found</div>';
                 for (var i = 0; i < data.serverArray.length; i++) {
                   if (i == 5) {
                     break;
                   }
                   if (data.serverArray[i].type == 'server') {
-                    html += '<a href="/server/' + data.serverArray[i].id + '" class="flex items-center p-2 border-b border-gray-300 hover:bg-primary-color hover:text-white"><img title="botscord.site" class="mr-2" width="48" onError="this.src = ' + "'/img/logo.webp'" + '" style="border-radius: 8px;" src="' + data.serverArray[i].avatar + '" />' + data.serverArray[i].name + '</a>';
+                    html += '<a href="/server/' + data.serverArray[i].id + '" class="flex items-center p-2 border-b border-gray-300 hover:bg-primary-color hover:text-white"><img title="botscord.site" class="mr-2" width="48" onError="this.src = ' + "'/img/logo.webp'" + '" style="border-radius: 8px;" src="' + data.serverArray[i].avatar + '" />' + data.serverArray[i].name + ' | Server</a>';
                   } else {
-                    html += '<a href="/bot/' + data.serverArray[i].id + '" class="flex items-center p-2 border-b border-gray-300 hover:bg-primary-color hover:text-white"><img title="botscord.site" class="mr-2" width="48" onError="this.src = ' + " '/img/logo.webp'" + '" style="border-radius: 8px;" src="' + data.serverArray[i].avatar + '" />' + data.serverArray[i].name + '</a>';
+                    html += '<a href="/bot/' + data.serverArray[i].id + '" class="flex items-center p-2 border-b border-gray-300 hover:bg-primary-color hover:text-white"><img title="botscord.site" class="mr-2" width="48" onError="this.src = ' + " '/img/logo.webp'" + '" style="border-radius: 8px;" src="' + data.serverArray[i].avatar + '" />' + data.serverArray[i].name + ' | Bot </a>';
                   }
                 }
                 var searchr = document.getElementById('search-results');

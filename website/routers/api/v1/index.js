@@ -10,7 +10,7 @@ router.get('/', function (req, res) {
     })
 });
 router.get('/search/:id', function (req, res) {
-    bots.find({ $or: [{ id: { $regex: req.params.id } }, { name: { $regex: req.params.id } }] },async  function (err, bot) {
+    bots.find({ $or: [{ id: { $regex: req.params.id } }, { name: { $regex: req.params.id } }] }, async function (err, bot) {
         if (err) throw err;
         if (!bot) {
             return
@@ -36,6 +36,69 @@ router.get('/search/:id', function (req, res) {
         }
     })
 })
+const applyText = (canvas, text) => {
+    const context = canvas.getContext('2d');
+    let fontSize = 70;
+
+    do {
+        context.font = `30px sans-serif`;
+    } while (context.measureText(text).width > canvas.width - 300);
+
+    return context.font;
+};
+const { createCanvas, loadImage, Image } = require('canvas')
+const { readFile } = require('fs/promises');
+
+router.get('/server/:id', function (req, res) {
+    // Get one server and draw it on the canvas
+    servers.findOne({ id: req.params.id }, async function (err, server) {
+        if (err) throw err;
+        if (!server) {
+            return
+        } else {
+            const serverr = await global.bsl.guilds.cache.get(req.params.id)
+            if(!serverr)return
+            const serverName = server.name
+            const serverDescription = server.description
+            const serverMembers = serverr.memberCount
+            // Load the image
+            const avatar = await loadImage(`https://cdn.discordapp.com/icons/${serverr.id}/${serverr.icon}.jpg`)
+            // Draw the image
+            const canvas = createCanvas(700, 250);
+            const context = canvas.getContext('2d');
+
+            const background = await readFile('./website/public/img/wallpaper.jpg');
+            const backgroundImage = new Image();
+            backgroundImage.src = background;
+            context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+
+            context.strokeStyle = '#0099ff';
+            context.strokeRect(0, 0, canvas.width, canvas.height);
+
+            context.font = '15px sans-serif';
+            context.fillStyle = '#fff';
+            context.fillText('©️ BotsCord.xyz', canvas.width / 1.2, canvas.height / 1.05);
+            context.font = '30px sans-serif';
+
+            context.fillStyle = '#ffffff';
+            context.fillText(`BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB`, canvas.width / 2.7, canvas.height / 1.8);
+            context.font = '18px sans-serif';
+
+            context.fillText(`🙍‍♂️ ${serverMembers}`, canvas.width / 2.7, canvas.height / 1.1);
+            context.fillText(`❤️ ${server.votes}`, canvas.width / 2.1, canvas.height / 1.1);
+
+            context.beginPath();
+            context.arc(125, 125, 100, 0, Math.PI * 2, true);
+            context.closePath();
+            context.clip();
+            context.drawImage(avatar, 25, 25, 200, 200);
+            res.setHeader('Content-Type', 'image/png');
+            canvas.pngStream().pipe(res);
+        }
+    })
+
+})
+
 router.use(function (req, res, next) {
     if (!req.headers.authorization) {
         return res.status(403).json({ error: 'No credentials sent!' });
@@ -144,5 +207,6 @@ router.get('/bots/check/:id', function (req, res) {
         }
     });
 })
+
 
 module.exports = router;

@@ -43,7 +43,6 @@ router.post('/add', async function (req, res) {
                 req.session.error = "Server already exists";
                 return res.redirect('/');
             }
-            //check if member has admin permissions
             if (!checkServer.members.cache.get(req.user.id).permissions.has("ADMINISTRATOR")) {
                 req.session.error = "You do not have admin permissions";
                 return res.redirect('/');
@@ -55,8 +54,6 @@ router.post('/add', async function (req, res) {
                     req.session.error = "Could not create invite";
                     return res.redirect('/');
                 } else {
-
-
                     channel.createInvite({
                         maxAge: 0,
                         maxUses: 0,

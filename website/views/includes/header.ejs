@@ -25,7 +25,7 @@
   <% if(typeof server !="undefined" ) { %>
   <meta property="og:title" content="BotsCord.xyz" />
   <meta property="og:url" content="http://botscord.xyz/server/<%=server.id %>" />
-  <meta property="og:image" content="<%= server.icon %>" />
+  <meta property="og:image" content="https://cdn.discordapp.com/avatars/<%=server.id %>/<%=global.bsl.guilds.cache.get(server.id).icon %>.png" />
   <meta property="og:description" content="<%= server.description %>
   ­
   🟢 <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status).size %> onlineᅠᅠᅠᅠ⚫ <%= global.bsl.guilds.cache.get(server.id).memberCount %> members">
@@ -88,9 +88,11 @@
                     <li class="fa fa-server mr-1"></li>Edit server
                   </a>
                 </div>
+                <div class="py-1" role="none">
+                  <a target=”_blank” href="https://docs.botscord.xyz" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2"><i class="fa fa-solid fa-book"></i>Docs</a>
+                </div>
               </div>
             </div>
-            <!-- dropdown menu with tailwindcss -->
           </div>
           <% if (typeof user=="undefined" ) { %>
           <a href="/auth" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0 w-fit h-fit">Login</a>
