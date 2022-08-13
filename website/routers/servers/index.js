@@ -6,6 +6,16 @@ const client = require('../../../index');
 const Discord = require('discord.js');
 var showdown = require('showdown'),
     converter = new showdown.Converter();
+function makeid(length) {
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() *
+            charactersLength));
+    }
+    return result;
+}
 router.get('/', function () {
 })
 
@@ -33,7 +43,32 @@ router.post('/add', async function (req, res) {
                 req.session.error = "Server already exists";
                 return res.redirect('/');
             }
+            //check if member has admin permissions
+            if (!checkServer.members.cache.get(req.user.id).permissions.has("ADMINISTRATOR")) {
+                req.session.error = "You do not have admin permissions";
+                return res.redirect('/');
+            }
+            if (req.body.create) {
+                var channel = await checkServer.channels.cache.filter(channel => channel.type === Discord.ChannelType.GuildText)
+                    .first();
+                if (!channel) {
+                    req.session.error = "Could not create invite";
+                    return res.redirect('/');
+                } else {
 
+
+                    channel.createInvite({
+                        maxAge: 0,
+                        maxUses: 0,
+                    }).catch(err => {
+                        console.log(err);
+                        req.session.error = "Could not create invite";
+                        return res.redirect('/');
+                    }).then(invite => {
+                        req.body.server_invite = invite.url
+                    })
+                }
+            }
             var server = new servers({
                 id: req.body.serverid,
                 name: checkServer.name,
@@ -42,7 +77,9 @@ router.post('/add', async function (req, res) {
                 description: req.body.server_short,
                 icon: checkServer.iconURL({ format: 'png', dynamic: true }),
                 memberCount: checkServer.memberCount,
-                tags: req.body.tags
+                tags: req.body.tags,
+                invite: req.body.server_invite,
+                token: makeid(64),
             })
             var tagss = Array.from(new Set(req.body.tags));
             var tags;
@@ -59,7 +96,6 @@ router.post('/add', async function (req, res) {
                 }
 
             }
-            console.log(tags)
             const embed = new client.embed()
                 .setTitle('New server')
                 .setDescription(`${req.user.username}#${req.user.discriminator} added **${checkServer.name}** with members: **${checkServer.memberCount}**\nDescription: **${req.body.server_short}**\nWith tags: **${tags}**`)
@@ -67,7 +103,7 @@ router.post('/add', async function (req, res) {
                 .setTimestamp()
                 .setThumbnail(checkServer.iconURL({ format: 'png', dynamic: true }))
                 .setFooter({ text: 'New Server', iconURL: "https://cdn.discordapp.com/avatars/" + req.user.id + "/" + req.user.avatar + ".png" });
-            client.client.channels.cache.get(client.client.config.server.channels.info).send({ embeds: [embed] });
+            client.client.channels.cache.get(client.client.config.bot.channels.info).send({ embeds: [embed] });
             server.save(function (err) {
                 if (err) {
                     console.log(err);
@@ -239,7 +275,7 @@ router.get('/:server/vote', function (req, res) {
                             .setTitle(`${req.user.username} has voted for ${bot.name}`)
                             .setDescription(`[${bot.name}](${bot.url})`)
                             .setThumbnail(global.bsl.guilds.cache.get(bot.id).iconURL({ format: 'png' }))
-                            .setFooter({ text: "BotsCord", iconURL: "https://botscord.xyz/img/logo.png"})
+                            .setFooter({ text: "BotsCord", iconURL: "https://botscord.xyz/img/logo.png" })
                             .setTimestamp();
                         global.client.channels.cache.get(global.config.bot.channels.vote).send({ embeds: [embed] });
                         req.session.message = "Vote added";
@@ -276,7 +312,7 @@ router.get('/:server/vote', function (req, res) {
                                                 content: `${req.user.username} has voted for ${bot.name}`,
                                                 username: "BotsCord",
                                                 avatarURL: "https://botscord.xyz/img/logo.png"
-                                        });
+                                            });
                                         } catch (e) {
                                             console.log(e);
                                         }

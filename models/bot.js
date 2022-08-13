@@ -12,7 +12,7 @@ let hm = new mongoose.Schema({
     premium: Boolean,
     servers: String,
     users: String,
-    votes: Number,
+    votes: { type: Number, default: 0 },
     token: String,
 });
 
