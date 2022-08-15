@@ -15,7 +15,9 @@ var admin = require('./routers/admin');
 var auth = require('./routers/auth');
 var servers = require('./routers/servers');
 var api = require('./routers/api');
+var profile = require('./routers/user');
 var client = require('../index');
+
 const port = client.config.server.port || 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
@@ -54,8 +56,8 @@ const server = require('../models/server');
 var scopes = ['identify', 'guilds', 'guilds.join'];
 var prompt = 'consent'
 passport.use(new DiscordStrategy({
-    clientID: '934087523649609768',
-    clientSecret: 'nPKjKvOCOyyhDaQM64qcJYbd6CdhCxLh',
+    clientID: '870001234583621713',
+    clientSecret: 'vnWBrTQwSPwjCz9bykN7QwxdliQSZYaC',
     callbackURL: client.config.server.host + '/auth/callback',
     scope: scopes,
     prompt: prompt
@@ -94,6 +96,7 @@ app.use('/admin', admin);
 app.use('/auth', auth);
 app.use('/server', servers);
 app.use('/api', api);
+app.use('/user', profile)
 
 // set up routes
 app.get('/', async (req, res) => {
@@ -162,6 +165,11 @@ app.get('/tag/:id', async (req, res) => {
     });
 });
 
+app.get('/tos' , (req, res) => {
+    res.render('tos', {
+        user: req.user,
+    });
+} );
 app.get("/robots.txt", function (req, res) {
     res.set('Content-Type', 'text/plain');
     res.send(`Sitemap: https://botscord.xyz/sitemap.xml`);
@@ -183,11 +191,17 @@ app.get('/invite', function (req, res) {
     res.redirect(client.config.bot.bsl.invite);
 });
 app.use((req, res, next) => {
-    res.status(404).send("Sorry can't find that!")
+    res.status(404).render('error', {
+        errorr: "Page not found",
+        user: req.user,
+    })
 })
 app.use((err, req, res, next) => {
     console.error(err.stack)
-    res.status(500).send('Something broke!')
+    res.status(500).render('error',{
+        errorr: 500,
+        user: req.user,
+    })
 })
 app.listen(client.config.server.port, () => {
     console.log(colors.green("Website: "), 'Your app is listening on port ' + port);

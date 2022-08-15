@@ -32,7 +32,7 @@ router.post('/add', async function (req, res) {
         var checkbot = await bots.findOne({ id: req.body.id });
         if (checkbot) {
             req.session.error = "Bot already exists";
-            res.redirect('/');
+            res.redirect('/bot/add');
             return
         }
         var owners = new Array();
@@ -55,12 +55,13 @@ router.post('/add', async function (req, res) {
             if (err) {
                 console.log(err);
                 req.session.error = "Something went wrong";
-                res.redirect('/');
+                res.redirect('/bot/add');
             } else {
                 req.session.message = "Bot added";
-                res.redirect('/');
+                res.redirect('/bot/' + bot.id);
             }
         });
+        client.client.client.channels.cache.get(client.client.config.bot.channels.admin).send(`<@${req.user.id}> has added a new bot: ${bot.name}, invite: https://discordapp.com/oauth2/authorize?client_id=${bot.id}&scope=bot&permissions=0 `);
     } else {
         req.session.backURL = req.originalUrl;
         res.redirect('/auth');
@@ -79,11 +80,11 @@ router.get('/:botID', async function (req, res) {
         }
         let coowner = new Array()
         await bot.owners.forEach(async function (a) {
-            try{
-            var b = await global.bsl.users.fetch(a)
-            }catch(e){
+            try {
+                var b = await global.bsl.users.fetch(a)
+            } catch (e) {
             }
-            if(!b) return;
+            if (!b) return;
             coowner.push(b)
         })
         try {
@@ -144,11 +145,11 @@ router.post('/:botID/settings', async function (req, res) {
                 req.session.error = "No bot found";
                 return res.redirect('/');
             }
-            if(!bot.owners.includes(req.user.id)){
-                
-                
-                    req.session.error = "You do not have permission to edit this bot";
-                    return res.redirect('/');
+            if (!bot.owners.includes(req.user.id)) {
+
+
+                req.session.error = "You do not have permission to edit this bot";
+                return res.redirect('/');
             }
             bot.name = req.body.bot_name;
             bot.description = req.body.bot_short;

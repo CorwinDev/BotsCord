@@ -83,12 +83,15 @@ client.on("guildMemberAdd", async (member) => {
     if (member.user.bot) {
         try {
             guild.member(member.id).roles.add(config.server.roles.botlist.bot);
+            client.channels.cache.get(config.server.channels.new).send(`${member.user.tag} has joined the server!`);
+
         } catch (error) {
 
         }
     } else {
         try {
             guild.member(member.id).roles.add(config.server.roles.botlist.user);
+            client.channels.cache.get(config.server.channels.new).send(`${member.user.tag} has joined the server!`);
         } catch (error) {
 
         }
@@ -96,25 +99,34 @@ client.on("guildMemberAdd", async (member) => {
 });
 var cooldown = [];
 client.on("messageCreate", async (message) => {
+    console.log(cooldown
+        )
     if (message.author.bot) return;
     if (message.channel.type === "dm") return;
-    // cooldown function
-    if (cooldown.includes(message.author.id)) return;
-    cooldown.push(message.author.id);
-    const coins = await users.findOne({ id: message.author.id });
-    if (!coins) {
-        await users.create({ id: message.author.id, coins: 0 });
-    } else {
-        if (coins.coins < 1) {
-            coins.coins = 1;
-            coins.save();
-        } else {
-            coins.coins++;
-            coins.save();
+    if (cooldown.some(code => code.id === message.author.id)){
+        var userr = cooldown.findIndex((obj => obj.id == message.author.id));
+        cooldown[userr].message += 1;
+        if (cooldown[userr].message >= 15) {
+            cooldown[userr].message = 0;
+            const coins = await users.findOne({ id: message.author.id });
+            if (!coins) {
+                await users.create({ id: message.author.id, coins: 0 });
+            } else {
+                if (coins.coins < 1) {
+                    coins.coins = 1;
+                    coins.save();
+                } else {
+                    coins.coins++;
+                    coins.save();
+                }
+                message.reply(`You earned 1 coin! You now have ${coins.coins} coins!`);
+            }
         }
-        message.reply(`You have ${coins.coins} coins!`);
-        setTimeout(() => {
-            cooldown.splice(cooldown.indexOf(message.author.id), 1);
-        }, 1200000);
-    }
+        return
+    };
+    cooldown.push({
+        id: message.author.id,
+        message: 0,
+    });
+
 });
