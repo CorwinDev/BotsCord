@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3000;
 const fs = require('fs');
 const path = require('path');
 const session = require('express-session');
@@ -17,6 +16,7 @@ var auth = require('./routers/auth');
 var servers = require('./routers/servers');
 var api = require('./routers/api');
 var client = require('../index');
+const port = client.config.server.port || 3000;
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 const rateLimit = require('express-rate-limit')
