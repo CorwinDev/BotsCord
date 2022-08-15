@@ -30,6 +30,7 @@ const limiter = rateLimit({
 })
 app.use("/api", limiter)
 app.use('/api', api);
+app.set('trust proxy', 1)
 if(global.config.maintenance) {
     console.log(colors.red("[MAINTENANCE]") + " Bot is in maintenance mode.");
     app.get('/', (req, res) => {
@@ -181,6 +182,9 @@ app.get("/sitemap.xml", async function (req, res) {
 app.get('/invite', function (req, res) {
     res.redirect(client.config.bot.bsl.invite);
 });
+app.use((req, res, next) => {
+    res.status(404).send("Sorry can't find that!")
+})
 app.use((err, req, res, next) => {
     console.error(err.stack)
     res.status(500).send('Something broke!')
