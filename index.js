@@ -43,6 +43,9 @@ client.on('ready', () => {
 // Login
 client.login(client.config.bot.token);
 bsl.login(bsl.config.bot.bsl.token);
+bsl.on('rateLimit', (info) => {
+    console.log(`Rate limit hit ${info.timeDifference ? info.timeDifference : info.timeout ? info.timeout : 'Unknown timeout '}`)
+})
 // Node Error Handler
 process.on('uncaughtException', function (err) {
     console.log(err);

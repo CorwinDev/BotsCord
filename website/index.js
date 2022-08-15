@@ -19,6 +19,17 @@ var api = require('./routers/api');
 var client = require('../index');
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
+const rateLimit = require('express-rate-limit')
+const limiter = rateLimit({
+    windowMs: 1 * 60 * 1000, 
+    max: 100,
+    standardHeaders: true, 
+    legacyHeaders: false,
+    message:
+        'Too many requests from this IP, please try again after a few minutes.',
+})
+app.use("/api", limiter)
+app.use('/api', api);
 if(global.config.maintenance) {
     console.log(colors.red("[MAINTENANCE]") + " Bot is in maintenance mode.");
     app.get('/', (req, res) => {
@@ -141,10 +152,10 @@ app.get('/servers', async (req, res) => {
 });
 
 app.get('/tag/:id', async (req, res) => {
-    var id = req.params.id;
+    var id = req.params.id.toLowerCase();
     var bot = await bots.find({ tags: id });
     res.render('tags/index', {
-        bot: bot,
+        bots: bot,
         user: req.user,
         tag: id,
     });
@@ -170,17 +181,9 @@ app.get("/sitemap.xml", async function (req, res) {
 app.get('/invite', function (req, res) {
     res.redirect(client.config.bot.bsl.invite);
 });
-app.use((req, res, next) => {
-    if (res.statusCode === 404) {
-        req.session.error = "Page not found";
-        res.redirect('/');
-    } else if (res.statusCode === 500) {
-        req.session.error = "Internal server error";
-        res.redirect('/');
-    } else {
-        req.session.error = "Page not found";
-        res.redirect('/');
-    }
+app.use((err, req, res, next) => {
+    console.error(err.stack)
+    res.status(500).send('Something broke!')
 })
 app.listen(client.config.server.port, () => {
     console.log(colors.green("Website: "), 'Your app is listening on port ' + port);

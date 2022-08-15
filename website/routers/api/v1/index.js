@@ -30,7 +30,7 @@ router.get('/search/:id', function (req, res) {
                 serverArray.push({ "name": server.name, "id": server.id, "description": server.description, type: "bot" });
             });
             res.json({
-                serverArray
+                array: serverArray
             })
 
         }
@@ -49,7 +49,7 @@ const applyText = (canvas, text) => {
 const { createCanvas, loadImage, Image } = require('canvas')
 const { readFile } = require('fs/promises');
 
-router.get('/server/:id', function (req, res) {
+router.get('/server/banner/:id', function (req, res) {
     // Get one server and draw it on the canvas
     servers.findOne({ id: req.params.id }, async function (err, server) {
         if (err) throw err;
@@ -81,7 +81,7 @@ router.get('/server/:id', function (req, res) {
             context.font = '30px sans-serif';
 
             context.fillStyle = '#ffffff';
-            context.fillText(`BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB`, canvas.width / 2.7, canvas.height / 1.8);
+            context.fillText(serverName, canvas.width / 2.7, canvas.height / 1.8);
             context.font = '18px sans-serif';
 
             context.fillText(`🙍‍♂️ ${serverMembers}`, canvas.width / 2.7, canvas.height / 1.1);
@@ -189,7 +189,7 @@ router.get('/bots/search/:id', function (req, res) {
         }
     });
 });
-router.get('/bots/check/:id', function (req, res) {
+router.get('/bots/checkvote/:id', function (req, res) {
     votes.findOne({ user: req.params.id }, function (err, vote) {
         if (err) {
             res.status(503).json({

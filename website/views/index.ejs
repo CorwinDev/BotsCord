@@ -34,15 +34,15 @@
               type: 'GET',
               success: function(data) {
                 var html = '';
-                if(!data.serverArray.length) html = '<div class="text-center">No results found</div>';
-                for (var i = 0; i < data.serverArray.length; i++) {
+                if(!data.array.length) html = '<div class="text-center">No results found</div>';
+                for (var i = 0; i < data.array.length; i++) {
                   if (i == 5) {
                     break;
                   }
-                  if (data.serverArray[i].type == 'server') {
-                    html += '<a href="/server/' + data.serverArray[i].id + '" class="flex items-center p-2 border-b border-gray-300 hover:bg-primary-color hover:text-white"><img title="botscord.site" class="mr-2" width="48" onError="this.src = ' + "'/img/logo.webp'" + '" style="border-radius: 8px;" src="' + data.serverArray[i].avatar + '" />' + data.serverArray[i].name + ' | Server</a>';
+                  if (data.array[i].type == 'server') {
+                    html += '<a href="/server/' + data.array[i].id + '" class="flex items-center p-2 border-b border-gray-300 hover:bg-primary-color hover:text-white"><img title="botscord.site" class="mr-2" width="48" onError="this.src = ' + "'/img/logo.webp'" + '" style="border-radius: 8px;" src="' + data.array[i].avatar + '" />' + data.array[i].name + ' | Server</a>';
                   } else {
-                    html += '<a href="/bot/' + data.serverArray[i].id + '" class="flex items-center p-2 border-b border-gray-300 hover:bg-primary-color hover:text-white"><img title="botscord.site" class="mr-2" width="48" onError="this.src = ' + " '/img/logo.webp'" + '" style="border-radius: 8px;" src="' + data.serverArray[i].avatar + '" />' + data.serverArray[i].name + ' | Bot </a>';
+                    html += '<a href="/bot/' + data.array[i].id + '" class="flex items-center p-2 border-b border-gray-300 hover:bg-primary-color hover:text-white"><img title="botscord.site" class="mr-2" width="48" onError="this.src = ' + " '/img/logo.webp'" + '" style="border-radius: 8px;" src="' + data.array[i].avatar + '" />' + data.array[i].name + ' | Bot </a>';
                   }
                 }
                 var searchr = document.getElementById('search-results');

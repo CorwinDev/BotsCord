@@ -1,5 +1,5 @@
 module.exports = {
-    maintenance: true,
+    maintenance: false,
     mongodb: "mongodb+srv://root:RzIhDff90LKkOOjw@cluster0.jo9hd.mongodb.net/?retryWrites=true&w=majority",
     bot: {
         id: "934087523649609768",
@@ -50,6 +50,6 @@ module.exports = {
     },
     users: {
         owner: ["755297485328482356"],
-        verificator: ["755297485328482356", "759037138929975297"],
+        verificator: ["755297485328482356"],
     }
 }

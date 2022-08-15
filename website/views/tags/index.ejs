@@ -1,1 +1,43 @@
 <%- include("../includes/header.ejs", { title: "Tag: " + tag}) %>
+<% var nbots= bots
+      nbots.forEach((val, key) => {
+      randomIndex = Math.ceil(Math.random()*(key + 1));
+      nbots[key] = nbots[randomIndex];
+      nbots[randomIndex] = val;
+      });
+      if(nbots.length > 0) { %>
+<div class="mx-auto text-center">
+  <br>
+  <h2 class="text-xl text-white text-center"><i class="fa fa-tag" aria-hidden="true"></i> Bots tagged with <%= tag %></h2>
+  </h2>
+  <p class="content text-white text-center" style="opacity:.6">These bots are tagged with <%= tag %> </p>
+</div>
+<div class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
+  <% } %>
+  <% for(let i=0; i < nbots.length; i++) { if (i===3) break; var bot=nbots[i]; if(bot) { %>
+  <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/bot/<%=bot.id%> ';" style="cursor: pointer;">
+    <img class="w-full rounded-full" src="<%= bot.icon %>" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
+    <div class="px-6 text-white text-base">
+      <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <%if(bot.servers) { %><i class="fa fa-server"></i>: <%= bot.servers %><% } %>
+      </p>
+    </div>
+    <div class="px-6 py-4">
+      <div class="font-bold text-xl mb-2 text-white">
+        <%= bot.name %>
+      </div>
+      <p class="text-white text-base">
+        <%= bot.description %>
+      </p>
+    </div>
+    <% if(bot.tags) {%>
+    <div class="px-6 pt-4 pb-2">
+      <% bot.tags.slice(-3).forEach(tag=>{ %>
+      <a href="/tag/<%= tag %>" class="inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2">#<%= tag %>
+      </a>
+      <% }) %>
+    </div>
+    <% } %>
+  </div>
+  <% } %>
+  <% } %>
+</div>
