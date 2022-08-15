@@ -1,3 +1,5 @@
 node_modules
 .VSCodeCounter
 .vscode
+config.js
+package-lock.json
