@@ -17,6 +17,18 @@ var auth = require('./routers/auth');
 var servers = require('./routers/servers');
 var api = require('./routers/api');
 var client = require('../index');
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
+if(global.config.maintenance) {
+    console.log(colors.red("[MAINTENANCE]") + " Bot is in maintenance mode.");
+    app.get('/', (req, res) => {
+        res.render('maintenance');
+    })
+    app.listen(port, () => {
+        
+    });
+    return
+}
 passport.serializeUser(function (user, done) {
     done(null, user);
 });
@@ -62,8 +74,6 @@ app.use(passport.session());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 // set up view engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, '/views'));
 // set up static files
 app.use(express.static(path.join(__dirname, 'public')));
 // Import routers 

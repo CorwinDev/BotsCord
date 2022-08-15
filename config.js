@@ -1,4 +1,5 @@
 module.exports = {
+    maintenance: true,
     mongodb: "mongodb+srv://root:RzIhDff90LKkOOjw@cluster0.jo9hd.mongodb.net/?retryWrites=true&w=majority",
     bot: {
         id: "934087523649609768",
