@@ -57,7 +57,7 @@ router.get('/server/banner/:id', function (req, res) {
             return
         } else {
             const serverr = await global.bsl.guilds.cache.get(req.params.id)
-            if(!serverr)return
+            if (!serverr) return
             const serverName = server.name
             const serverDescription = server.description
             const serverMembers = serverr.memberCount
@@ -66,12 +66,20 @@ router.get('/server/banner/:id', function (req, res) {
             // Draw the image
             const canvas = createCanvas(700, 250);
             const context = canvas.getContext('2d');
-
-            const background = await readFile('./website/public/img/wallpaper.jpg');
-            const backgroundImage = new Image();
-            backgroundImage.src = background;
-            context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
-
+            if (req.query.background) {
+                try {
+                    const background = await loadImage(req.query.background)
+                    context.drawImage(background, 0, 0, canvas.width, canvas.height);
+                } catch (e) {
+                    res.send("Invalid Background")
+                    return
+                }
+            } else {
+                const background = await readFile('./website/public/img/wallpaper.jpg');
+                const backgroundImage = new Image();
+                backgroundImage.src = background;
+                context.drawImage(backgroundImage, 0, 0, canvas.width, canvas.height);
+            }
             context.strokeStyle = '#0099ff';
             context.strokeRect(0, 0, canvas.width, canvas.height);
 
