@@ -83,7 +83,7 @@ router.get('/:botID', async function (req, res) {
         }
         let referresURL = String(req.headers.referer).replace("undefined", "Unkown").split('.').join(',');
         await bots.updateOne({
-            botID: req.params.botID
+            id: req.params.botID
         }, {
             $inc: {
                 analytics_visitors: 1
@@ -97,7 +97,7 @@ router.get('/:botID', async function (req, res) {
         if (geo) {
             let CountryCode = geo.country || "TR"
             await bots.updateOne({
-                botID: req.params.botID
+                id: req.params.botID
             }, {
                 $inc: {
                     [`country.${CountryCode}`]: 1
@@ -105,7 +105,7 @@ router.get('/:botID', async function (req, res) {
             })
         }
         await bots.updateOne({
-            botID: req.params.botID
+            id: req.params.botID
         }, {
             $inc: {
                 [`analytics.${referresURL}`]: 1
