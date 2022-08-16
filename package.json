@@ -36,6 +36,8 @@
     "express": "^4.18.1",
     "express-rate-limit": "^6.5.1",
     "express-session": "^1.17.3",
+    "geoip-lite": "^1.4.6",
+    "ipware": "^2.0.0",
     "memorystore": "^1.6.7",
     "mongoose": "^6.5.0",
     "parse-ms-2": "^1.0.0",

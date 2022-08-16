@@ -14,6 +14,10 @@ let hm = new mongoose.Schema({
     users: String,
     votes: { type: Number, default: 0 },
     token: String,
+    country: Object,
+    analytics: Object,
+    analytics_visitors: Number,
+    analytics_invites: Number,
 });
 
 module.exports = mongoose.model("bots", hm);

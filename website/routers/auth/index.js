@@ -23,17 +23,23 @@ router.get('/callback', passport.authenticate('discord', {
     keepSessionInfo: true
 }), function (req, res) {
     try {
-        request({
-            url: `https://discordapp.com/api/v8/guilds/${config.server.id}/members/${req.user.id}`,
+        var lol = request({
+            url: `https://discord.com/api/v10/guilds/${global.config.discord.id}/members/${req.user.id}`,
             method: "PUT",
             json: {
                 access_token: req.user.accessToken
             },
             headers: {
-                "Authorization": `Bot ${client.token}`
+                "Authorization": `Bot ${global.bsl.token}`,
+                'Content-Type': 'application/json',
             }
+        }, function (error, response, body){
+            console.log(error)
+            console.log(body)
         });
-    } catch { };
+    } catch(e) {
+        console.log(e);
+    };
     const embed = new client.embed()
         .setTitle('User logged in')
         .setDescription(`${req.user.username}#${req.user.discriminator} logged in\nID: ${req.user.id}`)

@@ -1,3 +1,5 @@
+const { SlashCommandBuilder, Routes, EmbedBuilder, ActivityType } = require('discord.js');
+
 const client = require('../index.js').bsl;
 const servers = require('../models/server');
 const bots = require('../models/bot');
@@ -8,7 +10,9 @@ const ms = require("parse-ms-2");
 // Set intents 
 client.on('ready', async () => {
     const bot = await bots.find({ verified: true });
-    client.user.setPresence({ activities: [{ name: 'botscord.xyz | ' + bot.length + ' bots' }] });
+    client.user.setPresence({  activities: [{ name: 'botscord.xyz | ' + bot.length + ' bots' }] });
+    client.user.setActivity('botscord.xyz | ' + bot.length + ' bots', { type: ActivityType.Watching });
+
     console.log(bsl, 'Bot is ready!');
     // Log server count
     setTimeout(() => {
@@ -16,7 +20,6 @@ client.on('ready', async () => {
             `${client.guilds.cache.size} servers`);
     }, 1000);
 });
-const { SlashCommandBuilder, Routes, EmbedBuilder } = require('discord.js');
 const { REST } = require('@discordjs/rest');
 const commands = [
     new SlashCommandBuilder().setName('ping').setDescription('Replies with pong!'),

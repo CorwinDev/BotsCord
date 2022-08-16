@@ -1,13 +1,13 @@
 <%- include('../includes/header.ejs', { title: server.name, server: server}) %>
 <br><br><br><br>
-<div class="flex space-x-4 py-2 lg:h-5/6 sm:min-h-min">
-  <div class="p-10 bg-blue-color w-2/3 text-white h-full m-4 mx-14 text-ellipsis">
+<div class="lg:flex space-x-4 py-2 lg:h-5/6 sm:min-h-min">
+  <div class="p-10 bg-blue-color w-full text-white h-full m-4 lg:mx-14 text-ellipsis lg:w-2/3">
     <p class="text-white text-clip">
-    <pre style="white-space: pre-wrap;" class="text-clip break-words	w-full h-full"><br><%= server.long_description %></pre>
+    <pre style="white-space: pre-wrap;" class="text-clip break-wordsw-full h-full"><br><%= server.long_description %></pre>
     </p>
   </div>
-  <div class="bg-blue-color w-1/4 p-10 text-white h-full m-4 ">
-    <img class="w-full rounded-full" src="<%= serverr.icon %>" alt="<%= server.name %>" onerror="this.src='/img/logo.png'">
+  <div class="bg-blue-color w-full p-10 text-white h-full lg:w-1/4 lg:m-4">
+    <img class="w-full rounded-full max-w-xs" src="https://cdn.discordapp.com/avatars/<%=server.id %>/<%=serverr.icon %>.png" alt="<%= server.name %>" onerror="this.src='/img/logo.png'">
     <h1 class="text-3xl">
       <%= server.name %>
     </h1>
@@ -17,7 +17,7 @@
       Join</a>
     <br>
     <% if(user) { if(serverr.members.cache.get(user.id)) {
-                if(serverr.members.cache.get(user.id).permissions.has('ADMINISTRATOR')) { %>
+                if(serverr.members.cache.get(user.id).permissions.has(global.discord.PermissionsBitField.adminstrator)) { %>
     <div class="h6 mt-4">
       <i class="fa user-crown"></i>Owner Options
     </div>
@@ -37,7 +37,7 @@
     </div>
     <div class="mt-1">
       <div class="box-2-p"><i class="mt-1 fa fa-users"></i></div>
-      <p class="box-2">Members:&nbsp;<%= serverr.memberCount.toLocaleString().replace(',', '.' ) %>/ <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status).size %> online
+      <p class="box-2">Members:&nbsp;<%= serverr.memberCount.toLocaleString().replace(',', '.' ) %>/ <%= serverr.members.cache.filter(a => a.presence?.status).size  %> online
       </p>
     </div>
     <div class="mt-1">

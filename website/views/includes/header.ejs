@@ -29,12 +29,18 @@
   <meta property="og:description" content="<%= server.description %>
   ­
   🟢 <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status).size %> onlineᅠᅠᅠᅠ⚫ <%= global.bsl.guilds.cache.get(server.id).memberCount %> members">
-  <% } %>
-  <meta property="og:title" content="BotsCord.xyz" />
+  <% } else if(typeof bota !="undefined" ) { %>
+  <meta property="og:url" content="http://botscord.xyz/server/<%=bota.id %>" />
+  <meta property="og:image" content="https://cdn.discordapp.com/avatars/<%=bota.id %>/<%=bota.avatar %>.png" />
+  <meta property="og:description" content="<%= bot.description %>">
+  <% }else{ %>
   <meta property="og:type" content="website" />
   <meta property="og:url" content="http://botscord.xyz" />
   <meta property="og:image" content="http://botscord.xyz/img/logo.png" />
   <meta property="og:description" content="Botscord is a place where you can promote and vote for your favorite bot/server!" />
+  <% } %>
+  <meta property="og:title" content="BotsCord.xyz" />
+
   <meta name="theme-color" content="#FF0000">
   <meta name="author" content="BotsCord">
   <meta name="robots" content="index, follow">

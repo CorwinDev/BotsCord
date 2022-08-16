@@ -131,7 +131,7 @@ router.get('/:server', function (req, res) {
         res.render('server/index', {
             user: req.user,
             server: server,
-            serverr: global.client.guilds.cache.get(server.id)
+            serverr: global.bsl.guilds.cache.get(server.id)
         });
     })
 })

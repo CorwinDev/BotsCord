@@ -79,28 +79,27 @@ client.on('interactionCreate', async interaction => {
     }
 });
 client.on("guildMemberAdd", async (member) => {
-    let guild = client.guilds.cache.get(config.discord.id);
+    console.log(colors.green("Website: "), `${member.user.tag} has joined ${member.guild.name}`);
+    let guild = client.guilds.cache.get(global.config.discord.id);
     if (member.user.bot) {
         try {
-            guild.member(member.id).roles.add(config.server.roles.botlist.bot);
-            client.channels.cache.get(config.server.channels.new).send(`${member.user.tag} has joined the server!`);
+            guild.members.cache.get(member.id).roles.add(global.config.discord.roles.bot);
+            client.channels.cache.get(global.config.bot.channels.welcome).send(`${member.user.tag} has joined the server!`);
 
         } catch (error) {
 
         }
     } else {
         try {
-            guild.member(member.id).roles.add(config.server.roles.botlist.user);
-            client.channels.cache.get(config.server.channels.new).send(`${member.user.tag} has joined the server!`);
+            guild.members.cache.get(member.id).roles.add(global.config.discord.roles.user);
+            client.channels.cache.get(global.config.bot.channels.welcome).send(`${member.user.tag} has joined the server!`);
         } catch (error) {
-
+            console.log(error)
         }
     }
 });
 var cooldown = [];
 client.on("messageCreate", async (message) => {
-    console.log(cooldown
-        )
     if (message.author.bot) return;
     if (message.channel.type === "dm") return;
     if (cooldown.some(code => code.id === message.author.id)){

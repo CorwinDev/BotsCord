@@ -3,6 +3,9 @@ var express = require('express'),
 var bots = require('../../../models/bot');
 var votes = require('../../../models/votes');
 const client = require('../../index');
+var getIP = require('ipware')().get_ip;
+var geoip = require('geoip-lite');
+
 function makeid(length) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -78,6 +81,36 @@ router.get('/:botID', async function (req, res) {
             req.session.error = "No bot found";
             return res.redirect('/');
         }
+        let referresURL = String(req.headers.referer).replace("undefined", "Unkown").split('.').join(',');
+        await bots.updateOne({
+            botID: req.params.botID
+        }, {
+            $inc: {
+                analytics_visitors: 1
+            }
+        })
+
+        var ipInfo = getIP(req);
+        var ip = ipInfo.clientIp;
+        var geo = geoip.lookup(ip);
+
+        if (geo) {
+            let CountryCode = geo.country || "TR"
+            await bots.updateOne({
+                botID: req.params.botID
+            }, {
+                $inc: {
+                    [`country.${CountryCode}`]: 1
+                }
+            })
+        }
+        await bots.updateOne({
+            botID: req.params.botID
+        }, {
+            $inc: {
+                [`analytics.${referresURL}`]: 1
+            }
+        })
         let coowner = new Array()
         await bot.owners.forEach(async function (a) {
             try {
@@ -125,6 +158,30 @@ router.get('/:botID/settings', async function (req, res) {
             res.render('bot/edit', {
                 bot: bot,
                 user: req.user,
+            });
+
+        });
+    }
+});
+
+router.get('/:botID/analytics', async function (req, res) {
+    if (!req.user) {
+        req.session.backURL = req.originalUrl;
+        return res.redirect('/auth');
+    } else {
+        bots.findOne({ id: req.params.botID }, async function (err, bot) {
+            if (err) {
+                console.log(err);
+                return res.redirect('/');
+            }
+            if (!bot) {
+                req.session.error = "No bot found";
+                return res.redirect('/');
+            }
+            res.render('bot/analytics', {
+                bot: bot,
+                user: req.user,
+                bota: await global.bsl.users.fetch(bot.id)
             });
 
         });
