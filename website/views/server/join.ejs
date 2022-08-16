@@ -1,0 +1,19 @@
+<%- include('../includes/header.ejs', {title: 'Join' + server.name}) %>
+<div class="flex flex-col items-center justify-center h-screen ">
+  <div class="w-96 h-96 bg-blue-color text-white text-center rounded-lg items-center">
+    <h1 class="text-3xl font-bold p-5">Join <%= server.name %></h1>
+    <p>You will be redirect after 3 seconds </p>
+    <div class="flex justify-center">
+      <image src="/gif/loading.gif">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+    <!-- script to redirect -->
+    <script>
+      setTimeout(function() {
+        window.location.href = '<%= server.invite %>';
+      }, 3000);
+    </script>
+  </div>
+</div>
+<%- include('../includes/footer.ejs') %>

@@ -164,7 +164,22 @@ app.get('/tag/:id', async (req, res) => {
         tag: id,
     });
 });
+app.get('/i/:id', async (req, res) => {
+    var id = req.params.id.toLowerCase();
+    var bott = await bots.findOne({ name: { $regex: req.params.id }});
+    if(!bott){
+        var serverr = await server.findOne({ name: { $regex: req.params.id }});
+        if(!serverr){
+            res.redirect('/');
+            return
+        }
+        res.redirect('/server/' + serverr.id + '/join');
+        return
+    }
+    res.redirect('/bot/' + bott.id + '/join');
+    return
 
+});
 app.get('/tos' , (req, res) => {
     res.render('tos', {
         user: req.user,

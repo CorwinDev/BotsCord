@@ -55,8 +55,8 @@
   <div class="mt-2 font-italic">
     <h3 style="color: #5f79da" class="text-uppercase">Referrers</h3>
     <p style="color: rgb(126, 126, 126)">The domain names of the sites that most redirect to your bot's page.</p>
-  </div>
-  <table id="analytics_referring" class="table table-hover" style="width:100%; color: #fff">
+  </div><br>
+  <table id="analytics_referring" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table" style="width:100%; color: #fff">
     <thead>
       <tr>
         <th>Referring Url</th>
@@ -78,21 +78,20 @@
   <div class="mt-2 font-italic">
     <h3 style="color: #5f79da" class="text-uppercase">Countries</h3>
     <p style="color: rgb(126, 126, 126)">These are the countries that enter your bot's page.</p>
-  </div>
-  <table id="analytics_country" class="table table-hover" style="width:100%; color: #fff">
-    <thead>
+  </div><br>
+  <table id="analytics_country" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table" style="width:100%; color: #fff">
+    <thead class="text-xs uppercase text-white ">
       <tr>
         <th>Country</th>
         <th>Total viewers</th>
       </tr>
-    </thead>
     <tbody>
       <% 
         if(bot.country) {
         Object.keys(bot.country).sort((a,b) => bot.country[b] - bot.country[a]).forEach(b => { 
         %>
       <tr>
-        <td translate="no"><span style="display: flex; align-items: center;"><img src="https://www.countryflags.io/<%= b %>/flat/32.png">&nbsp;<%= b %></span></td>
+        <td translate="no"><span style="display: flex; align-items: center;"><img src="https://countryflagsapi.com/png/<%= b %>" width="32px">&nbsp;<%= b %></span></td>
         <td><span style="display: flex; align-items: center;"><%= bot.country[b] %></span></td>
       </tr>
       <% 

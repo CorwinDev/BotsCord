@@ -1,0 +1,59 @@
+<%- include('../includes/header.ejs', {title: 'User' + dcuser.username}) %>
+<br><br><br><br>
+<div class="lg:flex space-x-4 py-2 lg:h-5/6 sm:min-h-min">
+  <div class="p-10 bg-blue-color w-full text-white h-full m-4 lg:mx-14 text-ellipsis lg:w-2/3">
+    <p class="text-white text-clip">
+    <pre style="white-space: pre-wrap;" class="text-clip break-wordsw-full h-full"><br><%= users.biography || "User Has No biography" %></pre>
+    </p>
+  </div>
+  <div class="bg-blue-color w-full p-10 text-white h-full lg:w-1/4 lg:m-4">
+    <img class="w-full rounded-full max-w-xs" src="https://cdn.discordapp.com/avatars/<%=dcuser.id %>/<%=dcuser.avatar %>.png" alt="<%= dcuser.name %>" onerror="this.src='/img/logo.png'">
+    <h1 class="text-3xl">
+      <%= dcuser.tag %>
+    </h1>
+    <!-- edit button -->
+    <!-- fontawome icon -->
+    <div class="flex">
+      <a href="/user/edit" class="text-white text-sm">
+        <i class="fa fa-edit"></i> Edit
+      </a>
+    </div>
+    <% if(typeof users.website != "undefined") { %>
+    <a href="<%= users.website %>" target="_blank" class="text-white text-clip">
+      <i class="fab fa-website"></i>
+      <%= users.website %>
+      <br>
+    </a>
+    <% } %>
+    <% if(typeof users.twitter != "undefined" ) { %>
+    <a href="https://twitter.com/<%= users.twitter %>" target="_blank" class="text-white text-clip">
+      <i class="fab fa-facebook"></i>
+      <%= users.twitter %>
+      <br>
+    </a>
+    <% } %>
+    <% if(typeof users.instagram != "undefined") { %>
+    <a href="https://instagram.com/<%= users.instagram %>" target="_blank" class="text-white text-clip">
+      <i class="fab fa-instagram"></i>
+      <%= users.instagram %>
+      <br>
+    </a>
+    <% } %>
+    <% if(typeof users.facebook != "undefined") { %>
+    <a href="https://facebook.com/<%= users.facebook %>" target="_blank" class="text-white text-clip">
+      <i class="fab fa-facebook"></i>
+      <%= users.facebook %>
+      <br>
+    </a>
+    <% } %>
+    <% if(typeof users.github != "undefined") { %>
+    <a href="https://youtube.com/<%= users.github %>" target="_blank" class="text-white text-clip">
+      <i class="fab fa-github"></i>
+      <%= users.github %>
+      <br>
+    </a>
+    <% } %>
+
+  </div>
+</div>
+<br><br><br>

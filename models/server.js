@@ -10,10 +10,14 @@ let hm = new mongoose.Schema({
     tags: [String],
     premium: Boolean,
     invite: String,
-    votes: Number,
+    votes: { type: Number, default: 0 },
     bump: Date,
     webhook: String,
-    bumps: Number,
+    bumps: { type: Number, default: 0 },
+    analytics: Object,
+    analytics_visitors: Number,
+    analytics_joins: Number,
+    country: Object,
 });
 
 module.exports = mongoose.model("servers", hm);

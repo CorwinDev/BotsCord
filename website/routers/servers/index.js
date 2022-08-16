@@ -47,6 +47,7 @@ router.post('/add', async function (req, res) {
                 req.session.error = "You do not have admin permissions";
                 return res.redirect('/');
             }
+            var invite = null;
             if (req.body.create) {
                 var channel = await checkServer.channels.cache.filter(channel => channel.type === Discord.ChannelType.GuildText)
                     .first();
@@ -54,15 +55,13 @@ router.post('/add', async function (req, res) {
                     req.session.error = "Could not create invite";
                     return res.redirect('/');
                 } else {
-                    channel.createInvite({
+                    var invite = await channel.createInvite({
                         maxAge: 0,
                         maxUses: 0,
                     }).catch(err => {
                         console.log(err);
                         req.session.error = "Could not create invite";
                         return res.redirect('/');
-                    }).then(invite => {
-                        req.body.server_invite = invite.url
                     })
                 }
             }
@@ -75,7 +74,7 @@ router.post('/add', async function (req, res) {
                 icon: checkServer.iconURL({ format: 'png', dynamic: true }),
                 memberCount: checkServer.memberCount,
                 tags: req.body.tags,
-                invite: req.body.server_invite,
+                invite: req.body.server_invite || invite.url,
                 token: makeid(64),
             })
             var tagss = Array.from(new Set(req.body.tags));
@@ -118,8 +117,8 @@ router.post('/add', async function (req, res) {
     }
 });
 
-router.get('/:server', function (req, res) {
-    servers.findOne({ id: req.params.server }, function (err, server) {
+router.get('/:server', async function (req, res) {
+    servers.findOne({ id: req.params.server }, async function (err, server) {
         if (err) {
             console.log(err);
             return res.redirect('/');
@@ -128,6 +127,38 @@ router.get('/:server', function (req, res) {
             req.session.error = "No server found";
             return res.redirect('/');
         }
+
+        let referresURL = String(req.headers.referer).replace("undefined", "Unkown").split('.').join(',');
+        await servers.updateOne({
+            id: req.params.server
+        }, {
+            $inc: {
+                analytics_visitors: 1
+            }
+        })
+        var getIP = require('ipware')().get_ip;
+        var ipInfo = getIP(req);
+        var geoip = require('geoip-lite');
+        var ip = ipInfo.clientIp;
+        var geo = geoip.lookup(ip);
+
+        if (geo) {
+            let CountryCode = geo.country || "TR"
+            await servers.updateOne({
+                id: req.params.server
+            }, {
+                $inc: {
+                    [`country.${CountryCode}`]: 1
+                }
+            })
+        }
+        await servers.updateOne({
+            id: req.params.server
+        }, {
+            $inc: {
+                [`analytics.${referresURL}`]: 1
+            }
+        })
         res.render('server/index', {
             user: req.user,
             server: server,
@@ -267,7 +298,7 @@ router.get('/:server/vote', function (req, res) {
                                 console.log(e);
                             }
                         }
-                        const embed = new Discord.EmbedBuilder()
+                        const embed = new Discord.Embeserversuilder()
                             .setColor('#0099ff')
                             .setTitle(`${req.user.username} has voted for ${bot.name}`)
                             .setDescription(`[${bot.name}](${bot.url})`)
@@ -314,7 +345,7 @@ router.get('/:server/vote', function (req, res) {
                                             console.log(e);
                                         }
                                     }
-                                    const embed = new Discord.EmbedBuilder()
+                                    const embed = new Discord.Embeserversuilder()
                                         .setColor('#0099ff')
                                         .setTitle(`${req.user.username} has voted for ${bot.name}`)
                                         .setDescription(`[${bot.name}](${bot.url})`)
@@ -334,4 +365,45 @@ router.get('/:server/vote', function (req, res) {
     }
 })
 
+router.get('/:server/join', async function (req, res) {
+    servers.findOne({ id: req.params.server }, async function (err, server) {
+        await servers.updateOne({
+            id: req.params.guildID
+        }, {
+            $inc: {
+                analytics_joins: 1
+            }
+        }
+        )
+        let urlInvite = server.invite;
+        res.render('server/join', {
+            url: urlInvite,
+            server: server
+        });
+    });
+})
+
+router.get('/:botID/analytics', async function (req, res) {
+    if (!req.user) {
+        req.session.backURL = req.originalUrl;
+        return res.redirect('/auth');
+    } else {
+        bots.findOne({ id: req.params.botID }, async function (err, bot) {
+            if (err) {
+                console.log(err);
+                return res.redirect('/');
+            }
+            if (!bot) {
+                req.session.error = "No bot found";
+                return res.redirect('/');
+            }
+            res.render('bot/analytics', {
+                bot: bot,
+                user: req.user,
+                bota: await global.bsl.users.fetch(bot.id)
+            });
+
+        });
+    }
+});
 module.exports = router;

@@ -14,12 +14,12 @@ router.get('/me', async function (req, res) {
         return res.redirect('/auth');
     }
     var bot = await bots.find({ owners: req.user.id });
-    var user = await users.find({ id: req.user.id });
-    res.render('user/me', {
+    var user = await users.findOne({ id: req.user.id });
+    res.render('user/index', {
         user: req.user,
         bots: bot,
         users: user,
-        dcuser: global.bsl.users.fetch(req.user.id)
+        dcuser: await global.bsl.users.fetch(req.user.id)
 
     });
 })
