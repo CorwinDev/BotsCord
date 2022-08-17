@@ -267,6 +267,7 @@ router.get('/:botID/vote', async function (req, res) {
                                 return res.redirect('/');
                             }
                         })
+                        global.client.channels.cache.get(global.config.bot.channels.vote).send(`${req.user.username} has voted for bot: ${bot.name} | <https://botscord.xyz/bot/${bot.id}>`);
 
                         req.session.message = "Vote added";
                         return res.redirect('/');
@@ -295,6 +296,7 @@ router.get('/:botID/vote', async function (req, res) {
                                     req.session.error = "Something went wrong";
                                     return res.redirect('/');
                                 } else {
+                                    global.client.channels.cache.get(global.config.bot.channels.vote).send(`${req.user.username} has voted for bot: ${bot.name} | <https://botscord.xyz/bot/${bot.id}>`);
                                     req.session.message = "Vote added";
                                     return res.redirect('/');
                                 }

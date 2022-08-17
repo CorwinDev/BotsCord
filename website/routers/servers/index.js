@@ -298,14 +298,7 @@ router.get('/:server/vote', function (req, res) {
                                 console.log(e);
                             }
                         }
-                        const embed = new Discord.EmbedBuilder()
-                            .setColor('#0099ff')
-                            .setTitle(`${req.user.username} has voted for ${bot.name}`)
-                            .setDescription(`[${bot.name}](${bot.url})`)
-                            .setThumbnail(global.bsl.guilds.cache.get(bot.id).iconURL({ format: 'png' }))
-                            .setFooter({ text: "BotsCord", iconURL: "https://botscord.xyz/img/logo.png" })
-                            .setTimestamp();
-                        global.client.channels.cache.get(global.config.bot.channels.vote).send({ embeds: [embed] });
+                        global.client.channels.cache.get(global.config.bot.channels.vote).send(`${req.user.username} has voted for server ${bot.name} | <https://botscord.xyz/server/${bot.id}>`);
                         req.session.message = "Vote added";
                         return res.redirect('/');
                     })
@@ -345,14 +338,7 @@ router.get('/:server/vote', function (req, res) {
                                             console.log(e);
                                         }
                                     }
-                                    const embed = new Discord.EmbedBuilder()
-                                        .setColor('#0099ff')
-                                        .setTitle(`${req.user.username} has voted for ${bot.name}`)
-                                        .setDescription(`[${bot.name}](${bot.url})`)
-                                        .setThumbnail(global.bsl.guilds.cache.get(bot.id).iconURL({ format: 'png' }))
-                                        .setFooter({ text: "BotsCord", iconURL: "https://botscord.xyz/img/logo.png" })
-                                        .setTimestamp();
-                                    global.client.channels.cache.get(global.config.bot.channels.vote).send({ embeds: [embed] });
+                                    global.client.channels.cache.get(global.config.bot.channels.vote).send(`${req.user.username} has voted for server ${bot.name} | <https://botscord.xyz/server/${bot.id}>`);
                                     req.session.message = "Vote added";
                                     return res.redirect('/');
                                 }
