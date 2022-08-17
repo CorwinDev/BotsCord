@@ -4,7 +4,21 @@
   <div class="p-10 bg-blue-color w-full text-white h-full m-4 lg:mx-14 text-ellipsis lg:w-2/3">
     <p class="text-white text-clip">
     <pre style="white-space: pre-wrap;" class="text-clip break-wordsw-full h-full"><br><%= users.biography || "User Has No biography" %></pre>
-    </p>
+    </p><br>
+    Bots owned by this user: <%= bots.length %><br>
+    <% if(bots) { %>
+    <% bots.forEach(async function(bot) { %>
+    <div class="flex items-center" onclick="location.href='/bot/<%=bot.id%> ';" style="cursor: pointer;">
+      <div class="flex items-center">
+        <img src="https://cdn.discordapp.com/avatars/<%=bot.id %>/<%= global.bsl.users.cache.get(bot.id).avatar %>.png" class="rounded-full h-8 w-8 mr-2">
+        <p class="text-white text-clip"><%= bot.username %></p>
+      </div>
+      <div class="flex items-center">
+        <p class="text-white text-clip"><%= bot.description %></p>
+      </div>
+    </div>
+    <% }) %>
+    <% } %>
   </div>
   <div class="bg-blue-color w-full p-10 text-white h-full lg:w-1/4 lg:m-4">
     <img class="w-full rounded-full max-w-xs" src="https://cdn.discordapp.com/avatars/<%=dcuser.id %>/<%=dcuser.avatar %>.png" alt="<%= dcuser.name %>" onerror="this.src='/img/logo.png'">
@@ -53,7 +67,6 @@
       <br>
     </a>
     <% } %>
-
   </div>
 </div>
 <br><br><br>

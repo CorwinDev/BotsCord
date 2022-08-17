@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,7 +12,7 @@
     <% } %>
   </title>
   <link href="/css/style.css" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/204113bb1b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <link rel="apple-touch-icon" sizes="180x180" href="/img/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon-32x32.png">
@@ -41,7 +40,7 @@
   <% } %>
   <meta property="og:title" content="BotsCord.xyz" />
 
-  <meta name="theme-color" content="#FF0000">
+  <meta name="theme-color" content="#5865F2">
   <meta name="author" content="BotsCord">
   <meta name="robots" content="index, follow">
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8650136628414172" crossorigin="anonymous"></script>
@@ -103,8 +102,8 @@
                 </div>
                 <div class="py-1" role="none">
                   <a href="/server/add" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-2"><i class="fa fa-solid fa-plus"></i>Add server</a>
-                  <a href="/me/servers" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-3">
-                    <li class="fa fa-server mr-1"></li>Edit server
+                  <a href="/bot/add" class="text-gray-700 block px-4 py-2 text-sm" role="menuitem" tabindex="-1" id="menu-item-3">
+                    <li class="fa fa-robot"></li>Add bot
                   </a>
                 </div>
                 <div class="py-1" role="none">
@@ -116,7 +115,7 @@
           <% if (typeof user=="undefined" ) { %>
           <a href="/auth" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0 w-fit h-fit">Login</a>
           <% }else { %>
-          <a href="/profile" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0 w-fit h-fit">Profile</a>
+          <a href="/user/me" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0 w-fit h-fit">Profile</a>
           <a href="/auth/logout" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-red-500 hover:border-transparent hover:text-blue-color hover:bg-white mt-4 lg:mt-0 w-fit h-fit">Logout</a>
           <% } %>
         </div>

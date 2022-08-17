@@ -149,7 +149,7 @@ app.get('/bots', async (req, res) => {
 app.get('/servers', async (req, res) => {
     var servers = await server.find({});
     res.render('servers', {
-        servers: servers,
+        bots: servers,
         user: req.user,
         botscord: client
     });
@@ -185,6 +185,11 @@ app.get('/tos' , (req, res) => {
         user: req.user,
     });
 } );
+app.get('/privacy', (req, res) => {
+    res.render('privacy', {
+        user: req.user,
+    });
+});
 app.get("/robots.txt", function (req, res) {
     res.set('Content-Type', 'text/plain');
     res.send(`Sitemap: https://botscord.xyz/sitemap.xml`);

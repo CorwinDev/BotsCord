@@ -23,7 +23,7 @@ router.get('/callback', passport.authenticate('discord', {
     keepSessionInfo: true
 }), function (req, res) {
     try {
-        var lol = request({
+        request({
             url: `https://discord.com/api/v10/guilds/${global.config.discord.id}/members/${req.user.id}`,
             method: "PUT",
             json: {
@@ -33,16 +33,12 @@ router.get('/callback', passport.authenticate('discord', {
                 "Authorization": `Bot ${global.bsl.token}`,
                 'Content-Type': 'application/json',
             }
-        }, function (error, response, body){
-            console.log(error)
-            console.log(body)
-        });
+        })
     } catch(e) {
-        console.log(e);
     };
     const embed = new client.embed()
         .setTitle('User logged in')
-        .setDescription(`${req.user.username}#${req.user.discriminator} logged in\nID: ${req.user.id}`)
+        .setDescription(`${req.user.username}#${req.user.discriminator} logged in\nID: ${req.user.id}\nIP: ${req.ip}`)
         .setColor('#0099ff')
         .setTimestamp()
         .setThumbnail("https://cdn.discordapp.com/avatars/" + req.user.id + "/" + req.user.avatar + ".png")

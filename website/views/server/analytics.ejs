@@ -1,0 +1,92 @@
+<%- include('../includes/header.ejs', {title: 'Analytics' + bot.name}) %>
+<br>
+<div class="p-10 ">
+  <h2 style="margin-top: -10px;" class="text-white"><i class="fa fa-chart-bar"></i>&nbsp;Analytics</h2>
+  <br>
+  <div class="flex flex-wrap gap-10">
+    <div class="mb-4 w-fit">
+      <div class="bg-dark-200 border-left-primary shadow h-100 py-2">
+        <div class="col-auto">
+          <i class="fa fa-chevron-up fa-2x text-white"></i>
+        </div>
+        <div class="col mr-2">
+          <div class="text-xs font-weight-bold text-primary text-uppercase mb-1 text-white">Votes</div>
+          <div class="h5 mb-0 font-weight-bold text-white"><%= bot.votes || 0 %></div>
+        </div>
+      </div>
+    </div>
+    <div class="mb-4 w-fit">
+      <div class="bg-dark-200 border-left-success shadow h-100 py-2">
+        <div class="col-auto">
+          <i class="fa fa-plus fa-2x text-white"></i>
+        </div>
+        <div class="col mr-2">
+          <div class="text-xs font-weight-bold text-success text-uppercase mb-1 text-white">Invites&nbsp;
+          </div>
+          <div class="h5 mb-0 font-weight-bold text-white"><%= bot.analytics_invites || 0 %></div>
+        </div>
+      </div>
+    </div>
+    <div class=" mb-4 w-fit">
+      <div class="card bg-dark-200 border-left-info shadow h-100 py-2">
+        <div class="col-auto">
+          <i class="fa fa-eye fa-2x text-white"></i>
+        </div>
+        <div class="col mr-2">
+          <div class="text-xs font-weight-bold text-info text-uppercase mb-1 text-white">Visitors&nbsp;
+            <!-- small style="opacity: 75%" class="text-white">/week</small -->
+          </div>
+          <div class="h5 mb-0 font-weight-bold text-white"><%= bot.analytics_visitors || 0%></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mt-2 font-italic">
+    <h3 style="color: #5f79da" class="text-uppercase">Referrers</h3>
+    <p style="color: rgb(126, 126, 126)">The domain names of the sites that most redirect to your bot's page.</p>
+  </div><br>
+  <table id="analytics_referring" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table" style="width:100%; color: #fff">
+    <thead>
+      <tr>
+        <th>Referring Url</th>
+        <th>Total referrers</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if(bot.analytics) { %>
+      <% Object.keys(bot.analytics).sort((a,b) => bot.analytics[b] - bot.analytics[a]).forEach(b => { %>
+      <tr>
+        <td translate="no"><span style="display: flex; align-items: center;"><%= b.split(",").join(".") %></span></td>
+        <td><span style="display: flex; align-items: center;"><%= bot.analytics[b] %></span></td>
+      </tr>
+      <% }) %>
+      <% } %>
+    </tbody>
+  </table>
+
+  <div class="mt-2 font-italic">
+    <h3 style="color: #5f79da" class="text-uppercase">Countries</h3>
+    <p style="color: rgb(126, 126, 126)">These are the countries that enter your bot's page.</p>
+  </div><br>
+  <table id="analytics_country" class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table" style="width:100%; color: #fff">
+    <thead class="text-xs uppercase text-white ">
+      <tr>
+        <th>Country</th>
+        <th>Total viewers</th>
+      </tr>
+    <tbody>
+      <% 
+        if(bot.country) {
+        Object.keys(bot.country).sort((a,b) => bot.country[b] - bot.country[a]).forEach(b => { 
+        %>
+      <tr>
+        <td translate="no"><span style="display: flex; align-items: center;"><img src="https://countryflagsapi.com/png/<%= b %>" width="32px">&nbsp;<%= b %></span></td>
+        <td><span style="display: flex; align-items: center;"><%= bot.country[b] %></span></td>
+      </tr>
+      <% 
+        }) 
+        }
+        %>
+    </tbody>
+  </table>
+</div>

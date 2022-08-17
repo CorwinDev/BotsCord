@@ -388,7 +388,7 @@ router.get('/:botID/analytics', async function (req, res) {
         req.session.backURL = req.originalUrl;
         return res.redirect('/auth');
     } else {
-        bots.findOne({ id: req.params.botID }, async function (err, bot) {
+        servers.findOne({ id: req.params.botID }, async function (err, bot) {
             if (err) {
                 console.log(err);
                 return res.redirect('/');
@@ -397,10 +397,9 @@ router.get('/:botID/analytics', async function (req, res) {
                 req.session.error = "No bot found";
                 return res.redirect('/');
             }
-            res.render('bot/analytics', {
+            res.render('server/analytics', {
                 bot: bot,
-                user: req.user,
-                bota: await global.bsl.users.fetch(bot.id)
+                user: req.user
             });
 
         });
