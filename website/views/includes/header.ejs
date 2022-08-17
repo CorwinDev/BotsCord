@@ -24,7 +24,7 @@
   <% if(typeof server !="undefined" ) { %>
   <meta property="og:title" content="BotsCord.xyz" />
   <meta property="og:url" content="http://botscord.xyz/server/<%=server.id %>" />
-  <meta property="og:image" content="https://cdn.discordapp.com/avatars/<%=server.id %>/<%=global.bsl.guilds.cache.get(server.id).icon %>.png" />
+  <meta property="og:image" content="https://cdn.discordapp.com/icons/<%=server.id %>/<%=global.bsl.guilds.cache.get(server.id).icon %>.png" />
   <meta property="og:description" content="<%= server.description %>
   ­
   🟢 <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status).size %> onlineᅠᅠᅠᅠ⚫ <%= global.bsl.guilds.cache.get(server.id).memberCount %> members">
