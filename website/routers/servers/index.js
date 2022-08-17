@@ -167,13 +167,13 @@ router.get('/:server', async function (req, res) {
     })
 })
 
-router.get('/:server/settings', function (req, res) {
+router.get('/:server/settings',async function (req, res) {
     if (!req.user) {
         req.session.backURL = req.originalUrl;
         res.redirect('/auth');
         return;
     }
-    servers.findOne({ id: req.params.server }, function (err, server) {
+    servers.findOne({ id: req.params.server },async function (err, server) {
         if (err) {
             console.log(err);
             return res.redirect('/');
@@ -182,7 +182,7 @@ router.get('/:server/settings', function (req, res) {
             req.session.error = "No server found";
             return res.redirect('/');
         }
-        var serverr = global.client.guilds.cache.get(server.id)
+        var serverr = await global.bsl.guilds.cache.get(server.id)
         if (serverr.members.cache.get(req.user.id)) {
             if (serverr.members.cache.get(req.user.id).permissions.has('ADMINISTRATOR')) {
                 res.render('server/edit', {
