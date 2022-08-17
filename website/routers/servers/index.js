@@ -92,7 +92,7 @@ router.post('/add', async function (req, res) {
                 }
 
             }
-            const embed = new client.embed()
+            const embed = new Discord.EmbedBuilder()
                 .setTitle('New server')
                 .setDescription(`${req.user.username}#${req.user.discriminator} added **${checkServer.name}** with members: **${checkServer.memberCount}**\nDescription: **${req.body.server_short}**\nWith tags: **${tags}**`)
                 .setColor('#00ff00')
@@ -298,7 +298,7 @@ router.get('/:server/vote', function (req, res) {
                                 console.log(e);
                             }
                         }
-                        const embed = new Discord.Embeserversuilder()
+                        const embed = new Discord.EmbedBuilder()
                             .setColor('#0099ff')
                             .setTitle(`${req.user.username} has voted for ${bot.name}`)
                             .setDescription(`[${bot.name}](${bot.url})`)
@@ -345,7 +345,7 @@ router.get('/:server/vote', function (req, res) {
                                             console.log(e);
                                         }
                                     }
-                                    const embed = new Discord.Embeserversuilder()
+                                    const embed = new Discord.EmbedBuilder()
                                         .setColor('#0099ff')
                                         .setTitle(`${req.user.username} has voted for ${bot.name}`)
                                         .setDescription(`[${bot.name}](${bot.url})`)

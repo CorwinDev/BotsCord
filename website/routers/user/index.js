@@ -60,9 +60,9 @@ router.get('/:id', async function (req, res) {
     }
     res.render('user/index', {
         user: req.user,
-        bot: bot,
+        bots: bot,
         users: user,
-        dcuser: global.bsl.users.fetch(req.user.id)
+        dcuser: await global.bsl.users.fetch(req.params.id)
     });
 })
 
