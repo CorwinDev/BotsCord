@@ -365,7 +365,7 @@ router.get('/:server/join', async function (req, res) {
         res.render('server/join', {
             url: urlInvite,
             server: server,
-            serverr:await global.client.guilds.cache.get(server.id)
+            serverr:await global.bsl.guilds.cache.get(server.id)
         });
     });
 })
