@@ -3,7 +3,14 @@
 <div class="lg:flex space-x-4 py-2 lg:h-5/6 sm:min-h-min">
   <div class="p-10 bg-blue-color w-full text-white h-full m-4 lg:mx-14 text-ellipsis lg:w-2/3">
     <p class="text-white text-clip">
-    <pre style="white-space: pre-wrap;" class="text-clip break-wordsw-full h-full"><br><%= users.biography || "User Has No biography" %></pre>
+    <pre style="white-space: pre-wrap;" class="text-clip break-wordsw-full h-full"><br>
+      <% if(typeof users.biography !== 'undefined') { %>
+        <%= users.biography %>
+      <% } else { %>
+      User Has No biography
+    
+    <%} %>
+  </pre>
     </p><br>
     Bots owned by this user: <%= bots.length %><br>
     <% if(bots) { %>
@@ -34,7 +41,7 @@
     </div>
     <% if(typeof users.website != "undefined") { %>
     <a href="<%= users.website %>" target="_blank" class="text-white text-clip">
-      <i class="fab fa-website"></i>
+      <i class="fa-solid fa-browser"></i>
       <%= users.website %>
       <br>
     </a>

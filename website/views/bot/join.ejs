@@ -1,18 +1,17 @@
-<%- include('../includes/header.ejs', {title: 'Join' + server.name}) %>
+<%- include('../includes/header.ejs', {title: 'Join' + bot.name}) %>
 <div class="flex flex-col items-center justify-center h-screen ">
   <div class="w-96 h-96 bg-blue-color text-white text-center rounded-lg items-center">
-    <h1 class="text-3xl font-bold p-5">Join <%= server.name %></h1>
+    <h1 class="text-3xl font-bold p-5">Join <%= bot.name %></h1>
     <p>You will be redirected after 3 seconds </p>
     <div class="flex justify-center">
       <image src="/gif/loading.gif">
         <span class="sr-only">Loading...</span>
     </div>
+    Press <a href="<%- invite %>">here</a> if you are not redirected.
   </div>
-  Press <a href="<%- server.invite %>">here</a> if you are not redirected.
-
   <script>
     setTimeout(function() {
-      window.location.href = '<%= server.invite %>';
+      window.location.href = '<%- invite %>';
     }, 3000);
   </script>
 </div>

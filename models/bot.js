@@ -18,6 +18,7 @@ let hm = new mongoose.Schema({
     analytics: Object,
     analytics_visitors: Number,
     analytics_invites: Number,
+    vanity: String,
 });
 
 module.exports = mongoose.model("bots", hm);

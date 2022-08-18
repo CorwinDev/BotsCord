@@ -16,14 +16,27 @@
       <input type="text" name="bot_short" id="floating_last_name" class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required value="<%= bot.description %>" />
       <label for="bot_name" class="peer-focus:font-medium absolute text-sm text-white dark:text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Short
         Description (Will be show on home page)</label>
-    </div><br>
+    </div>
+    <div class="relative z-0 mb-6 w-full group">
+      <input type="text" name="bot_vanity" id="bot_vanity" class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " value="<%= bot.vanity %>" />
+      <label for="bot_vanity" class="peer-focus:font-medium absolute text-sm text-white dark:text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Fill this in to get a vanity url invite.</label>
+      <span class="text-white text-xs" id="vanity">https://botscord.xyz/i/</span>
+    </div>
+    <script>
+      var vanity = document.getElementById("vanity");
+      vanity.innerHTML = vanity.innerHTML + "<%= bot.vanity %>";
+      var change = document.getElementById("bot_vanity");
+      change.addEventListener("keyup", function() {
+        vanity.innerHTML = "https://botscord.xyz/i/" + change.value;
+      });
+    </script>
+    <br>
     <h1 class="text-xl text-white">This token can be used to access your bot via our api</h1>
     <a href="/docs/api" class="text-sm text-white hover:text-blue-600 underline	">
-        <h1 class="text-sm text-white hover:text-blue-600">Access api docs</h1>
- 
+      <h1 class="text-sm text-white hover:text-blue-600">Access api docs</h1>
     </a>
     <div class="relative z-0 mb-6 w-full group">
-      <input type="text"  id="token" class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required value="<%= bot.token %>" onclick="copy()"/>
+      <input type="text" id="token" class="block py-2.5 px-0 w-full text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required value="<%= bot.token %>" onclick="copy()" />
     </div>
     <script>
       function copy() {

@@ -5,6 +5,9 @@ var votes = require('../../../models/votes');
 const client = require('../../index');
 var getIP = require('ipware')().get_ip;
 var geoip = require('geoip-lite');
+var showdown = require('showdown'),
+    converter = new showdown.Converter()
+const sanitizeHtml = require('sanitize-html');
 
 function makeid(length) {
     var result = '';
@@ -22,7 +25,11 @@ router.get('/', function () {
 })
 router.get('/add', function (req, res) {
     if (req.user) {
-        res.render('bot/add', { user: req.user });
+        res.render('bot/add', {
+            user: req.user,
+            message: req.session.message || undefined,
+            error: req.session.error || undefined,
+        });
         return
     } else {
         req.session.backURL = req.originalUrl;
@@ -81,63 +88,96 @@ router.get('/:botID', async function (req, res) {
             req.session.error = "No bot found";
             return res.redirect('/');
         }
-        let referresURL = String(req.headers.referer).replace("undefined", "Unkown").split('.').join(',');
-        await bots.updateOne({
-            id: req.params.botID
-        }, {
-            $inc: {
-                analytics_visitors: 1
+        if (bot.verified == false) {
+            if(!req.user) {
+                req.backURL = req.originalUrl;
+                return res.redirect('/auth');
             }
-        })
-
-        var ipInfo = getIP(req);
-        var ip = ipInfo.clientIp;
-        var geo = geoip.lookup(ip);
-
-        if (geo) {
-            let CountryCode = geo.country || "TR"
+            if (bot.owners.includes(req.user.id)) {
+                let coowner = new Array()
+                await bot.owners.forEach(async function (a) {
+                    try {
+                        var b = await global.bsl.users.fetch(a)
+                    } catch (e) {
+                    }
+                    if (!b) return;
+                    coowner.push(b)
+                })
+                var html = converter.makeHtml(bot.long_description);
+                html = sanitizeHtml(html)
+                res.render('bot/index', {
+                    bot: bot,
+                    user: req.user,
+                    owners: coowner,
+                    bota: await global.bsl.users.fetch(bot.id),
+                    description: html
+                });
+            } else {
+                req.session.error = "Bot not verified";
+                return res.redirect('/');
+            }
+        } else {
+            let referresURL = String(req.headers.referer).replace("undefined", "Unkown").split('.').join(',');
             await bots.updateOne({
                 id: req.params.botID
             }, {
                 $inc: {
-                    [`country.${CountryCode}`]: 1
+                    analytics_visitors: 1
                 }
             })
-        }
-        await bots.updateOne({
-            id: req.params.botID
-        }, {
-            $inc: {
-                [`analytics.${referresURL}`]: 1
+
+            var ipInfo = getIP(req);
+            var ip = ipInfo.clientIp;
+            var geo = geoip.lookup(ip);
+
+            if (geo) {
+                let CountryCode = geo.country || "TR"
+                await bots.updateOne({
+                    id: req.params.botID
+                }, {
+                    $inc: {
+                        [`country.${CountryCode}`]: 1
+                    }
+                })
             }
-        })
-        let coowner = new Array()
-        await bot.owners.forEach(async function (a) {
+            await bots.updateOne({
+                id: req.params.botID
+            }, {
+                $inc: {
+                    [`analytics.${referresURL}`]: 1
+                }
+            })
+            let coowner = new Array()
+            await bot.owners.forEach(async function (a) {
+                try {
+                    var b = await global.bsl.users.fetch(a)
+                } catch (e) {
+                }
+                if (!b) return;
+                coowner.push(b)
+            })
             try {
-                var b = await global.bsl.users.fetch(a)
+                var bota = await global.bsl.users.fetch(bot.id)
             } catch (e) {
+                if (!bota) {
+                    req.session.error = "No bot found";
+                    return res.redirect('/');
+                }
             }
-            if (!b) return;
-            coowner.push(b)
-        })
-        try {
-            var bota = await global.bsl.users.fetch(bot.id)
-        } catch (e) {
             if (!bota) {
                 req.session.error = "No bot found";
                 return res.redirect('/');
             }
+            var html = converter.makeHtml(bot.long_description);
+            html = sanitizeHtml(html)
+            res.render('bot/index', {
+                bot: bot,
+                user: req.user,
+                owners: coowner,
+                bota: await global.bsl.users.fetch(bot.id),
+                description: html
+            });
         }
-        if (!bota) {
-            req.session.error = "No bot found";
-            return res.redirect('/');
-        }
-        res.render('bot/index', {
-            bot: bot,
-            user: req.user,
-            owners: coowner,
-            bota: bota
-        });
     })
 })
 
@@ -155,11 +195,17 @@ router.get('/:botID/settings', async function (req, res) {
                 req.session.error = "No bot found";
                 return res.redirect('/');
             }
-            res.render('bot/edit', {
-                bot: bot,
-                user: req.user,
-            });
-
+            if (bot.owners.includes(req.user.id)) {
+                res.render('bot/edit', {
+                    bot: bot,
+                    user: req.user,
+                    message: req.session.message || undefined,
+                    error: req.session.error || undefined,
+                });
+            } else {
+                req.session.error = "You are not the owner of this bot";
+                res.redirect('/');
+            }
         });
     }
 });
@@ -178,12 +224,18 @@ router.get('/:botID/analytics', async function (req, res) {
                 req.session.error = "No bot found";
                 return res.redirect('/');
             }
-            res.render('bot/analytics', {
-                bot: bot,
-                user: req.user,
-                bota: await global.bsl.users.fetch(bot.id)
-            });
-
+            if (bot.owners.includes(req.user.id)) {
+                res.render('bot/analytics', {
+                    bot: bot,
+                    user: req.user,
+                    bota: await global.bsl.users.fetch(bot.id),
+                    message: req.session.message || undefined,
+                    error: req.session.error || undefined,
+                });
+            } else {
+                req.session.error = "You are not the owner of this bot";
+                res.redirect('/');
+            }
         });
     }
 });
@@ -203,25 +255,65 @@ router.post('/:botID/settings', async function (req, res) {
                 return res.redirect('/');
             }
             if (!bot.owners.includes(req.user.id)) {
-
-
                 req.session.error = "You do not have permission to edit this bot";
                 return res.redirect('/');
             }
-            bot.name = req.body.bot_name;
-            bot.description = req.body.bot_short;
-            bot.long_description = req.body.bot_description;
-            bot.save(function (err) {
+            bots.findOne({ vanity: req.body.bot_vanity }, async function (err, bot2) {
                 if (err) {
                     console.log(err);
-                    req.session.error = "Something went wrong";
-                    res.redirect('/');
+                    return res.redirect('/');
+                }
+                if (bot2) {
+                    if (bot2.id != bot.id) {
+                        req.session.error = "This vanity is already in use";
+                        return res.redirect('/');
+                    } else {
+
+                        bot.name = req.body.bot_name;
+                        bot.description = req.body.bot_short;
+                        bot.long_description = req.body.bot_description;
+                        bot.vanity = req.body.bot_vanity.toLowerCase();
+                        bot.save(function (err) {
+                            if (err) {
+                                console.log(err);
+                                req.session.error = "Something went wrong";
+                                res.redirect('/');
+                            } else {
+                                req.session.message = "Bot updated";
+                                res.redirect('/bot/' + req.params.botID + '/settings');
+                            }
+                        });
+                    }
                 } else {
-                    req.session.message = "Bot updated";
-                    res.redirect('/');
+                    servers.findOne({ vanity: req.body.bot_vanity }, async function (err, server) {
+                        if (err) {
+                            console.log(err);
+                            return res.redirect('/');
+                        }
+                        if (server) {
+                            req.session.error = "This vanity is already in use";
+                            return res.redirect('/');
+                        } else {
+
+                            bot.name = req.body.bot_name;
+                            bot.description = req.body.bot_short;
+                            bot.long_description = req.body.bot_description;
+                            bot.vanity = req.body.bot_vanity.toLowerCase();
+                            bot.save(function (err) {
+                                if (err) {
+                                    console.log(err);
+                                    req.session.error = "Something went wrong";
+                                    res.redirect('/');
+                                } else {
+                                    req.session.message = "Bot updated";
+                                    res.redirect('/bot/' + req.params.botID + '/settings');
+                                }
+                            });
+                        }
+                    });
                 }
             });
-        });
+        })
     }
 });
 router.get('/:botID/vote', async function (req, res) {
@@ -264,13 +356,13 @@ router.get('/:botID/vote', async function (req, res) {
                             if (err) {
                                 console.log(err);
                                 req.session.error = "Something went wrong";
-                                return res.redirect('/');
+                                return res.redirect('/bot/' + req.params.botID);
                             }
                         })
                         global.client.channels.cache.get(global.config.bot.channels.vote).send(`${req.user.username} has voted for bot: ${bot.name} | <https://botscord.xyz/bot/${bot.id}>`);
 
                         req.session.message = "Vote added";
-                        return res.redirect('/');
+                        return res.redirect('/bot/' + req.params.botID);
                     })
                 } else {
                     // add vote to database
@@ -283,7 +375,7 @@ router.get('/:botID/vote', async function (req, res) {
                         if (err) {
                             console.log(err);
                             req.session.error = "Something went wrong";
-                            return res.redirect('/');
+                            return res.redirect('/bot/' + req.params.botID);
                         } else {
                             if (bot.votes) {
                                 bot.votes = 1;
@@ -294,11 +386,11 @@ router.get('/:botID/vote', async function (req, res) {
                                 if (err) {
                                     console.log(err);
                                     req.session.error = "Something went wrong";
-                                    return res.redirect('/');
+                                    return res.redirect('/bot/' + req.params.botID);
                                 } else {
                                     global.client.channels.cache.get(global.config.bot.channels.vote).send(`${req.user.username} has voted for bot: ${bot.name} | <https://botscord.xyz/bot/${bot.id}>`);
                                     req.session.message = "Vote added";
-                                    return res.redirect('/');
+                                    return res.redirect('/bot/' + req.params.botID);
                                 }
                             })
                         }
@@ -308,5 +400,30 @@ router.get('/:botID/vote', async function (req, res) {
         })
     }
 })
+
+router.get('/:botID/invite', async function (req, res) {
+    bots.findOne({ id: req.params.botID }, async function (err, bot) {
+        if (err) {
+            console.log(err);
+            return res.redirect('/');
+        }
+        if (!bot) {
+            req.session.error = "No bot found";
+            return res.redirect('/');
+        }
+        if (!bot.invite) {
+            var invite = "https://discord.com/oauth2/authorize?client_id=" + bot.id + "&scope=bot&permissions=8";
+            return res.render('bot/join', {
+                bot: bot,
+                invite: invite,
+            })
+        }
+        return res.render('bot/join', {
+            bot: bot,
+            invite: bot.invite,
+        })
+    })
+})
+
 
 module.exports = router;

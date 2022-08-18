@@ -1,39 +1,16 @@
 <%- include("../includes/header.ejs", { title: "Bot" + bots.name}) %>
-<div class="overflow-x-auto relative container-sm">
-  <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-      <tr>
-        <th scope="col" class="py-3 px-6">
-          Bot Name
-        </th>
-        <th scope="col" class="py-3 px-6">
-          BotID
-        </th>
-        <th scope="col" class="py-3 px-6">
-          Bot Description
-        </th>
-        <th scope="col" class="py-3 px-6">
-          Owner
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-        <% var nbots = bots.filter(bot => bot.verified == false); %>
-      <% nbots.forEach(function(bot) { %>
-      <tr class="hover:bg-gray-100 dark:hover:bg-gray-800" onclick="location.href='/admin/bot/<%= bot.id %>'">
-        <td class="py-3 px-6">
-          <%= bot.name %>
-        </td>
-        <td class="py-3 px-6">
-          <%= bot.id %>
-        </td>
-        <td class="py-3 px-6">
-          <%= bot.description %>
-        </td>
-        <td class="py-3 px-6">
-          <%= bot.owner %>
-        </td>
-      </tr>
-      <% }) %>
-    </tbody>
-  </table>
+<div class="overflow-x-auto relative container-sm text-center">
+  <% if(typeof reject  != "undefined") { %>
+  <form action="" method="post">
+    <h1 class="text-xl text-white">Are you sure you want to reject this bot?</h1>
+    <p class="text-white">Reason: <input type="text " name="reason" class=" text-black "></p>
+    <input type="submit" value="Yes" name="reject" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
+    <input type="submit" value="No"  class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/admin'">
+  </form>
+  <% } %>
+  <% if(typeof verify != "undefined") { %>
+  <form action="" method="post">
+    <h1 class="text-xl">Are you sure you want to verify this bot?</h1>
+    <input type="submit" value="Yes" name="verify" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full" onclick="location.href='/admin/bot/<%= bots.id %>/verify'">
+  </form>
+  <% } %>

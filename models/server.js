@@ -18,6 +18,7 @@ let hm = new mongoose.Schema({
     analytics_visitors: Number,
     analytics_joins: Number,
     country: Object,
+    vanity: String,
 });
 
 module.exports = mongoose.model("servers", hm);

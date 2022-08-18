@@ -166,9 +166,9 @@ app.get('/tag/:id', async (req, res) => {
 });
 app.get('/i/:id', async (req, res) => {
     var id = req.params.id.toLowerCase();
-    var bott = await bots.findOne({ name: { $regex: req.params.id }});
+    var bott = await bots.findOne({ vanity: id });
     if(!bott){
-        var serverr = await server.findOne({ name: { $regex: req.params.id }});
+        var serverr = await server.findOne({ vanity: id });
         if(!serverr){
             res.redirect('/');
             return
@@ -176,7 +176,7 @@ app.get('/i/:id', async (req, res) => {
         res.redirect('/server/' + serverr.id + '/join');
         return
     }
-    res.redirect('/bot/' + bott.id + '/join');
+    res.redirect('/bot/' + bott.id + '/invite');
     return
 
 });

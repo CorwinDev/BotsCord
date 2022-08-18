@@ -18,7 +18,7 @@
     <% for(let i=0; i < nbots.length; i++) { var bot=nbots[i]; if(bot) { %>
     <% getBot = global.bsl.guilds.cache.get(bot.id); %>
 
-    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/bot/<%=bot.id%> ';" style="cursor: pointer;">
+    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/server/<%=bot.id%> ';" style="cursor: pointer;">
       <img class="w-full rounded-full" src="<%= getBot.iconURL({ format: 'png' }) %>" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <div class="px-6 text-white text-base">
         <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= global.bsl.guilds.cache.get(bot.id).memberCount.toLocaleString().replace(',', '.' ) %><span class="float-right"><i class="fa fa-bomb"></i>: <%=bot.bumps %></span>
@@ -63,7 +63,7 @@
     <% } %>
     <% for(let i=0; i < nbots.length; i++) {  var bot=nbots[i]; if(bot) { %>
     <% getBot = global.bsl.guilds.cache.get(bot.id); %>
-    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/bot/<%=bot.id%> ';" style="cursor: pointer;">
+    <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/server/<%=bot.id%> ';" style="cursor: pointer;">
       <img class="w-full rounded-full" src="<%= getBot.iconURL({ format: 'png' }) %>" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <div class="px-6 text-white text-base">
         <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= global.bsl.guilds.cache.get(bot.id).memberCount.toLocaleString().replace(',', '.' ) %><span class="float-right"><i class="fa fa-bomb"></i>: <%=bot.bumps %></span>

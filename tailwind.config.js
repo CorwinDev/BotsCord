@@ -4,6 +4,7 @@ module.exports = {
     "./website/**/*.{html,css}",
     "./website/views/*.ejs",
     "./website/views/**/*.ejs",
+    "./website/views/**/**/*.ejs",
   ],
   theme: {
     extend: {
@@ -19,12 +20,13 @@ module.exports = {
         serif: ["Georgia", "serif"],
         mono: ["Menlo", "monospace"]
       },
-    }
+    },
   },
   plugins: [
     {
       tailwindcss: {},
       autoprefixer: {},
+      typography: {}
     },
   ],
 };

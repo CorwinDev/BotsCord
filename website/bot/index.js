@@ -9,7 +9,7 @@ const colors = require('colors');
 const commands = [
     new SlashCommandBuilder().setName('ping').setDescription('Replies with pong!'),
     new SlashCommandBuilder().setName('topvoted').setDescription('Replies with highest server/bots!'),
-    new SlashCommandBuilder().setName('user').setDescription('Replies with user info and connected bots/servers!'),
+    new SlashCommandBuilder().setName('profile').setDescription('Replies with user info and connected bots/servers!'),
     new SlashCommandBuilder().setName('queue').setDescription('Replies with queue'),
 ]
     .map(command => command.toJSON());
@@ -60,8 +60,38 @@ client.on('interactionCreate', async interaction => {
         interaction.reply({ embeds: [embed] });
     } else if (commandName === 'user') {
         const { user } = interaction;
-        await interaction.reply(`${user.username}#${user.discriminator} has ${user.bot ? 'a bot' : 'no bot'} and is connected to ${user.guilds.size} servers!`);
-
+        bots.find({ owner: user.id }).then(bots => {
+            var bots1 = bots
+                .map(
+                    a => `${a.name} | ${a.id} **[ \`${a.votes}\` Votes ]**`
+                )
+                .join('\n');
+            if (!bots1) {
+                var bots1 = 'no bots';
+            }
+            const embed = new EmbedBuilder()
+                .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                .setColor("#7289da")
+                .setDescription(`**Bots owned by ${user.tag}**\n${bots1}`)
+            interaction.reply({ embeds: [embed] });
+        }).catch(console.error);
+    } else if (commandName === 'profile') {
+        bots.find({ owner: interaction.user.id }).then(async function(bots){
+            var bots1 = bots
+                .map(
+                    a => `${a.name} | ${a.id} **[ \`${a.votes}\` Votes ]**`
+                )
+                .join('\n');
+            if (!bots1) {
+                var bots1 = 'no bots';
+            }
+            var user = await users.findOne({ id: user.id });
+            const embed = new EmbedBuilder()
+                .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.avatarURL({ dynamic: true }) })
+                .setColor("#7289da")
+                .setDescription(`**Bots owned by ${user.tag}**\n${bots1}\nCoins: ${user.coins}`)
+            interaction.reply({ embeds: [embed] });
+        })
     } else if (commandName === 'queue') {
         if (!global.config.users.owner.includes(interaction.user.id) && !global.config.users.verificator.includes(interaction.user.id)) return interaction.reply('You are not allowed to use this command!');
         const unVerified = await bots.find({ verified: false });
@@ -102,7 +132,7 @@ var cooldown = [];
 client.on("messageCreate", async (message) => {
     if (message.author.bot) return;
     if (message.channel.type === "dm") return;
-    if (cooldown.some(code => code.id === message.author.id)){
+    if (cooldown.some(code => code.id === message.author.id)) {
         var userr = cooldown.findIndex((obj => obj.id == message.author.id));
         cooldown[userr].message += 1;
         if (cooldown[userr].message >= 15) {

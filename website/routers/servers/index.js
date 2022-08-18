@@ -2,6 +2,7 @@ var express = require('express'),
     router = express.Router();
 var servers = require('../../../models/server');
 var votes = require('../../../models/votes');
+var bots = require('../../../models/bot');
 const client = require('../../../index');
 const Discord = require('discord.js');
 var showdown = require('showdown'),
@@ -167,13 +168,13 @@ router.get('/:server', async function (req, res) {
     })
 })
 
-router.get('/:server/settings',async function (req, res) {
+router.get('/:server/settings', async function (req, res) {
     if (!req.user) {
         req.session.backURL = req.originalUrl;
         res.redirect('/auth');
         return;
     }
-    servers.findOne({ id: req.params.server },async function (err, server) {
+    servers.findOne({ id: req.params.server }, async function (err, server) {
         if (err) {
             console.log(err);
             return res.redirect('/');
@@ -188,7 +189,9 @@ router.get('/:server/settings',async function (req, res) {
                 res.render('server/edit', {
                     user: req.user,
                     server: server,
-                    serverr: serverr
+                    serverr: serverr,
+                    message: req.session.message || undefined,
+                    error: req.session.error || undefined,
                 });
             } else {
                 req.session.error = "You don't have permission to edit this server";
@@ -206,7 +209,7 @@ router.post('/:server/settings', async function (req, res) {
         req.session.backURL = req.originalUrl;
         res.redirect('/auth');
     }
-    servers.findOne({ id: req.params.server }, function (err, server) {
+    servers.findOne({ id: req.params.server }, async function (err, server) {
         if (err) {
             console.log(err);
             return res.redirect('/');
@@ -215,21 +218,62 @@ router.post('/:server/settings', async function (req, res) {
             req.session.error = "No server found";
             return res.redirect('/');
         }
-        var serverr = global.client.guilds.cache.get(server.id)
+        var serverr = await global.bsl.guilds.cache.get(server.id)
         if (serverr.members.cache.get(req.user.id)) {
             if (serverr.members.cache.get(req.user.id).permissions.has('ADMINISTRATOR')) {
-                server.description = req.body.server_short;
-                server.long_description = req.body.server_description;
-                server.tags = req.body.tags;
-                server.webhook = req.body.server_webhook;
-                server.save(function (err) {
+                servers.findOne({ vanity: req.body.server_vanity }, async function (err, server2) {
                     if (err) {
                         console.log(err);
-                        req.session.error = "Something went wrong";
-                        res.redirect('/');
+                        return res.redirect('/server/' + req.params.server + '/settings');
+                    }
+                    if (server2) {
+                        if (server2.id != req.params.server) {
+                            req.session.error = "Vanity already exists";
+                            return res.redirect('/server/' + req.params.server + '/settings');
+                        } else {
+                            server.description = req.body.server_short;
+                            server.long_description = req.body.server_description;
+                            server.tags = req.body.tags;
+                            server.webhook = req.body.server_webhook;
+                            server.vanity = req.body.server_vanity.toLowerCase();
+                            server.save(function (err) {
+                                if (err) {
+                                    console.log(err);
+                                    req.session.error = "Something went wrong";
+                                    res.redirect('/server/' + req.params.server + '/settings');
+                                } else {
+                                    req.session.message = "Server edited";
+                                    res.redirect('/server/' + req.params.server + '/settings');
+                                }
+                            });
+                        }
                     } else {
-                        req.session.message = "Server edited";
-                        res.redirect('/');
+                        bots.findOne({ vanity: req.body.server_vanity }, async function (err, bot) {
+                            if (err) {
+                                console.log(err);
+                                return res.redirect('/server/' + req.params.server + '/settings');
+                            }
+                            if (bot) {
+                                req.session.error = "Vanity already exists";
+                                return res.redirect('/server/' + req.params.server + '/settings');
+                            } else {
+                                server.description = req.body.server_short;
+                                server.long_description = req.body.server_description;
+                                server.tags = req.body.tags;
+                                server.webhook = req.body.server_webhook;
+                                server.vanity = req.body.server_vanity.toLowerCase();
+                                server.save(function (err) {
+                                    if (err) {
+                                        console.log(err);
+                                        req.session.error = "Something went wrong";
+                                        res.redirect('/server/' + req.params.server + '/settings');
+                                    } else {
+                                        req.session.message = "Server edited";
+                                        res.redirect('/server/' + req.params.server + '/settings');
+                                    }
+                                });
+                            }
+                        })
                     }
                 });
             } else {
@@ -300,7 +344,7 @@ router.get('/:server/vote', function (req, res) {
                         }
                         global.client.channels.cache.get(global.config.bot.channels.vote).send(`${req.user.username} has voted for server ${bot.name} | <https://botscord.xyz/server/${bot.id}>`);
                         req.session.message = "Vote added";
-                        return res.redirect('/');
+                        return res.redirect('/bot/' + bot.id);
                     })
                 } else {
                     // add vote to database
@@ -365,7 +409,7 @@ router.get('/:server/join', async function (req, res) {
         res.render('server/join', {
             url: urlInvite,
             server: server,
-            serverr:await global.bsl.guilds.cache.get(server.id)
+            serverr: await global.bsl.guilds.cache.get(server.id)
         });
     });
 })
