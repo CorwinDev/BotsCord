@@ -1,15 +1,15 @@
 <%- include('../includes/header.ejs', { title: bot.name, bot: bot}) %>
 <br><br><br><br>
-<div class="flex space-x-4 py-2 lg:h-5/6 sm:min-h-min">
-  <div class="p-10 bg-blue-color w-2/3 text-white h-full m-4 mx-14">
-    <article class="prose">
-      <br><%- description %>
+<div class="lg:flex space-x-4 py-2 lg:h-5/6 sm:min-h-min">
+  <div class="p-10 bg-blue-color w-full text-white h-full m-4 lg:mx-14 text-ellipsis lg:w-2/3">
+    <div class="prose prose-invert">
 
-    </article>
+      <%- description %>
+    </div>
   </div>
-  <div class="bg-blue-color w-1/4 p-10 text-white h-full m-4 ">
+  <div class="bg-blue-color w-full p-10 text-white h-full lg:w-1/4 lg:m-4">
     <!-- bot avatar image -->
-    <img class="w-full rounded-full" src="https://cdn.discordapp.com/avatars/<%= bot.id %>/<%=bota.avatar %>.webp" alt="<%= bot.name %>" onerror="this.src='https://cdn.discordapp.com/avatars/<%= bot.id %>/<%=bota.avatar %>.webp'">
+    <img class="w-full rounded-full" src="https://cdn.discordapp.com/avatars/<%= bot.id %>/<%=bota.avatar %>.webp" alt="<%= bot.name %>" onerror="this.src='/img/logo.webp'">
     <h1 class="text-3xl text-center">
       <%= bot.name %>
     </h1>

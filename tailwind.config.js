@@ -21,16 +21,22 @@ module.exports = {
         mono: ["Menlo", "monospace"]
       },
 
-      typography: {
+      typography: theme => ({
         DEFAULT: {
           css: {
-            color: '#FFFFFF',
-            code:{
-              color: '#FFFFFF',
-            }
+            color: '#FFF',
+            "code::before": {
+              "content": "unset",
+            },
+            "code::after": {
+              "content": "unset",
+            },
+            "code": {
+              "background-color": "#747174",
+            },
           },
         },
-      },
+      }),
     },
   },
   plugins: [

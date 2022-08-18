@@ -2,12 +2,13 @@
 <br><br><br><br>
 <div class="lg:flex space-x-4 py-2 lg:h-5/6 sm:min-h-min">
   <div class="p-10 bg-blue-color w-full text-white h-full m-4 lg:mx-14 text-ellipsis lg:w-2/3">
-    <p class="text-white text-clip">
-    <pre style="white-space: pre-wrap;" class="text-clip break-wordsw-full h-full"><br><%= server.long_description %></pre>
-    </p>
+    <div class="prose prose-invert">
+
+      <%- description %>
+    </div>
   </div>
   <div class="bg-blue-color w-full p-10 text-white h-full lg:w-1/4 lg:m-4">
-    <img class="w-full rounded-full max-w-xs" src="https://cdn.discordapp.com/avatars/<%=server.id %>/<%=serverr.icon %>.png" alt="<%= server.name %>" onerror="this.src='/img/logo.png'">
+    <img class="w-full rounded-full max-w-xs" src="https://cdn.discordapp.com/icons/<%=server.id %>/<%=serverr.icon %>.png" alt="<%= server.name %>" onerror="this.src='/img/logo.png'">
     <h1 class="text-3xl">
       <%= server.name %>
     </h1>

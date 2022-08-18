@@ -158,10 +158,12 @@ app.get('/servers', async (req, res) => {
 app.get('/tag/:id', async (req, res) => {
     var id = req.params.id.toLowerCase();
     var bot = await bots.find({ tags: id });
+    var servers = await server.find({ tags: id});
     res.render('tags/index', {
         bots: bot,
         user: req.user,
         tag: id,
+        servers: servers,
     });
 });
 app.get('/i/:id', async (req, res) => {

@@ -6,7 +6,8 @@ var bots = require('../../../models/bot');
 const client = require('../../../index');
 const Discord = require('discord.js');
 var showdown = require('showdown'),
-    converter = new showdown.Converter();
+    converter = new showdown.Converter()
+const sanitizeHtml = require('sanitize-html');
 function makeid(length) {
     var result = '';
     var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -160,10 +161,15 @@ router.get('/:server', async function (req, res) {
                 [`analytics.${referresURL}`]: 1
             }
         })
+        var html = converter.makeHtml(server.long_description);
+        console.log(html);
+        html = sanitizeHtml(html,
+            { allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']) })
         res.render('server/index', {
             user: req.user,
             server: server,
-            serverr: global.bsl.guilds.cache.get(server.id)
+            serverr: global.bsl.guilds.cache.get(server.id),
+            description: html,
         });
     })
 })

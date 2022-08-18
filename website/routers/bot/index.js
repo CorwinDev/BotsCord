@@ -89,7 +89,7 @@ router.get('/:botID', async function (req, res) {
             return res.redirect('/');
         }
         if (bot.verified == false) {
-            if(!req.user) {
+            if (!req.user) {
                 req.backURL = req.originalUrl;
                 return res.redirect('/auth');
             }
@@ -104,7 +104,8 @@ router.get('/:botID', async function (req, res) {
                     coowner.push(b)
                 })
                 var html = converter.makeHtml(bot.long_description);
-                html = sanitizeHtml(html)
+                html = sanitizeHtml(html,
+                    { allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']) })
                 res.render('bot/index', {
                     bot: bot,
                     user: req.user,

@@ -92,7 +92,7 @@ router.get('/server/banner/:id', function (req, res) {
             context.fillText(serverName, canvas.width / 2.7, canvas.height / 1.8);
             context.font = '18px sans-serif';
 
-            context.fillText(`🙍‍♂️ ${serverMembers}`, canvas.width / 2.7, canvas.height / 1.1);
+            context.fillText(`😊 ${serverMembers}`, canvas.width / 2.7, canvas.height / 1.1);
             context.fillText(`❤️ ${server.votes}`, canvas.width / 2.1, canvas.height / 1.1);
 
             context.beginPath();
