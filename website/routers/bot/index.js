@@ -111,7 +111,9 @@ router.get('/:botID', async function (req, res) {
                     user: req.user,
                     owners: coowner,
                     bota: await global.bsl.users.fetch(bot.id),
-                    description: html
+                    description: html,
+                    message: req.session.message || undefined,
+                    error: req.session.error || undefined,
                 });
             } else {
                 req.session.error = "Bot not verified";
@@ -176,7 +178,9 @@ router.get('/:botID', async function (req, res) {
                 user: req.user,
                 owners: coowner,
                 bota: await global.bsl.users.fetch(bot.id),
-                description: html
+                description: html,
+                message: req.session.message || undefined,
+                error: req.session.error || undefined,
             });
         }
     })
