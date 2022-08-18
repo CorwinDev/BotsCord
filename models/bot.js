@@ -11,7 +11,7 @@ let hm = new mongoose.Schema({
     long_description: String,
     banner: String,
     tags: [String],
-    premium: Boolean,
+    promoted : Boolean,
     servers: String,
     users: String,
     votes: { type: Number, default: 0 },
