@@ -36,9 +36,9 @@ router.get('/add', function (req, res) {
 
 router.post('/add', async function (req, res) {
     if (req.user) {
-        var checkServer = await client.bsl.guilds.cache.get(req.body.serverid);
+        var checkServer = await global.bsl.guilds.cache.get(req.body.serverid);
         if (!checkServer) {
-            return res.redirect(client.config.server.bsl.invite + "&guild_id=" + req.body.serverid);
+            return res.redirect(global.config.server.bsl.invite + "&guild_id=" + req.body.serverid);
         } else {
             let checkGuild = await servers.findOne({ id: checkServer.id });
             if (checkGuild) {
