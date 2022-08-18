@@ -59,6 +59,7 @@ router.post('/add', async function (req, res) {
             description: req.body.bot_short,
             tags: req.body.tags,
             token: makeid(64),
+            invite: req.body.bot_invite
         });
 
         bot.save(function (err) {
@@ -416,17 +417,18 @@ router.get('/:botID/invite', async function (req, res) {
             req.session.error = "No bot found";
             return res.redirect('/');
         }
-        if (!bot.invite) {
+        if (bot.invite) {
+            return res.render('bot/join', {
+                bot: bot,
+                invite: bot.invite,
+            })
+        } else {
             var invite = "https://discord.com/oauth2/authorize?client_id=" + bot.id + "&scope=bot&permissions=8";
             return res.render('bot/join', {
                 bot: bot,
                 invite: invite,
             })
         }
-        return res.render('bot/join', {
-            bot: bot,
-            invite: bot.invite,
-        })
     })
 })
 
