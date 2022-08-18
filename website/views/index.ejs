@@ -83,7 +83,7 @@
     <% } %>
     <% for(let i=0; i < nbots.length; i++) { if (i===5) break; var bot=nbots[i]; if(bot) { %>
     <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/bot/<%=bot.id%> ';" style="cursor: pointer;">
-      <img class="w-full rounded-full" src="<%= bot.icon %>" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
+      <img class="w-full rounded-full" src="https://cdn.discordapp.com/avatars/<%= bot.id %>/<%= global.bsl.users.cache.get(bot.id).avatar %>.webp" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <div class="px-6 text-white text-base">
         <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <%if(bot.servers) { %><i class="fa fa-server"></i>: <%= bot.servers %><% } %>
         </p>
@@ -127,7 +127,7 @@
     <% } %>
     <% for(let i=0; i < nbots.length; i++) { if (i===5) break; var bot=nbots[i]; if(bot) { %>
     <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/bot/<%=bot.id%> ';" style="cursor: pointer;">
-      <img class="w-full rounded-full" src="<%= bot.icon %>" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
+      <img class="w-full rounded-full" src="https://cdn.discordapp.com/avatars/<%= bot.id %>/<%=global.bsl.users.cache.get(bot.id).avatar %>.webp" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <div class="px-6 text-white text-base">
         <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <%if(bot.servers) { %><i class="fa fa-server"></i>: <%= bot.servers %><% } %>
         </p>

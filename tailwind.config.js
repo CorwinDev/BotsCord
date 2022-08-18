@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     "./website/**/*.{html,css}",
@@ -7,6 +6,7 @@ module.exports = {
     "./website/views/**/**/*.ejs",
   ],
   theme: {
+
     extend: {
       colors: {
         "primary-color": "#1E2023;",
@@ -20,13 +20,24 @@ module.exports = {
         serif: ["Georgia", "serif"],
         mono: ["Menlo", "monospace"]
       },
+
+      typography: {
+        DEFAULT: {
+          css: {
+            color: '#FFFFFF',
+            code:{
+              color: '#FFFFFF',
+            }
+          },
+        },
+      },
     },
   },
   plugins: [
+    require('@tailwindcss/typography'),
     {
       tailwindcss: {},
       autoprefixer: {},
-      typography: {}
     },
   ],
 };

@@ -4,7 +4,9 @@ let hm = new mongoose.Schema({
     name: String,
     icon: String,
     verified: Boolean,
-    description: String,
+    description: {
+        type: String, maxLength: 100
+    },
     owners: [String],
     long_description: String,
     banner: String,

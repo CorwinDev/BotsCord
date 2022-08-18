@@ -428,12 +428,24 @@ router.get('/:botID/analytics', async function (req, res) {
                 req.session.error = "No bot found";
                 return res.redirect('/');
             }
-            res.render('server/analytics', {
-                bot: bot,
-                user: req.user
-            });
+            var serverr = await global.bsl.guilds.cache.get(bot.id)
+            if (serverr.members.cache.get(req.user.id)) {
+                if (serverr.members.cache.get(req.user.id).permissions.has('ADMINISTRATOR')) {
+                    res.render('server/analytics', {
+                        bot: bot,
+                        user: req.user
+                    });
 
-        });
+                } else {
+                    req.session.error = "You don't have permission to do this";
+                    return res.redirect('/');
+
+                }
+            } else {
+                req.session.error = "You don't have permission to do this";
+                return res.redirect('/');
+            }
+        })
     }
 });
 module.exports = router;
