@@ -10,15 +10,21 @@ const ms = require("parse-ms-2");
 // Set intents 
 client.on('ready', async () => {
     const bot = await bots.find({ verified: true });
-    client.user.setPresence({  activities: [{ name: 'botscord.xyz | ' + bot.length + ' bots' }] });
-    client.user.setActivity('botscord.xyz | ' + bot.length + ' bots', { type: ActivityType.Watching });
+    const server = await servers.find({});
+    var loop = ['botscord.xyz | ' + bot.length + ' bots', 'botscord.xyz | ' + server.length + ' servers' ]
+    var i = 0;
+    setInterval(function () {
+        client.user.setActivity(loop[i], { type: ActivityType.Watching });
+        i++;
+        if (i > loop.length - 1) {
+            i = 0;
+        }
+    } , 5000);
 
     console.log(bsl, 'Bot is ready!');
     // Log server count
-    setTimeout(() => {
         console.log(bsl,
             `${client.guilds.cache.size} servers`);
-    }, 1000);
 });
 const { REST } = require('@discordjs/rest');
 const commands = [

@@ -13,8 +13,11 @@
     <h1 class="text-3xl text-center">
       <%= bot.name %>
     </h1>
-    <a href="/bot/<%= bot.id %>/join" class="button float-right"><i class="fa fa-link"></i>
+    <a href="/bot/<%= bot.id %>/join" class="button float-right inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><i class="fa fa-link"></i>
       Invite</a>
+    <a href="/bot/<%= bot.id %>/vote" class="button float-left inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><i class="fa fa-link"></i>
+      Vote</a>
+      <br>
     <% if(user) {  
                 bot.owners.forEach(a=>{
                     if(a == user.id) {
