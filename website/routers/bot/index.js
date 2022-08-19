@@ -49,13 +49,13 @@ router.post('/add', async function (req, res) {
         req.body.bot_owners.split(',').forEach(function (owner) {
             owners.push(owner.trim());
         })
-        owners.push(req.user.id);
         var bot = new bots({
             id: req.body.bot_id,
             name: req.body.bot_name,
             verified: false,
             long_description: req.body.bot_description,
-            owners: owners,
+            owner: req.user.id,
+            coowners: owners,
             description: req.body.bot_short,
             tags: req.body.tags,
             token: makeid(64),
@@ -94,7 +94,7 @@ router.get('/:botID', async function (req, res) {
                 req.backURL = req.originalUrl;
                 return res.redirect('/auth');
             }
-            if (bot.owners.includes(req.user.id)) {
+            if (bot.owners.includes(req.user.id) || global.config.users.verificator.includes(req.user.id) || global.config.users.owner.includes(req.user.id)) {
                 let coowner = new Array()
                 await bot.owners.forEach(async function (a) {
                     try {
@@ -274,11 +274,15 @@ router.post('/:botID/settings', async function (req, res) {
                         req.session.error = "This vanity is already in use";
                         return res.redirect('/');
                     } else {
-
+                        var owners = new Array();
+                        req.body.bot_owners.split(',').forEach(function (owner) {
+                            owners.push(owner.trim());
+                        })
                         bot.name = req.body.bot_name;
                         bot.description = req.body.bot_short;
                         bot.long_description = req.body.bot_description;
                         bot.vanity = req.body.bot_vanity.toLowerCase();
+                        bot.owners = owners;
                         bot.save(function (err) {
                             if (err) {
                                 console.log(err);
@@ -300,11 +304,15 @@ router.post('/:botID/settings', async function (req, res) {
                             req.session.error = "This vanity is already in use";
                             return res.redirect('/');
                         } else {
-
+                            var owners = new Array();
+                            req.body.bot_owners.split(',').forEach(function (owner) {
+                                owners.push(owner.trim());
+                            })
                             bot.name = req.body.bot_name;
                             bot.description = req.body.bot_short;
                             bot.long_description = req.body.bot_description;
                             bot.vanity = req.body.bot_vanity.toLowerCase();
+                            bot.owners = owners;
                             bot.save(function (err) {
                                 if (err) {
                                     console.log(err);

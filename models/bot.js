@@ -7,6 +7,7 @@ let hm = new mongoose.Schema({
     description: {
         type: String, maxLength: 100
     },
+    owner: String,
     owners: [String],
     long_description: String,
     banner: String,

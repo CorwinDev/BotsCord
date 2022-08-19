@@ -90,16 +90,17 @@ router.post('/bot/:d/:f', async function (req, res) {
                 res.redirect('/admin');
             }
             if (req.params.f == 'reject') {
-                bot.owners.forEach(async function (owner) {
-                    global.client.users.fetch(owner).then(async function (user) {
-                        try {
-                            user.send(`Your bot ${bot.name} has been rejected by the admin. With the reason: ${req.body.reason}`);
-                            global.client.channels.cache.get(global.config.bot.channels.new).send(`${bot.name} has been rejected by the admin. With the reason: ${req.body.reason}`);
-                        }
-                        catch (e) {
-                        }
-                    })
+
+                global.client.users.fetch(bot.owner).then(async function (user) {
+                    try {
+                        user.send(`<@${owner}> bot ${bot.name} has been rejected by the admin. With the reason: ${req.body.reason}`);
+                    }
+                    catch (e) {
+                    }
+                    global.client.channels.cache.get(global.config.bot.channels.new).send(`<@${owner}> bot ${bot.name} has been rejected by the admin. With the reason: ${req.body.reason}`);
+
                 })
+
                 var rem = await bots.findOneAndDelete({ id: req.params.d })
                 if (rem) {
                     res.redirect('/admin');
@@ -110,16 +111,16 @@ router.post('/bot/:d/:f', async function (req, res) {
             } else if (req.params.f == 'verify') {
                 bot.verified = true;
                 bot.save();
-                bot.owners.forEach(async function (owner) {
-                    global.client.users.fetch(owner).then(async function (user) {
-                        try {
-                            user.send(`Your bot ${bot.name} has been accepted by the admin.`);
-                            global.client.channels.cache.get(global.config.bot.channels.new).send(`${bot.name} has been accepted by the admin. View it at: https://botscord.xyz/bot/${bot.id}`);
-                        }
-                        catch (e) {
-                        }
-                    })
+                global.client.users.fetch(bot.owner).then(async function (user) {
+                    try {
+                        user.send(`<@${owner}> bot ${bot.name} has been accepted by the admin.`);
+                    }
+                    catch (e) {
+                    }
+                    global.client.channels.cache.get(global.config.bot.channels.new).send(`<@${owner}> bot ${bot.name} has been accepted by the admin. View it at: https://botscord.xyz/bot/${bot.id}`);
+
                 })
+
                 res.redirect('/admin');
             }
         } else {
