@@ -113,11 +113,11 @@ router.post('/bot/:d/:f', async function (req, res) {
                 bot.save();
                 global.client.users.fetch(bot.owner).then(async function (user) {
                     try {
-                        user.send(`<@${owner}> bot ${bot.name} has been accepted by the admin.`);
+                        user.send(`<@${user.id}> bot ${bot.name} has been accepted by the admin.`);
                     }
                     catch (e) {
                     }
-                    global.client.channels.cache.get(global.config.bot.channels.new).send(`<@${owner}> bot ${bot.name} has been accepted by the admin. View it at: https://botscord.xyz/bot/${bot.id}`);
+                    global.client.channels.cache.get(global.config.bot.channels.new).send(`<@${user.id}> bot ${bot.name} has been accepted by the admin. View it at: https://botscord.xyz/bot/${bot.id}`);
 
                 })
 
