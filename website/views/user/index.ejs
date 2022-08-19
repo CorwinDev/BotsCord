@@ -6,7 +6,7 @@
     <pre style="white-space: pre-wrap;" class="text-clip break-wordsw-full h-full"><br>
       <% if(!users.biography){ %>
             User Has No biography
-      <% else if(typeof users.biography != 'undefined') { %>
+      <% } else if(typeof users.biography != 'undefined') { %>
         <%= users.biography %>
       <% } else { %>
       User Has No biography
