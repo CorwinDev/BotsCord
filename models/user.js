@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 let model = new mongoose.Schema({
     id: String,
-    biography: { type: String, default: null },
+    biography: { type: String, default: "User has no biography" },
     coins: String,
     website: String,
     github: String,
