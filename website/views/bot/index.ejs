@@ -49,6 +49,13 @@
       </p>
     </div>
     <% } %>
+    <% if(typeof bot.prefix != "undefined"){ %>
+    <div class="mt-1">
+      <div class="box-2-p"><i class="mt-1 fa fa-server"></i></div>
+      <p class="box-2">Prefix:&nbsp;<%= bot.prefix %></p>
+      </p>
+    </div>
+    <% } %>
     <div class="mt-1">
       <div class="box-2-p"><i class="mt-1 fa fa-users"></i></div>
       <p class="box-2">Votes:&nbsp;<%= bot.votes  || 0 %>

@@ -4,16 +4,15 @@ var servers = require('../../../models/server');
 var votes = require('../../../models/votes');
 var bots = require('../../../models/bot');
 var users = require('../../../models/user');
-const user = require('../../../models/user');
 router.get('/', function (req, res) {
     res.redirect('/user/me')
 })
 router.get('/me', async function (req, res) {
-    if(!req.user){
+    if (!req.user) {
         req.session.backURL = req.originalUrl;
         return res.redirect('/auth');
     }
-    var bot = await bots.find({ owners: req.user.id });
+    var bot = await bots.find().or([{ owners: req.user.id }, { owner: req.user.id }]);
     var user = await users.findOne({ id: req.user.id });
     res.render('user/index', {
         user: req.user,
@@ -25,7 +24,7 @@ router.get('/me', async function (req, res) {
 })
 
 router.get('/me/edit', async function (req, res) {
-    if(!req.user){
+    if (!req.user) {
         req.session.backURL = req.originalUrl;
         return res.redirect('/auth');
     }
@@ -37,7 +36,7 @@ router.get('/me/edit', async function (req, res) {
     });
 })
 router.post('/me/edit', async function (req, res) {
-    if(!req.user){
+    if (!req.user) {
         req.session.backURL = req.originalUrl;
         return res.redirect('/auth');
     }
@@ -52,9 +51,9 @@ router.post('/me/edit', async function (req, res) {
     res.redirect('/user/me');
 })
 router.get('/:id', async function (req, res) {
-    var bot = await bots.find({ owners: req.params.id });
+    var bot = await bots.find().or([{ owners: req.params.id }, { owner: req.params.id }]);
     var user = await users.findOne({ id: req.params.id });
-    if(!user){
+    if (!user) {
         req.session.error = 'No user found';
         return res.redirect('/');
     }

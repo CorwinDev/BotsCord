@@ -59,7 +59,8 @@ router.post('/add', async function (req, res) {
             description: req.body.bot_short,
             tags: req.body.tags,
             token: makeid(64),
-            invite: req.body.bot_invite
+            invite: req.body.bot_invite,
+            prefix: req.body.bot_prefix
         });
 
         bot.save(function (err) {
@@ -283,6 +284,8 @@ router.post('/:botID/settings', async function (req, res) {
                         bot.long_description = req.body.bot_description;
                         bot.vanity = req.body.bot_vanity.toLowerCase();
                         bot.owners = owners;
+                        bot.prefix = req.body.bot_prefix;
+
                         bot.save(function (err) {
                             if (err) {
                                 console.log(err);
@@ -313,6 +316,7 @@ router.post('/:botID/settings', async function (req, res) {
                             bot.long_description = req.body.bot_description;
                             bot.vanity = req.body.bot_vanity.toLowerCase();
                             bot.owners = owners;
+                            bot.prefix = req.body.bot_prefix;
                             bot.save(function (err) {
                                 if (err) {
                                     console.log(err);
