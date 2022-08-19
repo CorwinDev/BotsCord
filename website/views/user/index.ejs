@@ -4,9 +4,7 @@
   <div class="p-10 bg-blue-color w-full text-white h-full m-4 lg:mx-14 text-ellipsis lg:w-2/3">
     <p class="text-white text-clip">
     <pre style="white-space: pre-wrap;" class="text-clip break-wordsw-full h-full"><br>
-      <% if(!users.biography){ %>
-            User Has No biography
-      <% } else if(typeof users.biography != 'undefined') { %>
+      <% if(typeof users.biography != 'undefined') { %>
         <%= users.biography %>
       <% } else { %>
       User Has No biography

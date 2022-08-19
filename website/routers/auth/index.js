@@ -3,7 +3,7 @@ var express = require('express'),
     passport = require('passport');
 const request = require('request');
 var url = require('url');
-
+var users = require('../../../models/user.js');
 const client = require('../../../index');
 router.get("/", (req, res, next) => {
     if (req.session.backURL) {
@@ -45,6 +45,19 @@ router.get('/callback', passport.authenticate('discord', {
         .setFooter({ text: 'Logged in', iconURL: "https://cdn.discordapp.com/avatars/" + req.user.id + "/" + req.user.avatar + ".png" });
     client.client.channels.cache.get(client.client.config.bot.channels.login).send({ embeds: [embed] });
     res.redirect(req.session.backURL || '/')
+    users.findOne({ id: req.user.id }, (err, user) => {
+        if (err) return console.log(err);
+        if (!user) {
+            var newUser = new users({
+                id: req.user.id,
+                username: req.user.username,
+                discriminator: req.user.discriminator,
+                avatar: req.user.avatar,
+                coins: 0
+            });
+            newUser.save();
+        }
+    });
 });
 router.get('/logout', function (req, res) {
     req.logout(function (err) {

@@ -169,7 +169,7 @@
   <div class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
     <% } %>
     <% for(let i=0; i < nbots.length; i++) { if (i===5) break; var bot=nbots[i]; if(bot) { %>
-            <% var serverr = global.bsl.guilds.cache.get(bot.id); if(serverr) { %>
+    <% var serverr = global.bsl.guilds.cache.get(bot.id); if(serverr) { %>
     <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/server/<%=bot.id%> ';" style="cursor: pointer;">
       <img class="w-full rounded-full" src="https://cdn.discordapp.com/icons/<%= bot.id %>/<%= serverr.icon %>.webp" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <div class="px-6 text-white text-base">
