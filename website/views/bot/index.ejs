@@ -17,7 +17,7 @@
       Invite</a>
     <a href="/bot/<%= bot.id %>/vote" class="button float-left inline-block bg-button-primary rounded-full px-3 py-1 text-sm font-semibold text-white mr-2 mb-2"><i class="fa fa-link"></i>
       Vote</a>
-      <br>
+    <br>
     <% if(user) {  
                 bot.owners.forEach(a=>{
                     if(a == user.id) {
@@ -57,6 +57,13 @@
     <div class="h6 mt-4">
       <i class="fa fa-crown"></i> Owners
     </div>
+    <a style="text-decoration: none;margin-bottom: -5px;" href="/user/<%= bot.owner %>" class="flex mt-1">
+      <div class="h-5 w-5 rounded-lg" style="background: url(<%= "https://cdn.discordapp.com/avatars/" + bot.owner + "/" + global.bsl.users.cache.get(bot.owner).avatar + ".webp" || '../../img/undefined_avatar.png' %>) center center no-repeat; background-size: 100%;">
+      </div>
+      <p translate="no" class="box-2">
+        <%=global.bsl.users.cache.get(bot.owner).username %>
+      </p>
+    </a>
     <% owners.forEach(admin=>{
                         %>
     <a style="text-decoration: none;margin-bottom: -5px;" href="/user/<%= admin.id %>" class="flex mt-1">
