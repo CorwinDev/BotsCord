@@ -162,7 +162,6 @@ router.get('/:server', async function (req, res) {
             }
         })
         var html = converter.makeHtml(server.long_description);
-        console.log(html);
         html = sanitizeHtml(html,
             { allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img']) })
         res.render('server/index', {
