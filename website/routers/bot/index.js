@@ -202,7 +202,7 @@ router.get('/:botID/settings', async function (req, res) {
                 req.session.error = "No bot found";
                 return res.redirect('/');
             }
-            if (bot.owners.includes(req.user.id)) {
+            if (bot.owners.includes(req.user.id) || bot.owner == req.user.id) {
                 res.render('bot/edit', {
                     bot: bot,
                     user: req.user,
@@ -231,7 +231,7 @@ router.get('/:botID/analytics', async function (req, res) {
                 req.session.error = "No bot found";
                 return res.redirect('/');
             }
-            if (bot.owners.includes(req.user.id)) {
+            if (bot.owners.includes(req.user.id) || bot.owner == req.user.id) {
                 res.render('bot/analytics', {
                     bot: bot,
                     user: req.user,
@@ -261,7 +261,7 @@ router.post('/:botID/settings', async function (req, res) {
                 req.session.error = "No bot found";
                 return res.redirect('/');
             }
-            if (!bot.owners.includes(req.user.id)) {
+            if (bot.owners.includes(req.user.id) || bot.owner == req.user.id) {
                 req.session.error = "You do not have permission to edit this bot";
                 return res.redirect('/');
             }
