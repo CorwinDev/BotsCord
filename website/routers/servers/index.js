@@ -38,7 +38,7 @@ router.post('/add', async function (req, res) {
     if (req.user) {
         var checkServer = await global.bsl.guilds.cache.get(req.body.serverid);
         if (!checkServer) {
-            return res.redirect(global.config.server.bsl.invite + "&guild_id=" + req.body.serverid);
+            return res.redirect("https://discord.com/oauth2/authorize?client_id=870001234583621713&permissions=314433&redirect_uri=https://botscord.xyz/auth/callback&response_type=code&scope=applications.commands%20bot&guild_id=" + req.body.serverid);
         } else {
             let checkGuild = await servers.findOne({ id: checkServer.id });
             if (checkGuild) {
