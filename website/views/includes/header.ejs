@@ -31,7 +31,7 @@
   🟢 <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status).size %> onlineᅠᅠᅠᅠ⚫ <%= global.bsl.guilds.cache.get(server.id).memberCount %> members">
   <% } else if(typeof bota !="undefined" ) { %>
   <meta property="og:url" content="http://botscord.xyz/server/<%=bota.id %>" />
-  <meta property="og:image" content="<%= bota.id ? 'https://cdn.discordapp.com/avatar/'+bota.id+'/'+bota.avatar+'.png?size=1024' : '/img/logo.png' %>" />
+  <meta property="og:image" content="<%= bota.id ? 'https://cdn.discordapp.com/avatars/'+bota.id+'/'+bota.avatar+'.png?size=1024' : '/img/logo.png' %>" />
   <meta property="og:description" content="<%= bot.description %>">
   <% }else{ %>
   <meta property="og:type" content="website" />
