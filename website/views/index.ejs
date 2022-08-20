@@ -82,8 +82,9 @@
   <div class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
     <% } %>
     <% for(let i=0; i < nbots.length; i++) { if (i===5) break; var bot=nbots[i]; if(bot) { %>
+    <% var bott = global.bsl.users.cache.get(bot.id); %>
     <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/bot/<%=bot.id%> ';" style="cursor: pointer;">
-      <img class="w-full rounded-full" src="https://cdn.discordapp.com/avatars/<%= bot.id %>/<%= global.bsl.users.cache.get(bot.id).avatar %>.webp" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
+      <img class="w-full rounded-full" src="<%= bott.avatar ? 'https://cdn.discordapp.com/avatars/' +bot.id +'/'+bott.avatar + '.webp?size=1024' : '/img/logo.webp' %>" onerror=" this.src='/img/logo.webp'" alt=" <%= bot.name %>">
       <div class="px-6 text-white text-base">
         <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <%if(bot.servers) { %><i class="fa fa-server"></i>: <%= bot.servers %><% } %>
         </p>
@@ -126,8 +127,9 @@
   <div class="grid columns items-center content-center justify-center grid-cols-1 gap-4 col-auto sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 m-8">
     <% } %>
     <% for(let i=0; i < nbots.length; i++) { if (i===5) break; var bot=nbots[i]; if(bot) { %>
+    <% var bott = global.bsl.users.cache.get(bot.id); %>
     <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/bot/<%=bot.id%> ';" style="cursor: pointer;">
-      <img class="w-full rounded-full" src="https://cdn.discordapp.com/avatars/<%= bot.id %>/<%=global.bsl.users.cache.get(bot.id).avatar %>.webp" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
+      <img class="w-full rounded-full" src="<%= bott.avatar ? 'https://cdn.discordapp.com/avatars/' +bot.id +'/'+bott.avatar + '.webp?size=1024' : '/img/logo.webp' %>" onerror="this.src='/img/logo.webp'" alt=" <%= bot.name %>">
       <div class="px-6 text-white text-base">
         <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <%if(bot.servers) { %><i class="fa fa-server"></i>: <%= bot.servers %><% } %>
         </p>
@@ -171,7 +173,7 @@
     <% for(let i=0; i < nbots.length; i++) { if (i===5) break; var bot=nbots[i]; if(bot) { %>
     <% var serverr = global.bsl.guilds.cache.get(bot.id); if(serverr) { %>
     <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/server/<%=bot.id%> ';" style="cursor: pointer;">
-      <img class="w-full rounded-full" src="https://cdn.discordapp.com/icons/<%= bot.id %>/<%= serverr.icon %>.webp" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
+      <img class="w-full rounded-full" src="<%= serverr.icon ? 'https://cdn.discordapp.com/icons/'+bot.id+'/'+serverr.icon+'.webp?size=1024' : '/img/logo.webp' %>" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <div class="px-6 text-white text-base">
         <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= serverr.memberCount.toLocaleString().replace(',', '.' ) %>
         </p>
@@ -219,7 +221,7 @@
     <% var serverr = global.bsl.guilds.cache.get(bot.id); if(serverr) { %>
 
     <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/server/<%=bot.id%> ';" style="cursor: pointer;">
-      <img class="w-full rounded-full" src="https://cdn.discordapp.com/icons/<%= bot.id %>/<%= serverr.icon %>.webp" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
+      <img class="w-full rounded-full" src="<%= serverr.icon ? 'https://cdn.discordapp.com/icons/'+bot.id+'/'+serverr.icon+'.webp?size=1024' : '/img/logo.webp' %>" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <div class="px-6 text-white text-base">
         <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= serverr.memberCount.toLocaleString().replace(',', '.' ) %><span class="float-right"><i class="fa fa-bomb"></i>: <%=bot.bumps %></span>
         </p>
@@ -239,9 +241,9 @@
         </a>
         <% }) %>
       </div>
-      <% } %>
-      <% } %>
     </div>
+    <% } %>
+    <% } %>
     <% }) %>
   </div>
 </div>
@@ -264,7 +266,7 @@
     <% for(let i=0; i < nbots.length; i++) { if (i===5) break; var bot=nbots[i]; if(bot) { %>
     <% var serverr = global.bsl.guilds.cache.get(bot.id); if(serverr) { %>
     <div class="transition-shadow ease-in-out duration-300 hover:shadow-blue-900 shadow-2xl rounded-lg max-w-sm bg-blue-color " onclick="location.href='/server/<%=bot.id%> ';" style="cursor: pointer;">
-      <img class="w-full rounded-full" src="https://cdn.discordapp.com/icons/<%= bot.id %>/<%= serverr.icon %>.webp" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
+      <img class="w-full rounded-full" src="<%= serverr.icon ? 'https://cdn.discordapp.com/icons/'+bot.id+'/'+serverr.icon+'.webp?size=1024' : '/img/logo.webp' %>" onerror="this.src='/img/logo.webp'" alt="<%= bot.name %>">
       <div class="px-6 text-white text-base">
         <p><i class="fa-solid fa-check-to-slot"></i>: <%= bot.votes || 0 %> <i class="fa fa-user"></i>: <%= global.bsl.guilds.cache.get(bot.id).memberCount.toLocaleString().replace(',', '.' ) %><span class="float-right"><i class="fa fa-bomb"></i>: <%=bot.bumps %></span> </p>
       </div>
@@ -283,9 +285,8 @@
         </a>
         <% }) %>
       </div>
-      <% } %>
-      <% } %>
-    </div>
+    </div> <% } %>
+    <% } %>
     <% } %>
     <% } %>
   </div>

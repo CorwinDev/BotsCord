@@ -9,7 +9,7 @@
   </div>
   <div class="bg-blue-color w-full p-10 text-white h-full lg:w-1/4 lg:m-4">
     <!-- bot avatar image -->
-    <img class="w-full rounded-full" src="https://cdn.discordapp.com/avatars/<%= bot.id %>/<%=bota.avatar %>.webp" alt="<%= bot.name %>" onerror="this.src='/img/logo.webp'">
+    <img class="w-full rounded-full" src="<%= bota.avatar ? 'https://cdn.discordapp.com/avatars/' +bot.id +'/'+bota.avatar + '.webp?size=1024' : '/img/logo.webp' %>" onerror="this.src='/img/logo.webp'" alt=" <%= bot.name %>">
     <h1 class="text-3xl text-center">
       <%= bot.name %>
     </h1>
@@ -65,7 +65,7 @@
       <i class="fa fa-crown"></i> Owners
     </div>
     <a style="text-decoration: none;margin-bottom: -5px;" href="/user/<%= bot.owner %>" class="flex mt-1">
-      <div class="h-5 w-5 rounded-lg" style="background: url(<%= "https://cdn.discordapp.com/avatars/" + bot.owner + "/" + global.bsl.users.cache.get(bot.owner).avatar + ".webp" || '../../img/undefined_avatar.png' %>) center center no-repeat; background-size: 100%;">
+      <div class="h-5 w-5 rounded-lg" style="background: url(<%= "https://cdn.discordapp.com/avatars/" + bot.owner + "/" + global.bsl.users.cache.get(bot.owner).avatar + ".webp" || '/img/logo.webp' %>) center center no-repeat; background-size: 100%;">
       </div>
       <p translate="no" class="box-2">
         <%=global.bsl.users.cache.get(bot.owner).username %>
@@ -74,7 +74,7 @@
     <% owners.forEach(admin=>{
                         %>
     <a style="text-decoration: none;margin-bottom: -5px;" href="/user/<%= admin.id %>" class="flex mt-1">
-      <div class="h-5 w-5 rounded-lg" style="background: url(<%= "https://cdn.discordapp.com/avatars/" + admin.id + "/" + admin.avatar + ".webp" || '../../img/undefined_avatar.png' %>) center center no-repeat; background-size: 100%;">
+      <div class="h-5 w-5 rounded-lg" style="background: url(<%= "https://cdn.discordapp.com/avatars/" + admin.id + "/" + admin.avatar + ".webp" || '/img/logo.webp' %>) center center no-repeat; background-size: 100%;">
       </div>
       <p translate="no" class="box-2">
         <%=admin.username %>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -24,13 +25,13 @@
   <% if(typeof server !="undefined" ) { %>
   <meta property="og:title" content="BotsCord.xyz" />
   <meta property="og:url" content="http://botscord.xyz/server/<%=server.id %>" />
-  <meta property="og:image" content="https://cdn.discordapp.com/icons/<%=server.id %>/<%=serverr.icon %>.png" />
+  <meta property="og:image" content="<%= serverr.icon ? 'https://cdn.discordapp.com/icons/'+server.id+'/'+serverr.icon+'.png?size=1024' : '/img/logo.png' %>" />
   <meta property="og:description" content="<%= server.description %>
   ­
   🟢 <%= global.bsl.guilds.cache.get(server.id).members.cache.filter(a => a.presence?.status).size %> onlineᅠᅠᅠᅠ⚫ <%= global.bsl.guilds.cache.get(server.id).memberCount %> members">
   <% } else if(typeof bota !="undefined" ) { %>
   <meta property="og:url" content="http://botscord.xyz/server/<%=bota.id %>" />
-  <meta property="og:image" content="https://cdn.discordapp.com/avatars/<%=bota.id %>/<%=bota.avatar %>.png" />
+  <meta property="og:image" content="<%= bota.id ? 'https://cdn.discordapp.com/avatar/'+bota.id+'/'+bota.avatar+'.png?size=1024' : '/img/logo.png' %>" />
   <meta property="og:description" content="<%= bot.description %>">
   <% }else{ %>
   <meta property="og:type" content="website" />

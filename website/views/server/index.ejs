@@ -8,7 +8,7 @@
     </div>
   </div>
   <div class="bg-blue-color w-full p-10 text-white h-full lg:w-1/4 lg:m-4">
-    <img class="w-full rounded-full max-w-xs" src="https://cdn.discordapp.com/icons/<%=server.id %>/<%=serverr.icon %>.png" alt="<%= server.name %>" onerror="this.src='/img/logo.png'">
+    <img class="w-full rounded-full max-w-xs" src="<%= serverr.icon ? 'https://cdn.discordapp.com/icons/'+server.id+'/'+serverr.icon+'.webp?size=1024' : '/img/logo.webp' %>" alt="<%= server.name %>" onerror="this.src='/img/logo.png'">
     <h1 class="text-3xl">
       <%= server.name %>
     </h1>
