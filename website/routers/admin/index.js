@@ -93,11 +93,11 @@ router.post('/bot/:d/:f', async function (req, res) {
 
                 global.client.users.fetch(bot.owner).then(async function (user) {
                     try {
-                        user.send(`<@${owner}> bot ${bot.name} has been rejected by the admin. With the reason: ${req.body.reason}`);
+                        user.send(`<@${user.id}> bot ${bot.name} has been rejected by the admin. With the reason: ${req.body.reason}`);
                     }
                     catch (e) {
                     }
-                    global.client.channels.cache.get(global.config.bot.channels.new).send(`<@${owner}> bot ${bot.name} has been rejected by the admin. With the reason: ${req.body.reason}`);
+                    global.client.channels.cache.get(global.config.bot.channels.new).send(`<@${user.id}> bot ${bot.name} has been rejected by the admin. With the reason: ${req.body.reason}`);
 
                 })
 
