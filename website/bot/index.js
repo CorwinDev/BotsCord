@@ -85,7 +85,7 @@ client.on('interactionCreate', async interaction => {
             if (!bots1) {
                 var bots1 = 'no bots';
             }
-            var user = await users.findOne({ id: user.id });
+            var user = await users.findOne({ id: interaction.user.id });
             const embed = new EmbedBuilder()
                 .setAuthor({ name: interaction.user.tag, iconURL: interaction.user.avatarURL({ dynamic: true }) })
                 .setColor("#7289da")
