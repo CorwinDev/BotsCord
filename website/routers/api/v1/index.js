@@ -21,7 +21,8 @@ router.get('/search/:id', function (req, res) {
                 return
             } else {
                 serverr.forEach(function (server1) {
-                    serverArray.push({ "name": server1.name, "id": server1.id, "description": server1.description, type: "server", "avatar": global.bsl.guilds.cache.get(server1.id).iconURL() })
+                    serverArray.push({
+                        "name": server1.name, "id": server1.id, "description": server1.description, type: "server", "avatar": 'https://cdn.discordapp.com/icons/'+server1.id+'/'+server1.icon+'.webp?size=1024' })
                 });
             }
 
