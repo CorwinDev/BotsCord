@@ -38,7 +38,7 @@ router.get('/callback', passport.authenticate('discord', {
     };
     const embed = new client.embed()
         .setTitle('User logged in')
-        .setDescription(`${req.user.username}#${req.user.discriminator} logged in\nID: ${req.user.id}\nIP: ${req.ip}`)
+        .setDescription(`${req.user.username}#${req.user.discriminator} logged in\nID: ${req.user.id}`)
         .setColor('#0099ff')
         .setTimestamp()
         .setThumbnail("https://cdn.discordapp.com/avatars/" + req.user.id + "/" + req.user.avatar + ".png")
