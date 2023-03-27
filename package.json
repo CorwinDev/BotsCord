@@ -39,7 +39,7 @@
     "geoip-lite": "^1.4.6",
     "ipware": "^2.0.0",
     "memorystore": "^1.6.7",
-    "mongoose": "^6.5.0",
+    "mongoose": "^7.0.3",
     "parse-ms-2": "^1.0.0",
     "passport": "^0.6.0",
     "passport-discord": "^0.1.4",
