@@ -52,6 +52,6 @@
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.4",
     "@types/sanitize-html": "^2.6.2",
-    "postcss-nesting": "^10.1.10"
+    "postcss-nesting": "^11.2.2"
   }
 }
