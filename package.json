@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ode index.js",
+    "start": "node index.js",
     "css": "postcss website/public/css/tailwind.css -o website/public/css/style.css"
   },
   "repository": {
